@@ -33,8 +33,6 @@ Everything about classification
 
 ---------------------------------------------
 
-# 1. Let's talk about Classification.
-
 # 1. Let's talk about Classification
 
 Classification is everywhere: even when we don’t notice it.  
