@@ -33,7 +33,7 @@ Everything about classification
 
 ---------------------------------------------
 
-# 1. Let's talk about Classification
+# 1. Let's talk about Classification.
 
 Classification is everywhere: even when we don’t notice it.  
 Every day, dozens of systems quietly classify information around us:  
@@ -105,45 +105,45 @@ To study classification deeply, one must go beyond algorithms and consider the i
 
 Classification becomes meaningful when we treat it as a complete process, not just a model choice. A robust analysis begins with a precise understanding of the decision we want to support, continues with careful treatment of data and representation, and matures through thoughtful training, evaluation, interpretation, and monitoring. This section describes that end-to-end path. The goal is simple and ambitious at the same time: build models that perform well, explain themselves clearly, and withstand real-world conditions.
 
-## 1. Understanding the problem and the data
+## 1. Understanding the problem and the data.
 
 A solid project starts when the team defines the question with care. The analyst states the decision that the model will support, clarifies who will use the prediction, and documents the consequence of being wrong. A hospital wants to flag patients at high risk, a bank wants to screen transactions for fraud, and a public agency wants to prioritize inspections. Each case carries a different cost for false positives and false negatives, and each cost changes how we should evaluate success.
 
 The analyst also identifies the type of classification at stake. A binary task separates two outcomes, a multiclass task assigns one among many labels, and a multilabel task allows several labels at once. A hierarchical task arranges labels in levels and requires consistent decisions across the hierarchy. The team then audits the sources of data, including tabular records, documents, images, audio, or sensor streams, and writes a short data card that lists provenance, refresh cycles, and known limitations. This early discipline prevents confusion later and aligns the modeling effort with the decisions that matter.
 
-## 2. Data preparation and cleaning
+## 2. Data preparation and cleaning.
 
 Clean data creates reliable learning. The analyst handles missing values in a way that respects the data generating process, detects outliers that break assumptions, and fixes inconsistencies that arise when systems merge. Categorical variables receive encodings that preserve information content, numerical variables receive scaling when algorithms require it, and time fields receive careful parsing to avoid hidden leakage. The team draws a clear boundary between training data and future data, because leakage appears the moment information from the future slips into the past. The final step splits the dataset into training, validation, and test partitions, or establishes cross-validation folds that respect grouping or time order. This structure keeps the estimate of generalization honest.
 
-## 3. Feature engineering and representation
+## 3. Feature engineering and representation.
 
 Features shape what a model can learn. The analyst begins with a minimal set that captures the essence of the domain and then improves representation with transformations and interactions. A credit model benefits from ratios that express behavior across time, a medical model benefits from trends rather than single snapshots, and a text model benefits from embeddings that preserve semantics. The team removes redundant or perfectly collinear features when they add noise, and applies dimensionality reduction when the number of variables grows faster than the number of examples. The choice of representation influences linear and nonlinear models in different ways. A linear model rewards informative transformations, while a tree ensemble tolerates raw forms but still benefits from well-designed features. Good representation reduces variance, clarifies signal, and lowers the burden on the learning algorithm.
 
-## 4. Model selection and training
+## 4. Model selection and training.
 
 Model selection follows from problem structure, data regime, and interpretability needs. A team chooses logistic regression or linear discriminant analysis when the relationship appears close to linear and when stakeholders demand transparent coefficients. A team chooses decision trees, random forests, or gradient boosted trees when relationships appear nonlinear and tabular data dominates. A team chooses support vector machines when margins matter and the kernel trick unlocks structure. A team chooses neural networks when images, audio, or language require hierarchical representation.
 
 Training becomes a controlled experiment. The analyst defines an objective function that matches the task, tunes hyperparameters with a method that balances thoroughness and compute budget, and applies regularization to prevent overfitting. The team handles class imbalance with class weights or resampling and reserves synthetic methods for cases where the signal does not reach the minority class without help. The training loop tracks convergence, records seeds for reproducibility, and logs configurations for future audits. A small set of baselines anchors the work, because a strong baseline protects the team from chasing noise.
 
-## 5. Validation and evaluation
+## 5. Validation and evaluation.
 
 Evaluation turns predictions into judgment. The analyst selects metrics that match the decision, not the dataset convenience. A rare event demands precision and recall, while a balanced screening task tolerates accuracy as a summary. Receiver operating characteristic curves describe ranking power across thresholds, while precision–recall curves reveal performance where positive cases are scarce. The team reads confusion matrices per class and studies error types with the same attention a clinician gives to symptoms. Threshold analysis appears as a natural step, because business value rarely aligns with a fixed probability of 0.5. Calibration closes the loop by aligning predicted probabilities with observed frequencies. A calibrated model gives a reliable measure of confidence, which becomes essential when humans use scores to plan actions.
 
 Cross-validation estimates generalization when data are limited, and temporal splits protect time-dependent structure when events evolve. Robustness checks matter as much as headline scores. The team perturbs inputs, repeats runs with different random seeds, and measures variance across folds. The analyst prefers a model that performs slightly worse on average but more consistently across time and subgroups, because stability sustains trust.
 
-## 6. Interpretation and explainability
+## 6. Interpretation and explainability.
 
 A model serves people when it explains itself. The analyst studies which features drive predictions and which interactions change decisions at the margin. Global importance summarizes the broad picture, while local explanations illuminate individual cases. Tools such as permutation importance, SHAP values, and counterfactual analysis provide complementary views, yet none replaces domain sense. The team validates explanations with subject matter experts and documents how limitations might affect use. The analyst quantifies uncertainty, communicates it with clarity, and avoids false certainty, because confidence without calibration misleads more than it helps. Interpretation does not exist to decorate reports. It exists to support responsible action.
 
-## 7. Deployment and monitoring
+## 7. Deployment and monitoring.
 
 A model becomes real when it leaves the notebook. The team exports artifacts in a portable format, wraps them in an interface that other systems can call, and writes a small contract that states input schema, output schema, and expected latencies. Monitoring begins on day one. The analyst tracks predictive performance and watches for data drift and concept drift, because the world changes slowly and then all at once. When drift appears, the team investigates whether feature distributions moved, whether labels shifted, or whether behavior changed in ways the original training could not anticipate. A feedback loop allows the model to learn again, but only after the team evaluates risks and documents the change.
 
-## 8. Ethical and responsible AI considerations
+## 8. Ethical and responsible AI considerations.
 
 A classification system touches people, therefore it carries responsibility. The analyst inspects data for biases that hurt protected groups, measures fairness with metrics that reflect the institution’s values, and records trade-offs that appear when fairness constraints meet accuracy goals. Transparency matters, because users deserve to understand how a system reaches conclusions that affect them. Accountability matters, because a team should be able to trace a decision back to data, code, and configuration. Responsible practice does not slow progress. Responsible practice makes progress sustainable.
 
-## 9. From process to practice
+## 9. From process to practice.
 
 The classification pipeline behaves like a cycle rather than a line. The analyst learns from errors, revisits data preparation, simplifies features, and resets baselines when the signal does not support complexity. Documentation becomes a habit rather than a chore, because future readers will depend on the record to reproduce results and extend the work. The team treats experiments as evidence, not as decoration, and accepts that small improvements rarely justify fragile systems. Over time, this discipline produces models that travel well from lab to production and remain useful after the initial excitement fades.
 
