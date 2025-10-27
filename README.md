@@ -37,7 +37,7 @@ Everything about classification
 
 # 1. Let's talk about Classification
 
-Classification is everywhere — even when we don’t notice it.  
+Classification is everywhere: even when we don’t notice it.  
 Every day, dozens of systems quietly classify information around us:  
 Netflix decides what you might like next.  
 Gmail separates spam from important messages.  
