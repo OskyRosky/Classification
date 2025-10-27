@@ -35,6 +35,25 @@ Everything about classification
 
 # 1. Let's talk about Classification.
 
+# 1. Let's talk about Classification
+
+Classification is everywhere — even when we don’t notice it.  
+Every day, dozens of systems quietly classify information around us:  
+Netflix decides what you might like next.  
+Gmail separates spam from important messages.  
+Spotify predicts the next song that fits your mood.  
+A bank model decides whether to approve your credit card.  
+
+These are not coincidences. They are **classification models** — algorithms that learn from data to assign categories, make predictions, and help humans make faster, more consistent decisions.
+
+In the modern world, classification is the foundation of intelligent applications.  
+It powers everything from voice assistants and medical diagnosis systems to fraud detection, recommendation engines, and autonomous vehicles.  
+
+This repository is dedicated to understanding these models — from the simplest logistic regression to the most advanced neural networks — explaining not only how they work, but also when and why to use them.
+
+Let’s explore how machines learn to **draw boundaries, make decisions, and see patterns in data**.
+
+
 # I. Introduction: What is Classification?
 
 Tipos de clasificación
