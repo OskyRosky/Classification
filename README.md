@@ -148,7 +148,9 @@ A classification system touches people, therefore it carries responsibility. The
 The classification pipeline behaves like a cycle rather than a line. The analyst learns from errors, revisits data preparation, simplifies features, and resets baselines when the signal does not support complexity. Documentation becomes a habit rather than a chore, because future readers will depend on the record to reproduce results and extend the work. The team treats experiments as evidence, not as decoration, and accepts that small improvements rarely justify fragile systems. Over time, this discipline produces models that travel well from lab to production and remain useful after the initial excitement fades.
 
 ---
+
 Before we introduce individual algorithms, we should master the forces that quietly govern their behavior. Class imbalance changes what success looks like, calibration reshapes the meaning of probability, and threshold selection turns ranked scores into real decisions. Metrics complete the picture by defining value in a way the project can defend. These transversal topics represent the grammar of classification. Once we speak that grammar with confidence, every method we study will become clearer, more comparable, and easier to deploy with integrity.
+
 ---
 
 
