@@ -155,10 +155,132 @@ Before we introduce individual algorithms, we should master the forces that quie
 
 # III.  Cross-cutting Topics.
 
+Purpose: before applying any classification algorithm, we must understand the analytical forces that define how models behave — imbalance, calibration, threshold choice, and metrics.
 
-# IV. Taxonomy of Classification Models
+I. Introduction: Why Cross-cutting Topics Matter
 
-#
+Explain why these concepts are universal to every classifier.
+
+Emphasize that these topics influence performance more than hyperparameters sometimes do.
+
+Mention how they connect statistical soundness with practical decision-making.
+
+II. Class Imbalance
+
+Describe the phenomenon: most real datasets are unbalanced.
+
+Explain consequences (biased decision boundaries, misleading accuracy).
+
+Discuss strategies:
+(1) algorithmic (class weights, cost-sensitive learning),
+(2) data-level (resampling, SMOTE/ADASYN),
+(3) evaluation (PR-AUC, F1 instead of accuracy).
+
+Provide an example (fraud detection, disease screening).
+
+III. Probability Calibration
+
+Define what it means for probabilities to be calibrated.
+
+Explain why some algorithms (e.g., trees, boosting) output distorted probabilities.
+
+Describe main methods: Platt scaling, Isotonic regression, Temperature scaling (for NNs).
+
+Show how to check calibration (Brier score, reliability curves).
+
+Explain the impact: in risk-based systems, calibration = trust.
+
+IV. Threshold Selection
+
+Introduce the concept of decision thresholds.
+
+Show why 0.5 is arbitrary and context-dependent.
+
+Explain strategies: Youden’s J, maximizing F1, cost-sensitive thresholds.
+
+Discuss trade-offs between precision and recall.
+
+Include an intuitive example (medical triage, credit approval).
+
+V. Evaluation Metrics
+
+Explain that metrics define the language of success.
+
+Group metrics by type:
+(a) ranking-based (ROC-AUC, PR-AUC),
+(b) class-level (precision, recall, F1, MCC),
+(c) probabilistic (Log-loss, Brier score).
+
+Explain when to prefer one over another.
+
+Introduce concept of calibration curves, confusion matrices, and threshold tuning.
+
+Emphasize that metrics are ethical choices as well as technical ones.
+
+VI. Integrative Perspective
+
+Explain how these topics interconnect: imbalance changes metrics; calibration affects thresholds; thresholds alter perceived fairness.
+
+Discuss the importance of treating them together rather than as isolated steps.
+
+Conclude that mastering these topics allows any model to be used responsibly.
+
+VII. Transition to IV. (Taxonomy of Classification Models. )
+
+Build a bridge:
+“Once we understand these cross-cutting elements, we can finally move to Taxonomy of Classification Models.”
+
+# IV. Taxonomy of Classification Models.
+
+La “cartografía” de los modelos, desde los más simples hasta los más complejos.
+
+Objetivo: presentar la jerarquía conceptual de las familias de modelos, de modo que el lector entienda la lógica evolutiva:
+lineales → margen → instancia → árboles → ensambles → redes neuronales.
+Aquí no se detallan fórmulas ni código aún, solo se expone el mapa del territorio, la genealogía de los métodos, sus bases matemáticas y filosóficas.
+
+Subestructura sugerida:
+
+Linear and Probabilistic Models (Logistic Regression, LDA, QDA, Naive Bayes).
+
+Margin-based Models (Perceptron, SVM).
+
+Instance-based Models (k-NN).
+
+Tree-based Models (Decision Trees).
+
+Ensemble Models (Bagging, Random Forest, Boosting, XGBoost, LightGBM, CatBoost).
+
+Neural Networks for Classification (MLP, CNN, RNN/LSTM/GRU).
+
+Short Reflection — how complexity changes interpretability.
+
+# V. Estimation Methods and Model-Specific Analysis
+
+Aquí comienza el desarrollo profundo de cada técnica (la parte “de ingeniería”).
+
+Cada modelo sigue la plantilla uniforme que ya establecimos:
+
+What is it?
+
+Why use it?
+
+Intuition.
+
+Mathematical foundation.
+
+Algorithmic training steps.
+
+Assumptions and hyperparameters.
+
+Implementation (Python/R).
+
+Code example.
+
+When to use / not to use.
+
+References (3 papers, 2 sources).
+
+Esto se convertirá en la parte más extensa y modular del repositorio, donde cada técnica vivirá en su propio documento dentro de /docs/ y su respectiva notebook en /notebooks/.
 
 #
 
