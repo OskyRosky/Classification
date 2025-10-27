@@ -52,7 +52,7 @@ This repository is dedicated to understanding these models — from the simplest
 Let’s explore how machines learn to **draw boundaries, make decisions, and see patterns in data**.
 
 
- # I. Introduction: What is Classification?
+ # I. Introduction: what is Classification?
 
 Classification stands as one of the pillars of modern machine learning. At its essence, it is the act of making a decision — determining to which category or class a given observation belongs. When an email service filters a message as spam, when a hospital system predicts whether a patient is at high or low risk, or when a smartphone recognizes a face to unlock the screen, it is performing a classification task. In each of these situations, a model transforms patterns in the data into meaningful, structured outcomes that help automate everyday decisions.
 
