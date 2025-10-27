@@ -153,12 +153,10 @@ Before we introduce individual algorithms, we should master the forces that quie
 
 ---
 
+# III.  Cross-cutting Topics.
 
 
-# III.  Temas transversales
-
-
-#
+# IV. Taxonomy of Classification Models
 
 #
 
