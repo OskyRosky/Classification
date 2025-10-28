@@ -153,7 +153,7 @@ Before we introduce individual algorithms, we should master the forces that quie
 
 ---
 
-# III.  Cross-cutting Topics.
+# III.  Cross-cutting Topics (Core Analytical Foundations).
 
 Purpose: before applying any classification algorithm, we must understand the analytical forces that define how models behave — imbalance, calibration, threshold choice, and metrics.
 
