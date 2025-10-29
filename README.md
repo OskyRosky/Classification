@@ -423,8 +423,16 @@ Guidance on appropriate contexts and common misuses.
 **10. References.**
 Three foundational academic sources and two reputable web resources for further study.
 
-##
+## Transition to the Model Families
 
+Before diving into individual techniques, it is important to recognize that no model exists in isolation.
+Each family of classifiers represents a historical and conceptual response to the limitations of the previous ones.
+From linear equations to deep neural networks, the evolution of classification has been a continuous dialogue between simplicity and capacity, interpretability and flexibility, data scarcity and abundance.
+
+We will now follow that natural order — the same logic established in the previous section’s taxonomy — beginning with the most fundamental of all: Linear and Probabilistic Models.
+
+These methods form the bedrock of statistical learning.
+They taught machines to make decisions not by memorizing data, but by estimating probabilities and drawing boundaries that separate uncertainty into meaning.
 
 
 ##
