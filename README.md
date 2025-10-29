@@ -431,7 +431,6 @@ We will now follow that natural order — the same logic established in the prev
 These methods form the bedrock of statistical learning.
 They taught machines to make decisions not by memorizing data, but by estimating probabilities and drawing boundaries that separate uncertainty into meaning.
 
-
 ## Canon of Models Covered (by Family)
 
 ### A. Linear & Probabilistic Models
