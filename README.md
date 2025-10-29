@@ -369,34 +369,36 @@ Having explored how these families connect conceptually, we will now study their
 
 # V. Estimation Methods and Model-Specific Analysis
 
-Aquí comienza el desarrollo profundo de cada técnica (la parte “de ingeniería”).
+## Purpose
 
-Cada modelo sigue la plantilla uniforme que ya establecimos:
+Classification models are more than algorithms; they are expressions of how we understand uncertainty and structure decision boundaries in data.
+This section forms the core analytical backbone of the repository.
+Its goal is to explain, model by model, the logic of estimation—how each technique learns, adapts, and makes predictions based on evidence.
 
-What is it?
+In the previous section, we explored the taxonomy of classification models — a conceptual map of the families and their philosophical foundations.
+Now, we move from that map to the machinery: we will look inside each model, understanding how it transforms inputs into decisions.
 
-Why use it?
+Every model we study here represents a distinct way of thinking about the world: linearity and probability, margins and geometry, similarity and distance, hierarchy and ensemble collaboration, and, ultimately, deep representation.
 
-Intuition.
+This part remains purely theoretical and conceptual.
+We will not write code or derive formulas step-by-step.
+Instead, the goal is to achieve clarity and intuition — to make the mathematics and training principles explain themselves.
 
-Mathematical foundation.
+All practical implementations, visualizations, and experiments will be developed later in the Practical Annexes (Sections VI–VII), where we will connect theory to execution.
 
-Algorithmic training steps.
+## 
 
-Assumptions and hyperparameters.
 
-Implementation (Python/R).
 
-Code example.
+##
 
-When to use / not to use.
 
-References (3 papers, 2 sources).
 
-Esto se convertirá en la parte más extensa y modular del repositorio, donde cada técnica vivirá en su propio documento dentro de /docs/ y su respectiva notebook en /notebooks/.
+##
 
-#
 
+
+##
 
 
 
