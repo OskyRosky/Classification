@@ -440,16 +440,27 @@ To make this exploration coherent, we will organize all techniques into families
 This “canon of models” mirrors the conceptual order established in the Taxonomy (Section IV), so that we move naturally from the simplest to the most advanced ideas, from probability to representation, from equations we can visualize to networks we can only approximate.
 
 Every model, regardless of its family, will be developed using the same analytical lens:
-	•	What is it?  → conceptual definition and short historical note.
-	•	Why use it?  → main use cases and decision context.
-	•	Intuition.  → mental model of how the classifier separates or estimates.
-	•	Mathematical foundation.  → principle of estimation or loss function explained in plain terms.
-	•	Training logic.  → how the algorithm learns from data conceptually.
-	•	Assumptions & limitations.  → when the model’s logic holds, and when it breaks.
-	•	Key hyperparameters.  → parameters that shape its flexibility and generalization.
-	•	Evaluation focus.  → metrics that best reflect success for this model.
-	•	When to use / When not to use.  → practical guidance.
-	•	References.  → canonical academic and web sources.
+
+•	What is it?  → conceptual definition and short historical note.
+	
+•	Why use it?  → main use cases and decision context.
+	
+•	Intuition.  → mental model of how the classifier separates or estimates.
+	
+•	Mathematical foundation.  → principle of estimation or loss function explained in plain terms.
+	
+•	Training logic.  → how the algorithm learns from data conceptually.
+	
+•	Assumptions & limitations.  → when the model’s logic holds, and when it breaks.
+	
+•	Key hyperparameters.  → parameters that shape its flexibility and generalization.
+	
+•	Evaluation focus.  → metrics that best reflect success for this model.
+	
+•	When to use / When not to use.  → practical guidance.
+	
+•	References.  → canonical academic and web sources.
+	
 
 This uniform structure ensures that readers can compare models fairly, understand their conceptual genealogy, and recognize that there is no single “best” classifier — only the right one for a given problem and context.
 
@@ -469,11 +480,16 @@ However, their simplicity is also their main limitation.
 When decision boundaries are nonlinear or interactions between features are complex, linear and probabilistic models may struggle — paving the way for more flexible approaches such as margin-based and tree-based learners.
 
 In this family, we will explore five major techniques that together define the statistical heart of classification:
-	1.	Logistic Regression (binary, multinomial) – the cornerstone of probabilistic classification, modeling the log-odds of class membership.
-	2.	Regularized Logistic Regression (L1, L2, Elastic Net) – adding control over model complexity through penalty terms.
-	3.	Linear Discriminant Analysis (LDA) – separating classes by maximizing between-class variance.
-	4.	Quadratic Discriminant Analysis (QDA) – extending LDA with distinct covariance structures for each class.
-	5.	Naive Bayes (Gaussian, Multinomial, Bernoulli, Complement) – a probabilistic learner based on independence assumptions and Bayes’ theorem.
+
+1.	Logistic Regression (binary, multinomial) – the cornerstone of probabilistic classification, modeling the log-odds of class membership.
+
+2.	Regularized Logistic Regression (L1, L2, Elastic Net) – adding control over model complexity through penalty terms.
+
+3.	Linear Discriminant Analysis (LDA) – separating classes by maximizing between-class variance.
+
+4.	Quadratic Discriminant Analysis (QDA) – extending LDA with distinct covariance structures for each class.
+
+5.	Naive Bayes (Gaussian, Multinomial, Bernoulli, Complement) – a probabilistic learner based on independence assumptions and Bayes’ theorem.
 
 Together, these models form the analytical backbone of classical classification — the bridge between pure statistics and the more flexible, data-driven methods that followed.
 
