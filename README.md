@@ -155,7 +155,9 @@ Before we introduce individual algorithms, we should master the forces that quie
 
 # III.  Cross-cutting Topics (Core Analytical Foundations).
 
-Purpose: before applying any classification algorithm, we must understand the analytical forces that define how models behave — imbalance, calibration, threshold choice, and metrics.
+Classification is not only about choosing an algorithm.
+Before any model can make a fair, reliable, and interpretable decision, we must understand the invisible forces that govern its behavior. These forces—class imbalance, probability calibration, threshold selection, and evaluation metrics—shape how models learn, predict, and fail. They are called cross-cutting topics because they apply to every classifier, regardless of its mathematical form.
+Ignoring them leads to models that perform well on paper but fail in reality; mastering them turns simple models into trustworthy tools.
 
 I. Introduction: Why Cross-cutting Topics Matter
 
