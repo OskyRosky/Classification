@@ -435,7 +435,32 @@ These methods form the bedrock of statistical learning.
 They taught machines to make decisions not by memorizing data, but by estimating probabilities and drawing boundaries that separate uncertainty into meaning.
 
 
-##
+## Canon of Models Covered (by Family)
+
+### A. Linear & Probabilistic Models
+
+#### Logistic Regression (binary, multinomial)
+
+#### Regularized Logistic Regression (L1, L2, Elastic Net)
+
+#### Linear Discriminant Analysis (LDA)
+
+#### Quadratic Discriminant Analysis (QDA)
+
+#### Naive Bayes (Gaussian, Multinomial, Bernoulli, Complement)
+
+
+### B. Margin-based Models
+
+### C. Instance-based Models
+
+### D. Tree-based Models
+
+### E. Ensemble Models
+
+### F. Neural Networks for Classification
+
+### G. Multiclass & Multilabel Strategies
 
 
 ##
