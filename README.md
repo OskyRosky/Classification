@@ -258,27 +258,114 @@ This transition marks the moment when understanding becomes craftsmanship, and w
 
 # IV. Taxonomy of Classification Models.
 
-La “cartografía” de los modelos, desde los más simples hasta los más complejos.
+Classification is a vast landscape, and each model represents a different way of seeing the world. To classify is not merely to compute; it is to choose a philosophy of learning — a way to interpret data, uncertainty, and structure.
+This taxonomy serves as a map through that landscape, tracing how ideas have evolved from simple linear equations to deep architectures capable of discovering meaning in text, vision, and sound.
+Here, we focus on understanding the logic behind each family of models, not the formulas or code. We will explore how they were born, what they solve, and why they continue to matter.
 
-Objetivo: presentar la jerarquía conceptual de las familias de modelos, de modo que el lector entienda la lógica evolutiva:
-lineales → margen → instancia → árboles → ensambles → redes neuronales.
-Aquí no se detallan fórmulas ni código aún, solo se expone el mapa del territorio, la genealogía de los métodos, sus bases matemáticas y filosóficas.
+## 1. Introduction to Model Taxonomy
 
-Subestructura sugerida:
+Every classification model answers a slightly different question.
+Linear and probabilistic models ask, “Can I draw a line that separates these points?” Margin-based models ask, “How far apart can I push them?” Instance-based models respond, “Whom do I resemble most?” Tree-based models inquire, “What sequence of questions best splits this space?” Ensembles reply, “What if we let many weak opinions vote?” And neural networks whisper, “Can the machine learn its own representation?”
 
-Linear and Probabilistic Models (Logistic Regression, LDA, QDA, Naive Bayes).
+This is the logic of progression — from the explicit to the emergent, from geometry to hierarchy.
+Linear models begin with human-defined relationships; deep networks end with patterns no human could describe but that still mirror intuition.
+Understanding this taxonomy is like standing on a mountain and watching the valleys of Machine Learning unfold below.
+We begin where everything started — with linearity and probability.
 
-Margin-based Models (Perceptron, SVM).
+## 2. Linear and Probabilistic Models
 
-Instance-based Models (k-NN).
+At the dawn of machine learning stood linearity — the belief that the world could be described by a weighted sum of inputs. Logistic Regression, Linear Discriminant Analysis (LDA), Quadratic Discriminant Analysis (QDA), and Naive Bayes emerged from statistical thinking long before the term “machine learning” was coined.
 
-Tree-based Models (Decision Trees).
+Their philosophy is simple: assume structure, estimate parameters, and predict categories based on explicit mathematical relationships. Logistic regression models the log-odds of belonging to a class, while LDA and QDA model the underlying distributions of each class and the boundary where they meet. Naive Bayes, though based on a strong independence assumption, exploits the same probabilistic foundation.
 
-Ensemble Models (Bagging, Random Forest, Boosting, XGBoost, LightGBM, CatBoost).
+These models remain powerful because they are transparent and stable. A logistic regression coefficient can be explained to a policymaker; an LDA score can be interpreted by a doctor. They thrive when data are limited and interpretability matters more than raw performance.
 
-Neural Networks for Classification (MLP, CNN, RNN/LSTM/GRU).
+Yet their beauty is also their boundary. When relationships are nonlinear or highly interactive, linear separability collapses. That limitation inspired a new generation of models that replaced probability with geometry — the margin-based family.
 
-Short Reflection — how complexity changes interpretability.
+## 3. Margin-based Models
+
+Margin-based models redefined learning by geometry rather than probability.
+The Perceptron, developed in the 1950s, sought a linear boundary that classified all examples correctly. It worked — until data became messy.
+Decades later, Support Vector Machines (SVMs) resurrected the idea with mathematical rigor, maximizing the margin between classes and allowing for imperfect separations through soft constraints.
+
+Their central idea is elegant: instead of fitting many points closely, find the boundary that lies farthest from both classes — the safest possible separator. Through kernel functions, SVMs project data into higher-dimensional spaces where complex patterns become linearly separable.
+
+Margin-based models marked the shift from explicit distributional assumptions to optimization and geometry. They balance power and parsimony, generalizing well even on small datasets with many features, such as text classification or genomics.
+However, interpretability and scalability suffer as kernels grow complex, making them harder to tune and understand.
+
+Their geometric focus paved the way for the next question: if the best boundary depends on proximity, what if we skip modeling altogether and let neighbors decide directly? Thus emerged instance-based learning.
+
+## 4. Instance-based Models
+
+Instance-based models classify not by abstraction but by resemblance.
+The k-Nearest Neighbors (kNN) algorithm embodies the intuition that similarity implies identity. To predict a new observation, kNN looks at the closest existing examples in feature space and assigns the most common label among them.
+
+This approach is lazy — it performs almost no training, deferring all computation to prediction time.
+Its simplicity is disarming and its logic profoundly human. We often reason this way ourselves: a new case reminds us of a previous one, and we draw analogies.
+
+Instance-based models excel when decision boundaries are irregular and data are dense. They perform well in small, low-dimensional spaces where local structure matters. Yet they struggle as data scale. Storing and comparing every observation becomes expensive; small changes in distance metrics can flip outcomes dramatically.
+
+Their strengths and weaknesses led researchers to seek hierarchical decisions — a way to learn compact, interpretable structures that could still model nonlinearity. The answer arrived through trees.
+
+##  5. Tree-based Models
+
+Decision Trees changed how we think about classification.
+Instead of fitting equations or comparing points, trees ask questions:
+“Is income greater than 50,000?” “Is the patient’s age above 45?”
+At each node, a split divides the data into purer groups, recursively creating a tree of logical decisions that ends with predicted classes.
+
+Models such as CART (Classification and Regression Trees) and ID3 introduced this principle of recursive partitioning.
+The result is intuitive: one can read a tree top-down like a decision manual. Trees handle numeric and categorical features, capture interactions, and require minimal preprocessing.
+
+Their main drawback lies in instability. A small change in data can yield an entirely different tree. They also tend to overfit, learning patterns too specific to the training sample. But trees reintroduced interpretability at a time when models were becoming increasingly opaque.
+They set the stage for one of the most transformative ideas in machine learning — combining many weak trees into one strong forest.
+
+## 6. Ensemble Models
+
+The idea of ensembles revolutionized predictive modeling: the collective opinion of many weak learners is often stronger than the judgment of one.
+Methods like Bagging (bootstrap aggregating) and Random Forests reduce variance by averaging over many diverse trees, while Boosting methods such as AdaBoost, XGBoost, LightGBM, and CatBoost sequentially correct errors made by previous models.
+
+Ensembles embody the principle of collective intelligence. Each individual tree may be inaccurate, but together they form a robust, flexible predictor.
+These models achieve state-of-the-art performance across domains, from credit risk to recommendation systems and beyond.
+
+However, their strength introduces opacity. Hundreds of trees make it difficult to explain why a specific decision was made. Moreover, ensembles demand more computational resources and tuning.
+Despite these challenges, they remain the workhorses of modern ML — balancing accuracy, generalization, and practical usability.
+
+As data grew in size and complexity, however, even ensembles struggled to capture abstract relationships in images, audio, and text. The next frontier required models that could learn representations themselves — leading to the era of neural networks.
+
+## 7. Neural Networks for Classification
+
+Neural networks transformed machine learning by introducing representation learning: the ability to discover features automatically through layers of computation.
+Early Multilayer Perceptrons (MLPs) extended the logic of linear models with nonlinear activations, capturing complex relationships in tabular data.
+Convolutional Neural Networks (CNNs) revolutionized computer vision by learning spatial hierarchies of features: edges, shapes, objects.
+Recurrent Neural Networks (RNNs) and later LSTMs and Transformers enabled sequence understanding in language, speech, and time series.
+
+Their conceptual shift was profound: rather than designing features manually, analysts now design architectures that learn features. The model becomes both a learner and a feature engineer.
+Neural networks can approximate virtually any function, achieving extraordinary results in domains once thought unreachable by algorithms.
+
+But power comes with cost. These systems require vast data, hardware acceleration, and careful tuning. Interpretability becomes difficult — decisions arise from thousands of parameters interacting in opaque ways.
+Yet their capacity for abstraction has expanded what classification can mean: not just labeling, but understanding.
+
+This complexity closes the taxonomy loop — from the transparent logic of equations to the emergent reasoning of layered representations.
+
+## 8. Comparative Reflection: Complexity vs Interpretability
+
+The evolution of classification models is not a ladder of superiority but a landscape of trade-offs.
+Linear models are transparent and grounded, ideal when interpretability and causality matter.
+Margin-based and instance-based models add geometric sophistication at the expense of simplicity.
+Trees and ensembles democratize nonlinearity, achieving strong predictive power with diminishing transparency.
+Neural networks push performance further but challenge our ability to explain and trust.
+
+Maturity in data science means choosing the simplest model that solves the problem while respecting ethical and practical boundaries.
+A logistic regression that performs nearly as well as a deep network is often the better choice when clarity, speed, or accountability matter.
+Each family contributes a different philosophy of learning; progress lies not in abandoning the old but in understanding when to use each wisely.
+
+---- 
+
+In the next section, we will leave the map and enter the terrain.
+Having explored how these families connect conceptually, we will now study their mathematical foundations, estimation methods, and implementations — the craft of making classification models work in practice.
+ 
+----
 
 # V. Estimation Methods and Model-Specific Analysis
 
