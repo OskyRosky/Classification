@@ -396,7 +396,7 @@ Each model will therefore be described through the following lenses:
 **1. What is it?**
 A short conceptual definition and its historical or disciplinary origin.
 
-**2. Why use it?v
+**2. Why use it?**
 The typical scenarios, problems, or data structures where it excels.
 
 **3. Intuition.**
@@ -436,7 +436,6 @@ They taught machines to make decisions not by memorizing data, but by estimating
 
 
 ##
-
 
 
 ##
