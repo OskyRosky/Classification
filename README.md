@@ -386,9 +386,42 @@ Instead, the goal is to achieve clarity and intuition — to make the mathematic
 
 All practical implementations, visualizations, and experiments will be developed later in the Practical Annexes (Sections VI–VII), where we will connect theory to execution.
 
-## 
+## Guiding Framework
 
+To ensure consistency across all techniques, every model follows the same explanatory skeleton.
+This uniform structure allows fair comparison between algorithms and helps build intuition layer by layer.
 
+Each model will therefore be described through the following lenses:
+
+**1. What is it?**
+A short conceptual definition and its historical or disciplinary origin.
+
+**2. Why use it?v
+The typical scenarios, problems, or data structures where it excels.
+
+**3. Intuition.**
+The geometric, probabilistic, or algorithmic “mental picture” of how it learns.
+
+**4. Mathematical foundation.**
+The key principle behind its estimation — its objective function or decision rule — explained in plain language and minimal notation.
+
+**5. Training logic.**
+A conceptual description of how parameters are adjusted to minimize loss or maximize separation.
+
+**6. Assumptions and limitations.**
+The data conditions that must hold for the model to perform well, and where it tends to fail.
+
+**7. Key hyperparameters (conceptual view).**
+Explanation of the main parameters that govern flexibility, bias–variance balance, and generalization capacity.
+
+**8. Evaluation focus.**
+The most relevant metrics and diagnostic strategies to assess performance (linked to Section III on cross-cutting topics).
+
+**9. When to use / When not to use.**
+Guidance on appropriate contexts and common misuses.
+
+**10. References.**
+Three foundational academic sources and two reputable web resources for further study.
 
 ##
 
