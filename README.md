@@ -741,34 +741,56 @@ In geometric terms, regularization reshapes the optimization landscape:
 
 Mathematical foundation
 
-Regularized Logistic Regression minimizes the penalized log-loss function:
+Regularized Logistic Regression minimizes the penalized log-loss function, which balances model fit and coefficient shrinkage:
 
 $$
-\text{Loss}{\text{reg}}(\beta) = - \sum{i=1}^{n} \Big[ y_i \log(p_i) + (1 - y_i) \log(1 - p_i) \Big] + \lambda P(\beta)
+\text{Loss}{\text{reg}}(\beta)
+= - \sum{i=1}^{n} \Big[ y_i \log(p_i) + (1 - y_i) \log(1 - p_i) \Big]
+	•	\lambda , P(\beta)
 $$
 
-where p_i = \frac{1}{1 + e^{-(\beta_0 + \beta^T x_i)}},
+where
+
+$$
+p_i = \frac{1}{1 + e^{-(\beta_0 + \beta^T x_i)}}
+$$
+
 and P(\beta) is the penalty term that depends on the chosen regularization type:
-	•	L1 (Lasso):
+
+⸻
+
+• L1 (Lasso)
 $$
 P(\beta) = \sum_{j=1}^{p} |\beta_j|
 $$
+
 Encourages sparsity by forcing irrelevant coefficients to zero.
-	•	L2 (Ridge):
+
+⸻
+
+• L2 (Ridge)
 $$
 P(\beta) = \sum_{j=1}^{p} \beta_j^2
 $$
-Shrinks all coefficients toward zero smoothly, stabilizing correlated variables.
-	•	Elastic Net:
-$$
-P(\beta) = \alpha \sum_{j=1}^{p} |\beta_j| + (1 - \alpha) \sum_{j=1}^{p} \beta_j^2
-$$
-Combines both penalties, with \alpha \in [0,1] controlling the balance between sparsity (L1) and smoothness (L2).
 
-The λ (lambda) parameter controls the strength of regularization:
+Shrinks all coefficients toward zero smoothly, stabilizing correlated variables.
+
+⸻
+
+• Elastic Net
+$$
+P(\beta) = \alpha \sum_{j=1}^{p} |\beta_j|
+	•	(1 - \alpha) \sum_{j=1}^{p} \beta_j^2
+$$
+
+Combines both penalties, with
+\alpha \in [0,1] controlling the balance between sparsity (L1) and smoothness (L2).
+
+⸻
+
+The regularization strength \lambda controls how strongly the penalty influences the model:
 	•	Large λ → stronger penalty → simpler model (higher bias, lower variance).
 	•	Small λ → weaker penalty → model behaves like standard logistic regression.
-
 ⸻
 
 Training logic
@@ -779,12 +801,12 @@ Because the penalty can make the function non-differentiable (especially with L1
 The iterative logic can be summarized as:
 
 1.	Compute predicted probabilities using the current coefficients.
-2.	
-3.	Calculate the gradient of the loss plus the penalty.
-4.	
-5.	Update coefficients in the opposite direction of the gradient, adjusted by the learning rate.
-6.	
-7.	For L1 penalties, coefficients that shrink below a threshold become exactly zero.
+
+2.	Calculate the gradient of the loss plus the penalty.
+
+3.	Update coefficients in the opposite direction of the gradient, adjusted by the learning rate.
+
+4.	For L1 penalties, coefficients that shrink below a threshold become exactly zero.
 
 This training approach ensures stability and convergence, even for large or sparse datasets.
 
