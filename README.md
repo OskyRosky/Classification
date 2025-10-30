@@ -495,6 +495,11 @@ Together, these models form the analytical backbone of classical classification 
 
 #### Logistic Regression (binary, multinomial)
 
+
+	1.	StatQuest — Logistic Regression Clearly Explained￼
+	2.	Scikit-learn User Guide: Logistic Regression￼
+
+
 #### Regularized Logistic Regression (L1, L2, Elastic Net)
 
 #### Linear Discriminant Analysis (LDA)
