@@ -494,7 +494,7 @@ In this family, we will explore five major techniques that together define the s
 
 Together, these models form the analytical backbone of classical classification — the bridge between pure statistics and the more flexible, data-driven methods that followed.
 
-#### **Logistic Regression (binary, multinomial)**
+#### ** 1.Logistic Regression (binary, multinomial)**
 
 **What is it?**
 
@@ -692,13 +692,15 @@ adding flexibility without losing interpretability, through the elegant mathemat
 
 ----
 
-#### Regularized Logistic Regression (L1, L2, Elastic Net)
+#### 2. Regularized Logistic Regression (L1, L2, Elastic Net)
 
-#### Linear Discriminant Analysis (LDA)
 
-#### Quadratic Discriminant Analysis (QDA)
 
-#### Naive Bayes (Gaussian, Multinomial, Bernoulli, Complement)
+#### 3. Linear Discriminant Analysis (LDA)
+
+#### 4. Quadratic Discriminant Analysis (QDA)
+
+#### 5. Naive Bayes (Gaussian, Multinomial, Bernoulli, Complement)
 
 
 ### B. Margin-based Models
