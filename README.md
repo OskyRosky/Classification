@@ -672,9 +672,10 @@ Canonical papers
 	3.	Hosmer, D. W., Lemeshow, S., & Sturdivant, R. X. (2013). Applied Logistic Regression (3rd ed.). Wiley.
 
 Web resources
-	1.	StatQuest – Logistic Regression Clearly Explained
+
+1.	StatQuest – Logistic Regression Clearly Explained
 	https://statquest.org/video/logistic-regression-clearly-explained/
-	2.	Scikit-learn User Guide: Logistic Regression￼
+3.	Scikit-learn User Guide: Logistic Regression￼
 	https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
 
 ⸻
