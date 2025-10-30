@@ -777,10 +777,14 @@ The training process is similar to ordinary logistic regression but includes the
 Because the penalty can make the function non-differentiable (especially with L1), solvers use coordinate descent, SGD, or proximal gradient methods to find the optimal coefficients.
 
 The iterative logic can be summarized as:
-	1.	Compute predicted probabilities using the current coefficients.
-	2.	Calculate the gradient of the loss plus the penalty.
-	3.	Update coefficients in the opposite direction of the gradient, adjusted by the learning rate.
-	4.	For L1 penalties, coefficients that shrink below a threshold become exactly zero.
+
+1.	Compute predicted probabilities using the current coefficients.
+2.	
+3.	Calculate the gradient of the loss plus the penalty.
+4.	
+5.	Update coefficients in the opposite direction of the gradient, adjusted by the learning rate.
+6.	
+7.	For L1 penalties, coefficients that shrink below a threshold become exactly zero.
 
 This training approach ensures stability and convergence, even for large or sparse datasets.
 
@@ -789,9 +793,12 @@ This training approach ensures stability and convergence, even for large or spar
 Assumptions and limitations
 
 The assumptions remain mostly the same as for standard logistic regression:
-	•	Linearity in the log-odds.
-	•	Independence of observations.
-	•	No severe outliers or missingness.
+
+•	Linearity in the log-odds.
+
+•	Independence of observations.
+
+•	No severe outliers or missingness.
 
 However, regularization relaxes the requirement of uncorrelated predictors, as L2 helps stabilize correlated variables and L1 can remove redundant ones.
 
@@ -803,15 +810,23 @@ Limitations:
 ⸻
 
 Key hyperparameters (conceptual view)
-	•	λ (Regularization strength): controls the trade-off between fit and simplicity.
+
+•	λ (Regularization strength): controls the trade-off between fit and simplicity.
 Larger λ increases the penalty, leading to smaller coefficients.
-	•	Penalty type:
-	•	"l1" for Lasso (sparse model).
-	•	"l2" for Ridge (smooth shrinkage).
-	•	"elasticnet" for a combination.
-	•	α (Elastic Net mixing parameter): balances L1 and L2 penalties (α=1 → Lasso, α=0 → Ridge).
-	•	Solver: must support the chosen penalty (e.g., "liblinear" for L1, "saga" for Elastic Net).
-	•	Class weights: optionally adjust for imbalanced data.
+
+•	Penalty type:
+
+•	"l1" for Lasso (sparse model).
+
+•	"l2" for Ridge (smooth shrinkage).
+
+•	"elasticnet" for a combination.
+
+•	α (Elastic Net mixing parameter): balances L1 and L2 penalties (α=1 → Lasso, α=0 → Ridge).
+
+•	Solver: must support the chosen penalty (e.g., "liblinear" for L1, "saga" for Elastic Net).
+
+•	Class weights: optionally adjust for imbalanced data.
 
 These parameters define how much regularization is applied and which type of structure is favored in the solution.
 
@@ -836,15 +851,22 @@ offering the robustness of Ridge and the feature selection power of Lasso.
 When to use / When not to use
 
 Use Regularized Logistic Regression when:
-	•	You have many predictors (high dimensionality).
-	•	Variables are correlated or redundant.
-	•	You need better generalization than standard logistic regression.
-	•	You want to perform embedded feature selection.
+
+•	You have many predictors (high dimensionality).
+
+•	Variables are correlated or redundant.
+
+•	You need better generalization than standard logistic regression.
+
+•	You want to perform embedded feature selection.
 
 Avoid it when:
-	•	Interpretability of individual coefficients is critical (since penalties distort raw magnitudes).
-	•	The dataset is small and simple (standard logistic regression suffices).
-	•	The relationship between features and outcomes is strongly nonlinear (consider tree-based or kernel methods).
+
+•	Interpretability of individual coefficients is critical (since penalties distort raw magnitudes).
+
+•	The dataset is small and simple (standard logistic regression suffices).
+
+•	The relationship between features and outcomes is strongly nonlinear (consider tree-based or kernel methods).
 
 ⸻
 
