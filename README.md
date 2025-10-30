@@ -741,7 +741,7 @@ In geometric terms, regularization reshapes the optimization landscape:
 
 Mathematical foundation
 
-Regularized Logistic Regression minimizes the penalized log-loss function, which balances model fit and coefficient shrinkage:
+Regularized Logistic Regression minimizes the penalized log-loss function, balancing model fit and coefficient shrinkage:
 
 $$
 \text{Loss}{\text{reg}}(\beta)
@@ -759,25 +759,25 @@ and P(\beta) is the penalty term that depends on the chosen regularization type:
 
 ⸻
 
-• L1 (Lasso)
+L1 (Lasso)
 $$
 P(\beta) = \sum_{j=1}^{p} |\beta_j|
 $$
 
-Encourages sparsity by forcing irrelevant coefficients to zero.
+Encourages sparsity by forcing irrelevant coefficients to zero — effectively performing automatic variable selection.
 
 ⸻
 
-• L2 (Ridge)
+L2 (Ridge)
 $$
 P(\beta) = \sum_{j=1}^{p} \beta_j^2
 $$
 
-Shrinks all coefficients toward zero smoothly, stabilizing correlated variables.
+Shrinks all coefficients smoothly toward zero, improving stability and reducing the impact of multicollinearity.
 
 ⸻
 
-• Elastic Net
+Elastic Net
 $$
 P(\beta) = \alpha \sum_{j=1}^{p} |\beta_j|
 	•	(1 - \alpha) \sum_{j=1}^{p} \beta_j^2
@@ -786,13 +786,16 @@ $$
 Combines both penalties, with
 \alpha \in [0,1] controlling the balance between sparsity (L1) and smoothness (L2).
 
+When \alpha = 1, the model behaves like pure Lasso;
+when \alpha = 0, it behaves like pure Ridge.
+
 ⸻
 
-The regularization strength \lambda controls how strongly the penalty influences the model:
-	•	Large λ → stronger penalty → simpler model (higher bias, lower variance).
-	•	Small λ → weaker penalty → model behaves like standard logistic regression.
-⸻
+The regularization strength \lambda determines how strongly the penalty term constrains the coefficients:
+	•	Large \lambda → stronger penalty → simpler model (higher bias, lower variance).
+	•	Small \lambda → weaker penalty → behaves like standard logistic regression.
 
+Thus, \lambda acts as a bias–variance control knob, letting the analyst trade precision for stability depending on the problem’s complexity and sample size.
 Training logic
 
 The training process is similar to ordinary logistic regression but includes the regularization term in the optimization objective.
