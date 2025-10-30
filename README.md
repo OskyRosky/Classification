@@ -682,8 +682,6 @@ Web resources
 
 ----
 
-**Transition**
-
 Logistic Regression established the foundation for probabilistic classification —
 a world where decisions are guided by likelihood and evidence rather than hard rules.
 Yet, its linear boundary can only go so far.
