@@ -1078,10 +1078,14 @@ Canonical papers
 	3.	McLachlan, G. J. (2004). Discriminant Analysis and Statistical Pattern Recognition. Wiley.
 
 Web resources
-	1.	StatQuest: Linear Discriminant Analysis (LDA) Clearly Explained￼
-	2.	Scikit-learn User Guide — Linear Discriminant Analysis￼
 
+1.	StatQuest: Linear Discriminant Analysis (LDA) Clearly Explained
 
+https://www.youtube.com/watch?v=azXCzI57Yfc
+￼
+2.	Scikit-learn User Guide — Linear Discriminant Analysis￼
+
+https://scikit-learn.org/stable/modules/lda_qda.html
 
 -----
 
