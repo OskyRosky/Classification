@@ -1,7 +1,6 @@
 # Classification
 Everything about classification
 
-L(\beta) = \prod_{i=1}^{n} P(y_i|x_i) = \prod_{i=1}^{n} [p_i]^{y_i} [1 - p_i]^{1 - y_i}
 
 ---------------------------------------------
 
