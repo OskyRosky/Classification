@@ -903,8 +903,12 @@ Canonical papers
 	3.	Zou, H., & Hastie, T. (2005). Regularization and Variable Selection via the Elastic Net. Journal of the Royal Statistical Society, Series B, 67(2), 301–320.
 
 Web resources
-	1.	StatQuest – Ridge, Lasso, and Elastic Net Regression￼
-	2.	Scikit-learn User Guide: Regularization in Logistic Regression￼
+
+1.	StatQuest – Ridge, Lasso, and Elastic Net Regression￼
+https://www.youtube.com/watch?v=Q81RR3yKn30
+
+3.	Scikit-learn User Guide: Regularization in Logistic Regression￼
+https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
 
 
 ----
