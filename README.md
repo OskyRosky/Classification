@@ -494,9 +494,9 @@ In this family, we will explore five major techniques that together define the s
 
 Together, these models form the analytical backbone of classical classification — the bridge between pure statistics and the more flexible, data-driven methods that followed.
 
-#### Logistic Regression (binary, multinomial)
+#### **Logistic Regression (binary, multinomial)**
 
-What is it?
+**What is it?**
 
 Logistic Regression is the most fundamental probabilistic model for classification.
 Despite its name, it is not a regression method in the traditional sense but a predictive model for categorical outcomes.
@@ -507,7 +507,7 @@ It later became a cornerstone of statistical learning theory, serving as the con
 
 ⸻
 
-Why use it?
+**Why use it?**
 
 Logistic Regression is used when the goal is to classify observations into discrete categories (e.g., “yes/no”, “fraud/not fraud”, “disease/healthy”) while also quantifying the confidence of those classifications.
 It is especially valuable in applications where interpretability and probability calibration matter as much as accuracy — such as medicine, finance, and social sciences.
@@ -522,7 +522,7 @@ Its transparency makes it ideal for regulated industries, where decision-making 
 
 ⸻
 
-Intuition
+**Intuition**
 
 At its heart, Logistic Regression asks a simple question:
 
@@ -553,7 +553,7 @@ The logit is preferred for interpretability and computational simplicity, but th
 
 ⸻
 
-Mathematical foundation
+**Mathematical foundation**
 
 The core principle is Maximum Likelihood Estimation (MLE).
 Given a dataset with binary outcomes y_i \in \{0,1\} and predictors x_i,
@@ -587,7 +587,7 @@ $$
 
 ⸻
 
-Training logic
+**Training logic**
 
 Training involves iteratively adjusting coefficients to minimize the log-loss.
 Because the loss function is convex, gradient-based methods such as Newton–Raphson, Iteratively Reweighted Least Squares (IRLS), or Stochastic Gradient Descent (SGD) are guaranteed to converge to a global minimum.
@@ -602,7 +602,7 @@ The model’s simplicity makes training stable, efficient, and reproducible, eve
 
 ⸻
 
-Assumptions and limitations
+**Assumptions and limitations**
 
 Logistic Regression is powerful but relies on several assumptions:
 	•	Linearity in the log-odds: the relationship between predictors and the logit of the outcome must be linear.
@@ -619,7 +619,7 @@ Nonetheless, these same constraints make it highly interpretable, a quality ofte
 
 ⸻
 
-Key hyperparameters (conceptual view)
+**Key hyperparameters (conceptual view)**
 
 Although Logistic Regression is mathematically straightforward, several configuration choices influence its behavior:
 	•	Regularization strength (C or λ): controls overfitting by shrinking coefficients.
@@ -631,7 +631,7 @@ These hyperparameters govern the bias–variance trade-off, balancing simplicity
 
 ⸻
 
-Evaluation focus
+**Evaluation focus**
 
 Because Logistic Regression produces probabilities, it should be evaluated not only for classification accuracy but also for probability calibration —
 how well predicted probabilities match actual observed frequencies.
@@ -648,7 +648,7 @@ connecting statistical learning with domain understanding.
 
 ⸻
 
-When to use / When not to use
+**When to use / When not to use**
 
 Use Logistic Regression when:
 	•	The relationship between predictors and the outcome is roughly linear.
@@ -664,7 +664,7 @@ Avoid Logistic Regression when:
 
 ⸻
 
-References
+**References**
 
 Canonical papers
 	1.	Cox, D. R. (1958). The Regression Analysis of Binary Sequences. Journal of the Royal Statistical Society, Series B.
@@ -680,7 +680,9 @@ Web resources
 
 ⸻
 
-Transition
+----
+
+**Transition**
 
 Logistic Regression established the foundation for probabilistic classification —
 a world where decisions are guided by likelihood and evidence rather than hard rules.
@@ -690,6 +692,7 @@ As data became more complex, new methods emerged to control overfitting and hand
 The next step in our journey explores how Regularized Logistic Regression extends this model —
 adding flexibility without losing interpretability, through the elegant mathematics of penalization.
 
+----
 
 #### Regularized Logistic Regression (L1, L2, Elastic Net)
 
