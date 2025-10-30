@@ -496,10 +496,198 @@ Together, these models form the analytical backbone of classical classification 
 
 #### Logistic Regression (binary, multinomial)
 
+What is it?
 
-1.	StatQuest — Logistic Regression Clearly Explained￼
+Logistic Regression is the most fundamental probabilistic model for classification.
+Despite its name, it is not a regression method in the traditional sense but a predictive model for categorical outcomes.
+It estimates the probability that an observation belongs to a particular class by modeling the relationship between the input features and the log-odds of the event.
 
-3.	Scikit-learn User Guide: Logistic Regression￼
+The model originated in the early 20th century through the work of David Cox (1958), who extended earlier logit models from statistics and epidemiology to binary outcomes.
+It later became a cornerstone of statistical learning theory, serving as the conceptual bridge between linear regression and modern classification algorithms.
+
+⸻
+
+Why use it?
+
+Logistic Regression is used when the goal is to classify observations into discrete categories (e.g., “yes/no”, “fraud/not fraud”, “disease/healthy”) while also quantifying the confidence of those classifications.
+It is especially valuable in applications where interpretability and probability calibration matter as much as accuracy — such as medicine, finance, and social sciences.
+
+Typical use cases include:
+	•	Predicting whether a patient has a disease given test results.
+	•	Determining if a transaction is fraudulent.
+	•	Estimating whether a customer will churn.
+	•	Modeling the probability of an event (success/failure, default/no default).
+
+Its transparency makes it ideal for regulated industries, where decision-making must be explainable and auditable.
+
+⸻
+
+Intuition
+
+At its heart, Logistic Regression asks a simple question:
+
+“Given this input, how likely is it that the outcome is 1 instead of 0?”
+
+Imagine a straight line (in one dimension) or a plane (in multiple dimensions) dividing two classes.
+Instead of producing a hard decision, the model computes a smooth curve — the logistic function — that transforms any linear combination of inputs into a probability between 0 and 1.
+
+In geometric terms, Logistic Regression learns a linear boundary in the feature space — the point where the model is equally uncertain about both classes (probability = 0.5).
+In probabilistic terms, it models the log-odds of belonging to one class as a linear function of the inputs:
+
+$$
+\log \left( \frac{P(y = 1 \mid x)}{1 - P(y = 1 \mid x)} \right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \dots + \beta_p x_p
+$$
+
+The logistic (sigmoid) transformation then converts these log-odds back into probabilities:
+
+$$
+P(y = 1 \mid x) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 x_1 + \dots + \beta_p x_p)}}
+$$
+
+This combination of linearity and nonlinearity — a linear function wrapped by a nonlinear sigmoid — is what makes Logistic Regression both simple and powerful.
+
+💡 Note:
+A closely related model, the Probit Regression, replaces the logistic (sigmoid) function with the cumulative normal distribution.
+Both aim to map linear predictors into probabilities, differing mainly in their link functions.
+The logit is preferred for interpretability and computational simplicity, but the probit offers similar results and can be used as an alternative in classification contexts.
+
+⸻
+
+Mathematical foundation
+
+The core principle is Maximum Likelihood Estimation (MLE).
+Given a dataset with binary outcomes y_i \in \{0,1\} and predictors x_i,
+the model estimates coefficients \beta that maximize the likelihood of observing the data:
+
+$$
+L(\beta) = \prod_{i=1}^{n} P(y_i \mid x_i) = \prod_{i=1}^{n} [p_i]^{y_i} [1 - p_i]^{1 - y_i}
+$$
+
+where
+
+$$
+p_i = \frac{1}{1 + e^{-(\beta_0 + \beta^T x_i)}}
+$$
+
+The optimization is typically performed by minimizing the log-loss (negative log-likelihood):
+
+$$
+\text{Loss}(\beta) = - \sum_{i=1}^{n} \Big[ y_i \log(p_i) + (1 - y_i) \log(1 - p_i) \Big]
+$$
+
+This formulation naturally penalizes confident but wrong predictions more heavily than uncertain ones,
+encouraging models that are both accurate and probabilistically well-calibrated.
+
+For multinomial Logistic Regression, the model generalizes to multiple classes using the softmax function,
+assigning probabilities to each possible outcome while ensuring they sum to 1:
+
+$$
+P(y = k \mid x) = \frac{e^{\beta_k^T x}}{\sum_{j=1}^{K} e^{\beta_j^T x}}
+$$
+
+⸻
+
+Training logic
+
+Training involves iteratively adjusting coefficients to minimize the log-loss.
+Because the loss function is convex, gradient-based methods such as Newton–Raphson, Iteratively Reweighted Least Squares (IRLS), or Stochastic Gradient Descent (SGD) are guaranteed to converge to a global minimum.
+
+Conceptually, each iteration performs three steps:
+	1.	Compute predicted probabilities from the current coefficients.
+	2.	Measure how far predictions are from true outcomes (residuals).
+	3.	Adjust coefficients proportionally to the direction of greatest improvement (the gradient).
+
+This process continues until the changes in coefficients are small enough to indicate convergence.
+The model’s simplicity makes training stable, efficient, and reproducible, even for moderately large datasets.
+
+⸻
+
+Assumptions and limitations
+
+Logistic Regression is powerful but relies on several assumptions:
+	•	Linearity in the log-odds: the relationship between predictors and the logit of the outcome must be linear.
+	•	Independent observations: errors across samples should be uncorrelated.
+	•	No extreme multicollinearity: predictors should not be highly correlated, as this destabilizes coefficients.
+	•	Sufficient sample size: large enough to estimate reliable probabilities.
+
+Limitations include:
+	•	Poor performance when decision boundaries are nonlinear.
+	•	Sensitivity to outliers and missing values.
+	•	Difficulty capturing complex feature interactions without manual feature engineering.
+
+Nonetheless, these same constraints make it highly interpretable, a quality often lost in more complex algorithms.
+
+⸻
+
+Key hyperparameters (conceptual view)
+
+Although Logistic Regression is mathematically straightforward, several configuration choices influence its behavior:
+	•	Regularization strength (C or λ): controls overfitting by shrinking coefficients.
+	•	Penalty type (L1, L2, Elastic Net): determines how regularization is applied (sparse vs smooth solutions).
+	•	Solver: optimization algorithm (e.g., "liblinear", "lbfgs", "saga").
+	•	Class weights: rebalance the influence of minority classes in imbalanced datasets.
+
+These hyperparameters govern the bias–variance trade-off, balancing simplicity and generalization.
+
+⸻
+
+Evaluation focus
+
+Because Logistic Regression produces probabilities, it should be evaluated not only for classification accuracy but also for probability calibration —
+how well predicted probabilities match actual observed frequencies.
+
+Key metrics include:
+	•	Log-loss: direct measure of probabilistic accuracy.
+	•	ROC–AUC: overall discrimination power between classes.
+	•	PR–AUC: preferred in imbalanced classification tasks.
+	•	Brier score: calibration and reliability of predicted probabilities.
+	•	Confusion matrix & F1-score: evaluation under chosen decision thresholds.
+
+Interpreting coefficient signs and magnitudes adds a qualitative layer —
+connecting statistical learning with domain understanding.
+
+⸻
+
+When to use / When not to use
+
+Use Logistic Regression when:
+	•	The relationship between predictors and the outcome is roughly linear.
+	•	You need interpretable coefficients and well-calibrated probabilities.
+	•	The dataset is of moderate size and not excessively high-dimensional.
+	•	Transparency and explainability are priorities (e.g., healthcare, public policy, credit scoring).
+
+Avoid Logistic Regression when:
+	•	Data exhibit strong nonlinearities or complex feature interactions.
+	•	Predictors are highly correlated or numerous relative to observations.
+	•	Decision boundaries are highly irregular or discontinuous.
+	•	You prioritize pure predictive accuracy over interpretability.
+
+⸻
+
+References
+
+Canonical papers
+	1.	Cox, D. R. (1958). The Regression Analysis of Binary Sequences. Journal of the Royal Statistical Society, Series B.
+	2.	McCullagh, P. & Nelder, J. (1989). Generalized Linear Models (2nd ed.). Chapman & Hall.
+	3.	Hosmer, D. W., Lemeshow, S., & Sturdivant, R. X. (2013). Applied Logistic Regression (3rd ed.). Wiley.
+
+Web resources
+	1.	StatQuest – Logistic Regression Clearly Explained
+	https://statquest.org/video/logistic-regression-clearly-explained/
+	2.	Scikit-learn User Guide: Logistic Regression￼
+	https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+
+⸻
+
+Transition
+
+Logistic Regression established the foundation for probabilistic classification —
+a world where decisions are guided by likelihood and evidence rather than hard rules.
+Yet, its linear boundary can only go so far.
+As data became more complex, new methods emerged to control overfitting and handle correlated or numerous predictors.
+
+The next step in our journey explores how Regularized Logistic Regression extends this model —
+adding flexibility without losing interpretability, through the elegant mathematics of penalization.
 
 
 #### Regularized Logistic Regression (L1, L2, Elastic Net)
