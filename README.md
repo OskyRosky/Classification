@@ -1481,6 +1481,8 @@ We move now to Margin-based Models, beginning with the Perceptron, the first alg
 
 ### B. Margin-based Models
 
+
+
 #### 6. Perceptron
 
 #### 7. Linear SVM (soft margin, hinge loss)
