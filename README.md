@@ -1667,19 +1667,19 @@ The next model, the Support Vector Machine (SVM), formalizes that intuition into
 
 #### 7. Linear SVM (soft margin, hinge loss)
 
-What is it?
+**What is it?**
 
 A Linear Support Vector Machine learns a separating hyperplane that maximizes the margin between classes. Instead of modeling class densities, it focuses on the decision boundary itself. The soft-margin variant adds slack to tolerate overlap and noise, which makes it practical for real data.
 
 ⸻
 
-Why use it?
+**Why use it?**
 
 It performs strongly on high-dimensional, sparse, or noisy problems (text, bag-of-words, wide tabular data). It often generalizes better than plain Perceptron or unregularized linear models because maximizing margin naturally controls overfitting. It is also robust when n << p.
 
 ⸻
 
-Intuition
+**Intuition**
 
 Think of a line (or hyperplane) that separates classes while staying as far as possible from the closest points of both classes. Points that touch or violate the margin are the “support vectors.” Only they determine the boundary; everything else is irrelevant for the final solution. Decisions come from the sign of a linear score:
 
@@ -1689,7 +1689,7 @@ $$
 
 ⸻
 
-Mathematical foundation
+**Mathematical foundation**
 
 Learning consists of balancing a large margin with few violations via the hinge loss.
 
@@ -1712,26 +1712,26 @@ C controls the trade-off: large C penalizes violations more (lower bias, higher 
 
 ⸻
 
-Training logic
+**Training logic**
 
 Optimize the convex objective above (or an equivalent unconstrained hinge-loss form) with solvers such as coordinate descent, LIBLINEAR, or (stochastic) gradient methods on the primal. Only the support vectors (margin violators or exactly on the margin) matter for the final boundary.
 
 ⸻
 
-Assumptions and limitations
+**Assumptions and limitations**
 
 Assumptions
 	•	Classes are approximately linearly separable in the chosen feature space.
 	•	Features are scaled (standardization strongly recommended).
 
-Limitations
+**Limitations**
 	•	Linear boundary only; complex curvature requires kernels (next section).
 	•	Produces scores, not calibrated probabilities (apply Platt scaling or isotonic calibration if probabilities are needed; see Cross-cutting Topics).
 	•	Sensitive to unscaled features and outliers with very large norm.
 
 ⸻
 
-Key hyperparameters (conceptual view)
+**Key hyperparameters (conceptual view)**
 	•	C: strength of penalty on margin violations; governs the bias–variance trade-off.
 	•	class_weight: compensates class imbalance by reweighting errors.
 	•	max_iter / tol: convergence controls for the optimizer.
@@ -1739,33 +1739,35 @@ Key hyperparameters (conceptual view)
 
 ⸻
 
-Evaluation focus
+**Evaluation focus**
 
 Use ROC-AUC and PR-AUC on the raw decision scores for ranking quality. For hard decisions, inspect precision/recall/F1 at a chosen threshold. If you need probabilities (cost-sensitive decisions, risk ranking), calibrate the scores and assess log-loss or Brier score.
 
 ⸻
 
-When to use / When not to use
+**When to use / When not to use**
 
 Use when features are many, linear signals are plausible, and you want a strong linear baseline with good generalization and robustness.
 Avoid when boundaries are clearly nonlinear or interactions dominate; prefer Kernel SVM or tree/ensemble methods in those cases, or calibrate if probabilistic outputs are required.
 
 ⸻
 
-References
+**References**
 
 Canonical papers
 	1.	Cortes, C., & Vapnik, V. (1995). Support-Vector Networks. Machine Learning.
 	2.	Boser, B., Guyon, I., & Vapnik, V. (1992). A Training Algorithm for Optimal Margin Classifiers. COLT.
 	3.	Hastie, Tibshirani, Friedman (2009). The Elements of Statistical Learning (Ch. 12). Springer.
 
-Web resources
+Web resources**
 	•	Scikit-learn User Guide — Linear SVM (LinearSVC)
 https://scikit-learn.org/stable/modules/svm.html#svm-classification￼
 	•	StatQuest — SVMs Clearly Explained
 https://www.youtube.com/watch?v=efR1C6CvhmE￼
 
 ------
+
+Linear SVM gives us a strong boundary when linear signals dominate. When the data demand curved boundaries, we keep the SVM philosophy but map inputs into richer spaces via kernels. Next: Kernel SVM (RBF, polynomial).
 
 ------
 
