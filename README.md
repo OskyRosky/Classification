@@ -1771,8 +1771,153 @@ Linear SVM gives us a strong boundary when linear signals dominate. When the dat
 
 ------
 
-
 #### 8. Kernel SVM (RBF, polynomial kernels)
+
+What is it?
+
+A Kernel Support Vector Machine (SVM) extends the linear SVM to handle non-linear decision boundaries.
+It does so by implicitly mapping the input data into a higher-dimensional feature space where a linear separation becomes possible.
+This transformation is achieved through a mathematical function called a kernel, which computes the similarity between points without explicitly performing the mapping.
+
+This concept, known as the kernel trick, allows the SVM to learn complex, curved boundaries while maintaining the elegant geometric formulation of the linear case.
+
+⸻
+
+Why use it?
+
+Kernel SVMs are powerful for problems where the relationship between features and labels is non-linear but still structured — meaning the classes can be separated by a smooth surface.
+They are widely used in:
+	•	Image and handwriting recognition (e.g., digits in MNIST).
+	•	Bioinformatics (e.g., protein classification).
+	•	Text categorization and sentiment analysis.
+
+They often perform strongly even on small or medium-sized datasets, where deep neural networks would be unnecessary or prone to overfitting.
+
+⸻
+
+Intuition
+
+Instead of drawing a straight line, the model draws a smooth curved boundary by comparing every point with key examples (the support vectors).
+It decides based on how similar a new observation is to these critical samples, as measured by the kernel function K(x_i, x_j).
+
+The prediction is based on the sign of the weighted similarity sum:
+
+$$
+\hat{y} = \mathrm{sign}!\left(\sum_{i=1}^{n} \alpha_i y_i K(x_i, x) + b\right)
+$$
+
+Here the coefficients \alpha_i are found during training, and most of them are zero — only the support vectors remain “active.”
+
+⸻
+
+Mathematical foundation
+
+The optimization problem is the dual form of the soft-margin SVM, where the kernel replaces the inner product:
+
+$$
+\max_{\alpha} \sum_{i=1}^{n} \alpha_i - \tfrac{1}{2} \sum_{i,j=1}^{n} \alpha_i \alpha_j y_i y_j K(x_i, x_j)
+$$
+
+Subject to:
+
+$$
+0 \le \alpha_i \le C, \quad \sum_{i=1}^{n} \alpha_i y_i = 0
+$$
+
+The kernel defines the geometry of the transformed space.
+Common choices include:
+	•	Linear kernel: K(x_i, x_j) = x_i^\top x_j
+(equivalent to the linear SVM).
+	•	Polynomial kernel: K(x_i, x_j) = (x_i^\top x_j + c)^d
+(captures polynomial feature interactions).
+	•	Radial Basis Function (RBF): K(x_i, x_j) = \exp(-\gamma \|x_i - x_j\|^2)
+(produces flexible, smooth boundaries that adapt locally).
+
+⸻
+
+Training logic
+
+Training involves solving a quadratic optimization problem using algorithms like Sequential Minimal Optimization (SMO).
+Because only a subset of data points (the support vectors) define the decision boundary, the model focuses computational effort on the most informative samples.
+
+Choosing the right kernel and hyperparameters is critical — especially the RBF parameter \gamma and the regularization constant C.
+Too large a \gamma leads to overfitting (narrow bumps around data), while too small a \gamma oversmooths the boundary.
+
+⸻
+
+Assumptions and limitations
+
+Assumptions
+	•	The classes are separable in some higher-dimensional space induced by the chosen kernel.
+	•	Features are properly scaled (kernels are sensitive to magnitude).
+
+Limitations
+	•	Training can be computationally expensive for large datasets (O(n²) memory).
+	•	Hard to interpret — the model becomes a black box of support vectors.
+	•	Sensitive to hyperparameter choice (C, γ, and kernel type).
+
+Despite these challenges, kernel SVMs remain a gold standard for medium-sized structured data.
+
+⸻
+
+Key hyperparameters (conceptual view)
+	•	C: regularization constant controlling margin width vs. misclassification tolerance.
+	•	kernel: type of similarity function (“linear”, “poly”, “rbf”).
+	•	γ (gamma): RBF width — small values yield smoother boundaries, large values yield tighter fits.
+	•	degree (d): degree of the polynomial kernel.
+	•	coef0 (c): additive constant in the polynomial kernel, affecting curvature.
+
+These parameters together shape the geometry of the decision surface.
+
+⸻
+
+Evaluation focus
+
+The model outputs raw decision scores, not probabilities.
+Thus, evaluate with:
+	•	ROC-AUC and PR-AUC for ranking.
+	•	Accuracy, precision, and recall for classification thresholds.
+	•	Apply probability calibration (Platt scaling or isotonic regression) when calibrated outputs are needed.
+
+Visualization of the decision surface can also reveal under- or overfitting patterns — particularly useful in 2-D projections.
+
+⸻
+
+When to use / When not to use
+
+Use it when:
+	•	The relationship between inputs and outputs is non-linear but structured.
+	•	The dataset size is moderate (up to a few tens of thousands).
+	•	You need strong generalization without large models like neural nets.
+
+Avoid it when:
+	•	Data are huge (training cost grows quadratically).
+	•	Features are extremely sparse (linear SVM may perform just as well).
+	•	Interpretability or probability estimation is required.
+
+⸻
+
+References
+
+Canonical papers
+	1.	Boser, B., Guyon, I., & Vapnik, V. (1992). A Training Algorithm for Optimal Margin Classifiers. COLT.
+	2.	Scholkopf, B., & Smola, A. J. (2002). Learning with Kernels. MIT Press.
+	3.	Cristianini, N., & Shawe-Taylor, J. (2000). An Introduction to Support Vector Machines. Cambridge University Press.
+
+Web resources
+	•	Scikit-learn User Guide — SVM Kernels
+https://scikit-learn.org/stable/modules/svm.html#kernel-functions￼
+	•	StatQuest — The Kernel Trick Explained Clearly
+https://www.youtube.com/watch?v=Qc5IyLW_hns￼
+
+--------
+
+Kernel SVMs represent the culmination of the margin-based approach — transforming linear geometry into flexible, curved separations.
+However, they still rely on pairwise comparisons between samples, making them computationally heavy for massive datasets.
+The next family, Instance-based Models, turns this idea inside out: instead of learning a boundary, we classify by comparing new samples directly to past examples.
+
+--------
+
 
 ### C. Instance-based Models
 
