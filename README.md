@@ -1667,6 +1667,8 @@ The next model, the Support Vector Machine (SVM), formalizes that intuition into
 
 #### 7. Linear SVM (soft margin, hinge loss)
 
+
+
 #### 8. Kernel SVM (RBF, polynomial kernels)
 
 ### C. Instance-based Models
