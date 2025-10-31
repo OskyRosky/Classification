@@ -1481,9 +1481,189 @@ We move now to Margin-based Models, beginning with the Perceptron, the first alg
 
 ### B. Margin-based Models
 
+The models explored so far — Logistic Regression, LDA, QDA, and Naive Bayes — interpret classification through the lens of probability.
+They assume that data follow certain statistical patterns: distributions (often Gaussian), independence between features, and additive effects that together define the likelihood of each class.
+These methods work beautifully when their assumptions are approximately true, offering interpretability, calibrated probabilities, and direct links to statistical theory.
+Yet, as data became richer and more irregular, those assumptions began to constrain rather than empower.
 
+Margin-based models emerged as a paradigm shift.
+Instead of asking “Which class is most probable given this point?”, they ask
+
+“Where should the boundary lie so that classes are best separated?”
+
+This shift replaces the probabilistic framework with a geometric one.
+A classifier is now seen as a surface in feature space — a hyperplane that divides points of different labels with the widest possible margin between them.
+Each training sample exerts a geometric “pull” on that boundary; the model learns by balancing these opposing forces until the separation is maximized.
+
+Why this matters
+	1.	Freedom from distributional assumptions
+Margin-based algorithms do not require features to be Gaussian, independent, or even linearly correlated.
+They rely solely on the geometry of the data — distances and orientations — making them robust in heterogeneous, high-dimensional environments.
+	2.	Focus on boundaries, not densities
+Probabilistic models approximate how data are distributed within each class.
+Margin-based models focus on where classes meet, learning decision surfaces that adapt even when densities overlap or are non-parametric.
+	3.	Better generalization via margins
+Maximizing the separation between classes naturally reduces overfitting.
+A larger margin implies that the model commits only when evidence is strong, yielding smoother and more stable decision regions.
+	4.	Gateway to modern geometric learning
+This concept of margins and separating hyperplanes became the foundation for Support Vector Machines and, indirectly, for many modern neural methods that also learn hierarchical geometric boundaries.
+
+In summary
+
+If probabilistic models represent reasoning under uncertainty,
+margin-based models embody decision through geometry.
+They define classification not as an act of inference but as the art of drawing the clearest possible line between competing explanations.
+
+With that new lens, we now step into the first and most historic of these geometric learners — the Perceptron, the algorithm that first taught machines how to learn a boundary from experience.
 
 #### 6. Perceptron
+
+What is it?
+
+The Perceptron is the earliest and simplest algorithm for supervised classification based purely on geometry.
+Introduced by Frank Rosenblatt (1958), it represents one of the first attempts to make a machine learn from experience — by adjusting a decision boundary through exposure to data.
+
+It learns a linear separator between two classes by iteratively updating weights whenever a sample is misclassified.
+Though simple, the Perceptron introduced the core idea that still underlies modern neural networks: a neuron that combines inputs, applies a transformation, and outputs a decision.
+
+⸻
+
+Why use it?
+
+The Perceptron is used mainly for linearly separable classification problems and as a conceptual foundation for more advanced models such as Support Vector Machines (SVMs) and Artificial Neural Networks.
+
+Its main advantages are:
+	•	Simplicity: the training algorithm is intuitive and fast.
+	•	Interpretability: the learned weights define the orientation of the separating hyperplane.
+	•	Historical and pedagogical value: it teaches the principles of iterative learning and convergence.
+
+Typical use cases are educational examples, prototype experiments, or low-dimensional datasets where a linear boundary suffices.
+
+⸻
+
+Intuition
+
+Geometrically, the Perceptron seeks a hyperplane that divides the input space into two halves — one for each class.
+Each sample exerts an influence: if a point is misclassified, the hyperplane is nudged in the direction that would classify it correctly next time.
+
+The decision rule is based on the sign of a weighted linear combination of the features:
+
+$$
+\hat{y} = \text{sign}(w^T x + b)
+$$
+
+If the result is positive, the prediction is class +1; otherwise, it is −1.
+Over many iterations, these corrections gradually align the hyperplane with the true boundary.
+
+⸻
+
+Mathematical foundation
+
+The Perceptron minimizes a simple misclassification loss by updating the weights whenever an error occurs.
+
+For each sample (x_i, y_i), where y_i \in \{-1, +1\}:
+	1.	Compute the prediction:
+\hat{y}_i = \text{sign}(w^T x_i + b)
+	2.	If the prediction is wrong (y_i \neq \hat{y}_i), update:
+
+$$
+w \leftarrow w + \eta, y_i, x_i
+$$
+
+$$
+b \leftarrow b + \eta, y_i
+$$
+
+Here \eta (eta) is the learning rate — a small constant controlling the step size.
+The algorithm repeats until all points are correctly classified or a maximum number of iterations is reached.
+
+Because this rule adjusts only on errors, the model naturally converges for linearly separable data.
+
+⸻
+
+Training logic
+
+Training is incremental and deterministic:
+Each misclassified point “teaches” the model by shifting the decision boundary toward the correct side.
+The updates continue until either all points are correctly classified or the model cycles between a few errors (if the data are not linearly separable).
+
+The Perceptron does not optimize a differentiable loss like modern gradient descent — it performs direct corrections based on mistakes.
+This simplicity makes it computationally efficient but also limits its applicability to problems where a perfect linear separator exists.
+
+⸻
+
+Assumptions and limitations
+
+Assumptions
+	•	Data must be linearly separable (a single hyperplane can divide the classes).
+	•	Features should be scaled or normalized for stable learning.
+
+Limitations
+	•	Fails to converge when data are not linearly separable.
+	•	Sensitive to feature scaling and initialization.
+	•	Produces hard decisions (no probabilities or confidence).
+	•	Cannot handle multiclass problems natively (requires one-vs-rest extensions).
+
+Despite these limits, its geometric simplicity made it the stepping stone for nearly all future linear classifiers.
+
+⸻
+
+Key hyperparameters (conceptual view)
+	•	Learning rate (η): controls the step size of weight updates.
+	•	Max iterations: prevents infinite loops when data are not separable.
+	•	Shuffle or random seed: affects convergence order and stability.
+
+These parameters influence how quickly and smoothly the model converges.
+
+⸻
+
+Evaluation focus
+
+Because it produces binary hard outputs, evaluation typically relies on:
+	•	Accuracy and confusion matrix for balanced datasets.
+	•	Precision, recall, and F1-score when classes are imbalanced.
+	•	ROC–AUC can be used when applying score-based variants (averaged raw activations).
+
+The Perceptron’s performance is best interpreted geometrically — by visualizing the boundary and the margin between classes.
+
+⸻
+
+When to use / When not to use
+
+Use it when:
+	•	The classes are roughly linearly separable.
+	•	You want a fast, interpretable, and educational model.
+	•	The task involves small or low-dimensional data.
+
+Avoid it when:
+	•	The data are nonlinear or noisy.
+	•	You need probabilistic outputs.
+	•	Convergence or margin optimization matters (SVMs are superior in such cases).
+
+⸻
+
+References
+
+Canonical papers
+	1.	Rosenblatt, F. (1958). The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain. Psychological Review.
+	2.	Minsky, M., & Papert, S. (1969). Perceptrons. MIT Press.
+	3.	Novikoff, A. B. J. (1962). On Convergence Proofs on Perceptrons. Proceedings of the Symposium on the Mathematical Theory of Automata.
+
+Web resources
+	•	Scikit-learn User Guide — Perceptron
+https://scikit-learn.org/stable/modules/linear_model.html#perceptron￼
+	•	StatQuest — The Perceptron Clearly Explained (video)
+https://www.youtube.com/watch?v=3Xc3CA655Y4￼
+
+-----
+
+The Perceptron introduced the revolutionary idea of learning from errors — updating a model dynamically as data arrive.
+However, it lacked a notion of confidence and failed when classes were not perfectly separable.
+
+This motivated the next step: algorithms that keep the geometric spirit of the Perceptron but seek the widest possible margin between classes.
+The next model, the Support Vector Machine (SVM), formalizes that intuition into an elegant and mathematically powerful framework.
+
+-----
 
 #### 7. Linear SVM (soft margin, hinge loss)
 
