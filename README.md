@@ -908,9 +908,11 @@ Canonical papers
 Web resources
 
 1.	StatQuest – Ridge, Lasso, and Elastic Net Regression￼
+
 https://www.youtube.com/watch?v=Q81RR3yKn30
 
 3.	Scikit-learn User Guide: Regularization in Logistic Regression￼
+
 https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
 
 
@@ -1081,11 +1083,11 @@ Web resources
 
 1.	StatQuest: Linear Discriminant Analysis (LDA) Clearly Explained
 
-https://www.youtube.com/watch?v=azXCzI57Yfc
+ https://www.youtube.com/watch?v=azXCzI57Yfc
 ￼
 2.	Scikit-learn User Guide — Linear Discriminant Analysis￼
 
-https://scikit-learn.org/stable/modules/lda_qda.html
+ https://scikit-learn.org/stable/modules/lda_qda.html
 
 
 -----
