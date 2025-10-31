@@ -1104,23 +1104,230 @@ leading to nonlinear decision boundaries that can better capture complex class s
 
 #### 4. Quadratic Discriminant Analysis (QDA)
 
+Quadratic Discriminant Analysis (QDA) is the nonlinear extension of Linear Discriminant Analysis (LDA).
+While LDA assumes that all classes share the same covariance matrix, QDA allows each class to have its own covariance structure.
+This flexibility enables QDA to learn curved (quadratic) decision boundaries that adapt to more complex data distributions.
+
+QDA remains a probabilistic generative model — it models how each class generates data through a multivariate Gaussian distribution and then applies Bayes’ rule to classify observations.
+Historically, it evolved from Fisher’s discriminant work (1936) and later generalized by statisticians such as Rao and Friedman.
+
+⸻
+
+Why use it?
+
+QDA is useful when the covariance structure of each class differs — that is, when the spread, orientation, or shape of the class clouds in feature space is not homogeneous.
+It performs particularly well in:
+	•	Biomedical and diagnostic problems where patient groups have different variability.
+	•	Fault detection or signal analysis where data dispersion changes by category.
+	•	Any domain where nonlinear class boundaries are needed but interpretability is still desired.
+
+In short, QDA trades some simplicity for richer geometric representation.
+
+⸻
+
+Intuition
+
+Imagine each class as an ellipsoid cloud of points in feature space.
+LDA fits one shared ellipse to all classes, separating them with straight lines (planes).
+QDA instead fits a separate ellipse per class, allowing boundaries that bend to follow each class’s natural contour.
+
+At prediction time, QDA evaluates how likely a new point is under each class’s Gaussian “shape.”
+The observation is assigned to the class where it falls within the highest probability region.
+
+⸻
+
+Mathematical foundation
+
+Each class k is assumed to follow a multivariate normal distribution with its own mean vector \mu_k and covariance matrix \Sigma_k:
+
+$$
+P(x \mid y = k) =
+\frac{1}{(2\pi)^{p/2} |\Sigma_k|^{1/2}}
+\exp!\left(
+-\tfrac{1}{2}(x - \mu_k)^{T} \Sigma_k^{-1} (x - \mu_k)
+\right)
+$$
+
+Using Bayes’ theorem, the posterior probability of class k is proportional to:
+
+$$
+P(y = k \mid x) \propto
+P(x \mid y = k) P(y = k)
+$$
+
+Taking logarithms (and omitting constants that are equal for all classes) yields the discriminant function:
+
+$$
+\delta_k(x)
+= -\tfrac{1}{2} \log |\Sigma_k|
+-\tfrac{1}{2} (x - \mu_k)^T \Sigma_k^{-1} (x - \mu_k)
+	•	\log P(y = k)
+$$
+
+The model assigns x to the class with the highest \delta_k(x).
+Because \Sigma_k differs across classes, the resulting decision boundaries are quadratic surfaces — hyper-ellipses rather than hyperplanes.
+
+⸻
+
+Training logic
+
+Training QDA involves closed-form estimation, not iterative optimization:
+	1.	Compute the class means \mu_k.
+	2.	Compute the class-specific covariance matrices \Sigma_k.
+	3.	Estimate prior probabilities P(y = k) from class frequencies or predefined priors.
+	4.	Plug these estimates into the discriminant function \delta_k(x).
+	5.	Classify each observation by selecting the class with the maximum discriminant score.
+
+This makes QDA analytically elegant but computationally heavier than LDA because each class requires a full covariance estimate.
+
+⸻
+
+Assumptions and limitations
+
+Assumptions:
+	•	Each class follows a multivariate Gaussian distribution.
+	•	Observations are independent and identically distributed.
+	•	Sample size per class is large enough to estimate its covariance matrix reliably.
+
+Limitations:
+	•	When the number of features p is large relative to the number of samples n_k per class, covariance estimation can become unstable or singular.
+	•	Sensitive to outliers and feature scaling.
+	•	If class covariances are actually similar, LDA may generalize better because it pools information across classes.
+
+Regularization or covariance shrinkage can partially mitigate these issues.
+
+⸻
+
+Key hyperparameters (conceptual view)
+
+QDA has few but crucial parameters that influence performance and stability:
+	•	priors — Define class prior probabilities P(y = k).
+Adjusting priors changes how strongly the model favors frequent or rare classes.
+	•	reg_param — Adds a small multiple of the identity matrix to each covariance matrix,
+controlling the trade-off between bias and variance. Larger values yield more regularized (spherical) shapes.
+	•	store_covariance / tol — Numerical options controlling precision, storage, and convergence tolerance.
+
+In practice, the regularization parameter is the most important, as it stabilizes estimation when data are high-dimensional or imbalanced.
+
+⸻
+
+Evaluation focus
+
+Because QDA produces posterior probabilities, evaluation goes beyond accuracy.
+Typical diagnostics include:
+	•	Log-loss and Brier score for probabilistic calibration.
+	•	ROC–AUC and PR–AUC for discrimination quality.
+	•	Confusion matrix to inspect asymmetric misclassifications.
+	•	Cross-validation stability across folds, especially in small datasets.
+
+Visualizing decision boundaries in 2-D projections can also reveal whether the quadratic surfaces match intuition about class geometry.
+
+⸻
+
+When to use / When not to use
+
+Use QDA when:
+	•	Each class has distinct covariance patterns.
+	•	You have sufficient samples per class to estimate \Sigma_k.
+	•	Curved decision boundaries are necessary.
+	•	Probabilistic interpretability is still desired.
+
+Avoid QDA when:
+	•	The feature dimension is high relative to sample size (risk of overfitting).
+	•	Covariances are approximately equal — prefer LDA.
+	•	Strong collinearity or outliers distort the covariance estimates.
+
+Regularized or hybrid approaches (e.g., Friedman’s Regularized Discriminant Analysis) can act as intermediate solutions between LDA and QDA.
+
+⸻
+
+References
+
+Canonical papers
+	1.	Hastie, T., Tibshirani, R., & Friedman, J. (2009). The Elements of Statistical Learning, Chapter 4. Springer.
+	2.	McLachlan, G. (2004). Discriminant Analysis and Statistical Pattern Recognition. Wiley.
+	3.	Friedman, J. (1989). Regularized Discriminant Analysis. Journal of the American Statistical Association.
+
+Web resources
+	•	Scikit-learn User Guide — Quadratic Discriminant Analysis
+https://scikit-learn.org/stable/modules/lda_qda.html#quadratic-discriminant-analysis￼
+	•	StatQuest — LDA and QDA (video overview)
+https://www.youtube.com/watch?v=EIJG0xHdl3k￼
+
+------
+
+Quadratic Discriminant Analysis extended linear boundaries into smooth curves,
+offering a probabilistic yet flexible lens for complex class structures.
+However, as the number of parameters grows with every covariance matrix,
+QDA can quickly become unstable in high-dimensional spaces.
+
+This limitation motivated a new family of algorithms —
+models that avoid estimating full distributions and instead focus on decision margins.
+The next step in our journey introduces these margin-based learners, beginning with the Perceptron.
+
+------
+
 #### 5. Naive Bayes (Gaussian, Multinomial, Bernoulli, Complement)
 
 
 ### B. Margin-based Models
 
+#### 6. Perceptron
+
+#### 7. Linear SVM (soft margin, hinge loss)
+
+#### 8. Kernel SVM (RBF, polynomial kernels)
+
 ### C. Instance-based Models
+
+#### 9. Distance metrics, scaling, k selection.  (Distance metrics, scaling, k selection.)
 
 ### D. Tree-based Models
 
+#### 10. Decision Trees (CART)
+
+#### 11. Cost-sensitive Trees (class weights, impurity adjustments)
+
 ### E. Ensemble Models
+
+#### Bagging
+
+#### Random Forest
+
+#### Extra Trees
+
+#### AdaBoost
+
+#### Gradient Boosting (GBDT)
+
+#### XGBoost
+
+#### LightGBM
+
+#### CatBoost
+
+
 
 ### F. Neural Networks for Classification
 
-### G. Multiclass & Multilabel Strategies
+
+#### MLP (Feed-Forward Neural Network)
+	
+	
+#### CNN (Convolutional Neural Network) – overview for image data.
+
+#### RNN / LSTM / GRU – overview for sequence data.
+
+#### Transformer-based Classifier – overview for text or sequential data.
+	
 
 
-##
+
+
+
+
+
+
 
 
 
