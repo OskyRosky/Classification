@@ -1269,6 +1269,215 @@ The next step in our journey introduces these margin-based learners, beginning w
 
 #### 5. Naive Bayes (Gaussian, Multinomial, Bernoulli, Complement)
 
+What is it?
+
+Naive Bayes is a family of simple yet remarkably effective probabilistic classifiers based on Bayes’ theorem with the strong assumption that features are conditionally independent given the class label.
+Despite this unrealistic “naive” assumption, it performs surprisingly well in many real-world problems, especially when features contribute additively to the decision.
+
+Naive Bayes is part of the earliest generation of machine-learning algorithms, rooted in statistical inference and pattern recognition since the 1950s. It remains popular for text classification, spam detection, and document categorization because of its scalability and interpretability.
+
+⸻
+
+Why use it?
+
+Naive Bayes excels when:
+	•	Data dimensionality is high (e.g., thousands of words or features).
+	•	Feature dependencies are weak or approximately additive.
+	•	The goal is to get fast, interpretable, and well-calibrated probabilities.
+
+Typical applications:
+	•	Email spam filtering (spam vs ham).
+	•	Sentiment analysis in social media.
+	•	Medical diagnosis from categorical symptoms.
+	•	Document topic classification.
+
+Its simplicity allows it to train in seconds even on very large datasets — often outperforming more complex models in sparse domains.
+
+⸻
+
+Intuition
+
+At its heart, Naive Bayes computes:
+
+“Given this input, which class makes the observed features most likely?”
+
+Using Bayes’ rule:
+
+$$
+P(y \mid x_1, x_2, \dots, x_p)
+\propto
+P(y),
+P(x_1, x_2, \dots, x_p \mid y)
+$$
+
+The “naive” assumption decomposes the joint likelihood into independent terms:
+
+$$
+P(x_1, x_2, \dots, x_p \mid y)
+= \prod_{j=1}^{p} P(x_j \mid y)
+$$
+
+This dramatically simplifies computation.
+Each feature contributes individually to the overall likelihood, and the class with the highest posterior probability is predicted:
+
+$$
+\hat{y} = \arg\max_y ; P(y), \prod_{j=1}^{p} P(x_j \mid y)
+$$
+
+⸻
+
+Mathematical foundation
+
+Different Naive Bayes variants differ only in how they model P(x_j \mid y):
+
+1. Gaussian Naive Bayes
+Used for continuous numeric features.
+Each conditional feature distribution is Gaussian:
+
+$$
+P(x_j \mid y = k)
+
+\frac{1}{\sqrt{2\pi\sigma_{jk}^2}}
+\exp!\left(
+-\frac{(x_j - \mu_{jk})^2}{2\sigma_{jk}^2}
+\right)
+$$
+
+The class-conditional log-posterior (up to constants) is:
+
+$$
+\log P(y = k \mid x)
+\propto
+\log P(y = k)
+-\frac{1}{2} \sum_{j} \frac{(x_j - \mu_{jk})^2}{\sigma_{jk}^2}
+$$
+
+2. Multinomial Naive Bayes
+Used for count data (e.g., word frequencies in text).
+The likelihood assumes a multinomial distribution:
+
+$$
+P(x \mid y = k)
+
+\frac{(\sum_j x_j)!}{\prod_j x_j!}
+\prod_{j=1}^{p} \theta_{jk}^{x_j}
+$$
+
+where \theta_{jk} = P(\text{feature } j \mid y = k).
+Laplace (add-one) smoothing prevents zero probabilities.
+
+3. Bernoulli Naive Bayes
+Used for binary indicator features (presence/absence).
+
+$$
+P(x_j \mid y = k)
+
+\theta_{jk}^{x_j},
+(1 - \theta_{jk})^{(1 - x_j)}
+$$
+
+This variant captures whether a term appears rather than how many times.
+
+4. Complement Naive Bayes
+Designed for imbalanced text classification.
+It estimates feature weights using statistics from complementary classes (all classes except the target) to reduce bias toward frequent categories.
+This often improves performance when certain classes dominate the training data.
+
+⸻
+
+Training logic
+
+Training Naive Bayes is non-iterative and fully analytical:
+	1.	Compute prior probabilities
+P(y = k) = \frac{n_k}{n}.
+	2.	Estimate conditional distributions
+P(x_j \mid y = k) using counts (Multinomial/Bernoulli) or mean/variance (Gaussian).
+	3.	Apply smoothing (Laplace or Lidstone) to avoid zero probabilities.
+	4.	Store these estimates — classification is just a lookup and product of probabilities.
+
+Its training complexity is O(n \times p), making it among the fastest learning algorithms available.
+
+⸻
+
+Assumptions and limitations
+
+Assumptions
+	•	Conditional independence of features given the class.
+	•	Feature distributions follow the assumed model (Gaussian, Multinomial, etc.).
+	•	Sufficient sample size per class to estimate reliable probabilities.
+
+Limitations
+	•	Independence rarely holds perfectly; correlations between features can degrade accuracy.
+	•	Sensitive to how continuous data are modeled — Gaussian assumption may be too restrictive.
+	•	Probabilities can be poorly calibrated when independence is violated.
+
+Still, the model is robust, and independence violations often do not destroy predictive power.
+
+⸻
+
+Key hyperparameters (conceptual view)
+	•	alpha (α) — Smoothing parameter for avoiding zero probabilities.
+	•	α = 1 corresponds to Laplace smoothing.
+	•	α → 0 removes smoothing (can cause instability).
+	•	fit_prior — Whether to learn class priors from data or assume uniform priors.
+	•	var_smoothing (Gaussian NB) — Small constant added to variance estimates to avoid division by zero or numerical instability.
+	•	binarize (Bernoulli NB) — Threshold value to transform numeric features into binary indicators.
+
+These parameters control smoothness, stability, and robustness to rare features.
+
+⸻
+
+Evaluation focus
+
+Since Naive Bayes outputs probabilities, we assess both discrimination and calibration:
+	•	Accuracy and F1-score for balanced datasets.
+	•	Precision/Recall and PR-AUC for imbalanced text data.
+	•	Log-loss and Brier score to measure probabilistic reliability.
+	•	Confusion matrix to inspect systematic class bias.
+
+Visualization of class posteriors or feature likelihoods often reveals where the independence assumption breaks down.
+
+⸻
+
+When to use / When not to use
+
+Use it when:
+	•	You need a fast, interpretable baseline.
+	•	Data are high-dimensional, sparse, or text-based.
+	•	You prefer a model that works well with small training data.
+
+Avoid it when:
+	•	Features are strongly correlated (e.g., pixel intensities in images).
+	•	You need complex, nonlinear decision boundaries.
+	•	Feature distributions deviate substantially from the assumed form.
+
+Despite these caveats, Naive Bayes often provides a competitive baseline that is hard to beat in efficiency and simplicity.
+
+⸻
+
+References
+
+Canonical papers
+	1.	Domingos, P., & Pazzani, M. (1997). On the Optimality of the Simple Bayesian Classifier under Zero–One Loss. Machine Learning.
+	2.	Mitchell, T. (1997). Machine Learning. McGraw-Hill.
+	3.	Rennie, J. D. M., Shih, L., Teevan, J., & Karger, D. R. (2003). Tackling the Poor Assumptions of Naive Bayes Text Classifiers. ICML 2003.
+
+Web resources
+	•	Scikit-learn User Guide — Naive Bayes
+https://scikit-learn.org/stable/modules/naive_bayes.html￼
+	•	StatQuest — Naive Bayes Clearly Explained (video)
+https://www.youtube.com/watch?v=O2L2Uv9pdDA￼
+
+
+----
+
+Naive Bayes completes our exploration of linear and probabilistic classifiers — models that reason through likelihood and evidence.
+However, these techniques rely heavily on assumptions about distributions and independence.
+
+The next stage in our journey abandons those assumptions, replacing probability with geometry.
+We move now to Margin-based Models, beginning with the Perceptron, the first algorithm to learn a separating hyperplane from data.
+
+----
 
 ### B. Margin-based Models
 
