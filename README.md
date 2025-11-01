@@ -1773,7 +1773,7 @@ Linear SVM gives us a strong boundary when linear signals dominate. When the dat
 
 #### 8. Kernel SVM (RBF, polynomial kernels)
 
-What is it?
+**What is it?**
 
 A Kernel Support Vector Machine (SVM) extends the linear SVM to handle non-linear decision boundaries.
 It does so by implicitly mapping the input data into a higher-dimensional feature space where a linear separation becomes possible.
@@ -1783,7 +1783,7 @@ This concept, known as the kernel trick, allows the SVM to learn complex, curved
 
 ⸻
 
-Why use it?
+**Why use it?**
 
 Kernel SVMs are powerful for problems where the relationship between features and labels is non-linear but still structured — meaning the classes can be separated by a smooth surface.
 They are widely used in:
@@ -1795,7 +1795,7 @@ They often perform strongly even on small or medium-sized datasets, where deep n
 
 ⸻
 
-Intuition
+**Intuition**
 
 Instead of drawing a straight line, the model draws a smooth curved boundary by comparing every point with key examples (the support vectors).
 It decides based on how similar a new observation is to these critical samples, as measured by the kernel function K(x_i, x_j).
@@ -1810,7 +1810,7 @@ Here the coefficients \alpha_i are found during training, and most of them are z
 
 ⸻
 
-Mathematical foundation
+**Mathematical foundation**
 
 The optimization problem is the dual form of the soft-margin SVM, where the kernel replaces the inner product:
 
@@ -1835,7 +1835,7 @@ Common choices include:
 
 ⸻
 
-Training logic
+**Training logic**
 
 Training involves solving a quadratic optimization problem using algorithms like Sequential Minimal Optimization (SMO).
 Because only a subset of data points (the support vectors) define the decision boundary, the model focuses computational effort on the most informative samples.
@@ -1845,7 +1845,7 @@ Too large a \gamma leads to overfitting (narrow bumps around data), while too sm
 
 ⸻
 
-Assumptions and limitations
+**Assumptions and limitations**
 
 Assumptions
 	•	The classes are separable in some higher-dimensional space induced by the chosen kernel.
@@ -1871,19 +1871,21 @@ These parameters together shape the geometry of the decision surface.
 
 ⸻
 
-Evaluation focus
+**Evaluation focus**
 
 The model outputs raw decision scores, not probabilities.
+
 Thus, evaluate with:
-	•	ROC-AUC and PR-AUC for ranking.
-	•	Accuracy, precision, and recall for classification thresholds.
-	•	Apply probability calibration (Platt scaling or isotonic regression) when calibrated outputs are needed.
+
+•	ROC-AUC and PR-AUC for ranking.
+•	Accuracy, precision, and recall for classification thresholds.
+•	Apply probability calibration (Platt scaling or isotonic regression) when calibrated outputs are needed.
 
 Visualization of the decision surface can also reveal under- or overfitting patterns — particularly useful in 2-D projections.
 
 ⸻
 
-When to use / When not to use
+**When to use / When not to use**
 
 Use it when:
 	•	The relationship between inputs and outputs is non-linear but structured.
@@ -1897,18 +1899,20 @@ Avoid it when:
 
 ⸻
 
-References
+**References**
 
-Canonical papers
-	1.	Boser, B., Guyon, I., & Vapnik, V. (1992). A Training Algorithm for Optimal Margin Classifiers. COLT.
-	2.	Scholkopf, B., & Smola, A. J. (2002). Learning with Kernels. MIT Press.
-	3.	Cristianini, N., & Shawe-Taylor, J. (2000). An Introduction to Support Vector Machines. Cambridge University Press.
+**Canonical papers**
 
-Web resources
-	•	Scikit-learn User Guide — SVM Kernels
-https://scikit-learn.org/stable/modules/svm.html#kernel-functions￼
-	•	StatQuest — The Kernel Trick Explained Clearly
-https://www.youtube.com/watch?v=Qc5IyLW_hns￼
+1.	Boser, B., Guyon, I., & Vapnik, V. (1992). A Training Algorithm for Optimal Margin Classifiers. COLT.
+2.	Scholkopf, B., & Smola, A. J. (2002). Learning with Kernels. MIT Press.
+3.	Cristianini, N., & Shawe-Taylor, J. (2000). An Introduction to Support Vector Machines. Cambridge University Press.
+
+**Web resources**
+
+•	Scikit-learn User Guide — SVM Kernels
+	https://scikit-learn.org/stable/modules/svm.html#kernel-functions￼
+•	StatQuest — The Kernel Trick Explained Clearly
+	https://www.youtube.com/watch?v=Qc5IyLW_hns￼
 
 --------
 
@@ -1935,7 +1939,7 @@ This is the philosophy behind algorithms such as k-Nearest Neighbors (kNN) and r
 
 ⸻
 
-From Boundaries to Proximity
+**From Boundaries to Proximity**
 
 While margin-based algorithms define decision boundaries globally, instance-based models make decisions locally.
 Each new point is evaluated in the context of its surroundings.
@@ -1952,7 +1956,7 @@ storing and comparing all instances means high computational cost, and because i
 
 ⸻
 
-Why Instance-based Thinking Matters
+**Why Instance-based Thinking Matters**
 
 In many real-world problems, decisions are inherently local.
 A rare medical case may resemble only a few other patients in a dataset.
@@ -1965,7 +1969,7 @@ an idea that also underlies modern deep learning embeddings and retrieval-based 
 
 ⸻
 
-Conceptual Shift
+**Conceptual Shift**
 
 This family of models represents another philosophical turn:
 	•	From probability (family A) to geometry (family B),
@@ -1973,7 +1977,7 @@ This family of models represents another philosophical turn:
 
 Instead of asking “What is the separating function?”, we now ask
 
-“Which points are most similar to this one, and what can they tell me?”
+“**Which points are most similar to this one, and what can they tell me?**”
 
 The heart of this method lies in the choice of distance metric —
 how we define “similarity” between observations —
@@ -1985,11 +1989,406 @@ k-Nearest Neighbors (kNN) — a classifier that makes decisions by remembering a
 
 #### 9. Distance metrics, scaling, k selection.  (Distance metrics, scaling, k selection.)
 
+**What is it?**
+
+The k-Nearest Neighbors (kNN) algorithm is one of the simplest and most intuitive methods in machine learning.
+It classifies a new observation based on the majority class among its k closest points in the training data.
+Rather than learning a parametric function, kNN is a memory-based learner — it stores all training samples and defers decision-making until prediction time.
+
+First introduced by Fix and Hodges (1951) and later popularized by Cover and Hart (1967), kNN remains a foundational model for understanding the concept of similarity-based learning.
+
+⸻
+
+**Why use it?**
+
+kNN excels in situations where the relationship between features and labels is highly non-linear or difficult to model explicitly.
+It adapts naturally to data geometry without assuming any functional form or distribution.
+
+Key advantages:
+	•	Non-parametric flexibility: learns directly from the data, no training optimization required.
+	•	Intuitive interpretability: decisions depend on observable neighbors.
+	•	Strong local adaptation: effective when nearby points share the same label.
+
+Typical use cases include pattern recognition, anomaly detection, recommendation systems, and small tabular or image datasets.
+
+⸻
+
+**Intuition**
+
+Classification in kNN is based entirely on proximity:
+points close in feature space are expected to belong to the same class.
+
+For a new sample x_q:
+	1.	Compute the distance between x_q and every training sample.
+	2.	Select the k nearest points.
+	3.	Assign the class most frequent among those neighbors (majority vote).
+
+Formally, the decision rule can be written as:
+
+$$
+\hat{y}(x_q) = \text{mode}\big({y_i : x_i \in N_k(x_q)}\big)
+$$
+
+where N_k(x_q) is the set of the k nearest neighbors of x_q.
+
+⸻
+
+**Mathematical foundation**
+
+Distance is the essence of kNN.
+Common distance functions include:
+
+Euclidean distance
+$$
+d(x_i, x_j) = \sqrt{\sum_{m=1}^{p}(x_{im} - x_{jm})^2}
+$$
+
+Manhattan distance
+$$
+d(x_i, x_j) = \sum_{m=1}^{p} |x_{im} - x_{jm}|
+$$
+
+Minkowski distance (general form)
+$$
+d(x_i, x_j) = \left(\sum_{m=1}^{p} |x_{im} - x_{jm}|^r \right)^{1/r}
+$$
+
+Choosing the right distance depends on the scale and nature of the features.
+All features must be normalized or standardized — otherwise, attributes with large numeric ranges dominate the distance computation.
+
+⸻
+
+**Training logic**
+
+There is no explicit training phase.
+The model stores all data points and performs computation only during inference.
+When a new sample arrives, it calculates distances to all stored examples and applies the majority voting rule.
+
+This makes kNN computationally light to train but heavy to predict, especially for large datasets.
+Approximate nearest-neighbor methods (e.g., KD-Trees, Ball-Trees, FAISS) mitigate this limitation in practice.
+
+⸻
+
+**Assumptions and limitations**
+
+Assumptions
+	•	Samples close in feature space share the same label.
+	•	All features contribute equally to distance (hence the need for scaling).
+
+Limitations
+	•	Computationally expensive for large datasets (O(n) per prediction).
+	•	Sensitive to irrelevant features and the curse of dimensionality.
+	•	Memory-intensive — must store the full dataset.
+	•	No direct probability output (only majority voting).
+
+Despite these challenges, kNN provides a strong baseline for similarity-based reasoning.
+
+⸻
+
+Key hyperparameters (conceptual view)
+	•	k (number of neighbors):
+Controls smoothness of the decision boundary.
+Small k → flexible, but sensitive to noise.
+Large k → stable, but can blur class boundaries.
+	•	metric:
+Defines the notion of distance — common choices include euclidean, manhattan, minkowski, or cosine.
+	•	weights:
+Determines voting scheme.
+Uniform assigns equal weight to all neighbors; distance gives closer points more influence.
+	•	scaling method:
+Standardization or normalization to ensure comparable feature magnitudes.
+
+⸻
+
+**Evaluation focus**
+
+Because kNN decisions depend on local density and class balance, evaluation should consider:
+	•	Accuracy and F1-score for balanced datasets.
+	•	ROC-AUC and PR-AUC if calibrated scores or distances are used.
+	•	Cross-validation to tune k — typically using grid search on validation folds.
+
+Visualization of decision boundaries is also valuable for diagnosing overfitting (very jagged regions indicate too small k).
+
+⸻
+
+**When to use / When not to use**
+
+Use it when:
+	•	The dataset is small or moderate in size.
+	•	Relationships are complex but locally smooth.
+	•	Interpretability and simplicity are preferred over training efficiency.
+
+Avoid it when:
+	•	Data are high-dimensional (distance loses meaning).
+	•	Memory or inference speed is critical.
+	•	Many irrelevant or categorical features dominate the dataset.
+
+⸻
+
+**References**
+
+Canonical papers
+
+1.	Fix, E., & Hodges, J. L. (1951). Discriminatory Analysis, Nonparametric Discrimination: Consistency Properties. USAF School of Aviation Medicine.
+2.	Cover, T., & Hart, P. (1967). Nearest Neighbor Pattern Classification. IEEE Transactions on Information Theory.
+3.	Hastie, T., Tibshirani, R., & Friedman, J. (2009). The Elements of Statistical Learning. Springer.
+
+Web resources
+
+•	Scikit-learn User Guide — Nearest Neighbors
+	https://scikit-learn.org/stable/modules/neighbors.html￼
+•	StatQuest — k-Nearest Neighbors Explained Clearly
+https://www.youtube.com/watch?v=HVXime0nQeI￼
+
+
+-------
+
+k-Nearest Neighbors teaches us that classification can succeed without an explicit model — simply by remembering and comparing.
+Yet, this flexibility comes with computational cost and sensitivity to noise.
+To overcome these issues, the next family of algorithms introduces hierarchical decision structures that partition the feature space efficiently and transparently.
+
+-------
+
 ### D. Tree-based Models
+
+The families of models we’ve seen so far — linear, margin-based, and instance-based — each interpret learning through a different lens:
+linearity, geometry, or similarity.
+Tree-based models introduce yet another way of thinking: learning through hierarchical decisions.
+
+Instead of computing distances or probabilities, a tree classifier asks questions about the data — one at a time — and follows the path that best separates the classes.
+At each node, the model evaluates a simple rule such as
+
+“Is the feature x₁ greater than 3.5?”
+and based on the answer, it splits the data into more homogeneous groups.
+
+By repeating this process recursively, the model builds a decision structure, not unlike how humans reason through choices:
+first broad distinctions, then finer refinements.
+
+⸻
+
+**From Flat Geometry to Hierarchical Reasoning**
+
+Linear and margin-based models see the world as continuous surfaces — boundaries drawn across the entire feature space.
+Tree-based models, in contrast, partition that space into discrete, interpretable regions.
+Each leaf of the tree represents a decision rule derived directly from the data.
+
+For example:
+	•	If income > 50,000 → branch A
+	•	Else → branch B
+Then within branch A, if age < 35 → class = “approve loan”
+Else → class = “deny loan”
+
+This divide-and-conquer approach allows trees to capture non-linear, non-parametric relationships with exceptional interpretability.
+
+⸻
+
+**Why Tree-based Models Matter**
+
+Tree algorithms provide a natural balance between flexibility and interpretability.
+They adapt to almost any data distribution without requiring scaling or transformations, yet their internal logic can be visualized and explained to non-technical audiences.
+
+Key advantages include:
+	•	Interpretability: the structure itself is the model — easy to visualize and audit.
+	•	Non-linearity: decision boundaries can be irregular and data-driven.
+	•	Feature selection: the tree automatically identifies informative variables.
+	•	Handling of mixed data: numeric and categorical features coexist seamlessly.
+
+However, single trees are also fragile.
+They can easily overfit, memorizing noise instead of general patterns.
+This limitation led to the rise of ensemble methods (discussed in the next family), which combine multiple trees to enhance stability and accuracy.
+
+⸻
+
+**Philosophical Shift**
+
+Tree-based models represent a transition from global reasoning to hierarchical segmentation.
+They learn not by summarizing all data at once, but by iteratively refining structure — dividing the feature space into progressively purer subsets.
+Each split increases local homogeneity, guided by impurity measures such as Gini index or entropy.
+
+In essence, while kNN looks outward to find similarity,
+a decision tree looks inward, carving structure from within.
+
+⸻
+
+**What’s Next**
+
+In this family, we’ll explore two key formulations:
+	1.	Decision Trees (CART formulation):
+The classic recursive partitioning model that builds binary splits to minimize impurity.
+	2.	Cost-sensitive Trees (class weighting and impurity adjustments):
+An adaptation of decision trees for imbalanced datasets and differential misclassification costs,
+extending fairness and robustness in practical applications.
 
 #### 10. Decision Trees (CART)
 
+What is it?
+
+A Decision Tree is a non-parametric, hierarchical model that predicts outcomes by recursively splitting data into subsets based on feature values.
+Each internal node represents a question about an input feature (e.g., Is income > 50,000?), each branch represents an answer (Yes/No), and each leaf node corresponds to a final decision or class label.
+
+The most common algorithm for constructing classification trees is CART (Classification and Regression Trees), introduced by Breiman, Friedman, Olshen, and Stone (1984).
+CART builds binary trees that maximize class purity at every split, forming a transparent, interpretable decision structure.
+
+⸻
+
+Why use it?
+
+Decision Trees are widely used because they mimic human decision-making.
+Their logic is straightforward, their boundaries are non-linear, and their predictions can be visualized and explained directly.
+
+They work especially well when:
+	•	The relationship between features and labels is non-linear or complex.
+	•	Interpretability and auditability are important (e.g., finance, healthcare, public policy).
+	•	Data include both numerical and categorical variables.
+	•	Feature interactions exist but are difficult to specify manually.
+
+Advantages:
+	•	No need for feature scaling or normalization.
+	•	Naturally handle missing values.
+	•	Easy to visualize and explain.
+
+⸻
+
+Intuition
+
+Decision Trees learn by dividing the feature space into increasingly homogeneous regions.
+At each node, the algorithm selects the feature and threshold that best split the data to reduce impurity.
+
+Imagine trying to separate apples from oranges by asking a sequence of yes/no questions:
+
+“Is color > 0.5 on the red channel?”
+“Is diameter > 7 cm?”
+
+Each question filters the data into smaller, purer subsets until each group contains mostly one class.
+
+The resulting structure can be visualized as a tree:
+	•	Root node: all samples.
+	•	Internal nodes: decision rules.
+	•	Leaves: final class predictions.
+
+⸻
+
+Mathematical foundation
+
+The central concept is impurity minimization — choosing splits that make child nodes as pure as possible.
+
+Common impurity measures:
+
+Gini Index
+$$
+G(t) = 1 - \sum_{k=1}^{K} p_{k,t}^2
+$$
+
+Entropy (Information Gain)
+$$
+H(t) = - \sum_{k=1}^{K} p_{k,t} \log_2(p_{k,t})
+$$
+
+At each node t, the algorithm evaluates all possible splits and selects the feature j and threshold s that minimize the weighted impurity of the child nodes:
+
+$$
+\text{Split}(j, s) = \arg\min_{j,s} \Big[ \frac{N_L}{N} I(L) + \frac{N_R}{N} I(R) \Big]
+$$
+
+where I(\cdot) represents the impurity function (Gini or entropy), and N_L, N_R are the sample counts in left and right branches.
+
+⸻
+
+Training logic
+	1.	Start with the full dataset as the root node.
+	2.	Evaluate every possible feature and threshold to find the split that minimizes impurity.
+	3.	Partition the data into left and right child nodes.
+	4.	Repeat recursively for each branch until:
+	•	A stopping criterion is reached (e.g., max_depth, min_samples_leaf).
+	•	The node is pure (all samples belong to the same class).
+	•	No further improvement in impurity is possible.
+	5.	Assign the most frequent class to each terminal node.
+
+This recursive partitioning yields a tree structure that can perfectly fit training data — which is why pruning is essential to prevent overfitting.
+
+⸻
+
+Assumptions and limitations
+
+Assumptions
+	•	Data can be effectively separated by axis-aligned splits.
+	•	Each feature contributes independently to the decision process.
+
+Limitations
+	•	Highly prone to overfitting without pruning or constraints.
+	•	Small changes in data can cause large structural variations (instability).
+	•	Poor extrapolation beyond training data.
+	•	Prefers features with more levels (bias toward continuous variables).
+
+Despite these drawbacks, trees remain the foundation for more advanced ensemble methods (e.g., Random Forest, XGBoost).
+
+⸻
+
+Key hyperparameters (conceptual view)
+	•	max_depth: maximum depth of the tree (controls overfitting).
+	•	min_samples_split / min_samples_leaf: minimum number of samples required to split or form a leaf.
+	•	criterion: impurity measure (gini or entropy).
+	•	class_weight: adjusts importance of classes (especially for imbalance).
+	•	max_features: number of features to consider when looking for the best split.
+
+These parameters control the balance between model complexity and generalization.
+
+⸻
+
+Evaluation focus
+
+Since Decision Trees can overfit easily, evaluation should emphasize generalization performance:
+	•	Use cross-validation or pruning to avoid overly deep trees.
+	•	Assess accuracy, F1-score, or ROC-AUC, depending on class balance.
+	•	Analyze feature importance — derived from impurity reduction — to interpret the model’s reasoning.
+
+Visualizing the tree structure (via plot_tree or graphviz) also helps validate interpretability and logic.
+
+⸻
+
+When to use / When not to use
+
+Use it when:
+	•	Transparency and interpretability are required.
+	•	Data relationships are highly non-linear.
+	•	There are mixed or missing feature types.
+
+Avoid it when:
+	•	Dataset is large and noisy (prefer ensembles).
+	•	Decision boundaries are smooth or continuous (SVMs or neural nets may perform better).
+	•	Stability and reproducibility are critical (trees are sensitive to small perturbations).
+
+⸻
+
+References
+
+Canonical papers
+	1.	Breiman, L., Friedman, J., Olshen, R., & Stone, C. (1984). Classification and Regression Trees. Wadsworth.
+	2.	Quinlan, J. R. (1993). C4.5: Programs for Machine Learning. Morgan Kaufmann.
+	3.	Loh, W.-Y. (2011). Classification and Regression Trees. Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery.
+
+Web resources
+	•	Scikit-learn User Guide — Decision Trees
+https://scikit-learn.org/stable/modules/tree.html￼
+	•	StatQuest — Decision Trees Clearly Explained
+https://www.youtube.com/watch?v=7VeUPuFGJHk￼
+
+
+
+------
+
+Decision Trees bring structure and transparency to classification.
+However, when datasets are imbalanced or certain errors are more costly than others, treating all splits equally becomes inefficient or even unfair.
+The next variant — Cost-sensitive Trees — adapts the same hierarchical framework to account for class imbalance and misclassification costs,
+making decisions not only accurate but also equitable.
+
+------
+
 #### 11. Cost-sensitive Trees (class weights, impurity adjustments)
+
+
+
+
 
 ### E. Ensemble Models
 
