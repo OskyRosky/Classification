@@ -2275,11 +2275,13 @@ The central concept is impurity minimization — choosing splits that make child
 Common impurity measures:
 
 Gini Index
+
 $$
 G(t) = 1 - \sum_{k=1}^{K} p_{k,t}^2
 $$
 
 Entropy (Information Gain)
+
 $$
 H(t) = - \sum_{k=1}^{K} p_{k,t} \log_2(p_{k,t})
 $$
@@ -2294,21 +2296,22 @@ where I(\cdot) represents the impurity function (Gini or entropy), and N_L, N_R 
 
 ⸻
 
-Training logic
-	1.	Start with the full dataset as the root node.
-	2.	Evaluate every possible feature and threshold to find the split that minimizes impurity.
-	3.	Partition the data into left and right child nodes.
-	4.	Repeat recursively for each branch until:
-	•	A stopping criterion is reached (e.g., max_depth, min_samples_leaf).
-	•	The node is pure (all samples belong to the same class).
-	•	No further improvement in impurity is possible.
+**Training logic**
+
+1.	Start with the full dataset as the root node.
+2.	Evaluate every possible feature and threshold to find the split that minimizes impurity.
+3.	Partition the data into left and right child nodes.
+4.	Repeat recursively for each branch until:
+•	A stopping criterion is reached (e.g., max_depth, min_samples_leaf).
+•	The node is pure (all samples belong to the same class).
+•	No further improvement in impurity is possible.
 	5.	Assign the most frequent class to each terminal node.
 
 This recursive partitioning yields a tree structure that can perfectly fit training data — which is why pruning is essential to prevent overfitting.
 
 ⸻
 
-Assumptions and limitations
+**Assumptions and limitations**
 
 Assumptions
 	•	Data can be effectively separated by axis-aligned splits.
@@ -2324,18 +2327,19 @@ Despite these drawbacks, trees remain the foundation for more advanced ensemble 
 
 ⸻
 
-Key hyperparameters (conceptual view)
-	•	max_depth: maximum depth of the tree (controls overfitting).
-	•	min_samples_split / min_samples_leaf: minimum number of samples required to split or form a leaf.
-	•	criterion: impurity measure (gini or entropy).
-	•	class_weight: adjusts importance of classes (especially for imbalance).
-	•	max_features: number of features to consider when looking for the best split.
+**Key hyperparameters (conceptual view)**
+
+•	max_depth: maximum depth of the tree (controls overfitting).
+•	min_samples_split / min_samples_leaf: minimum number of samples required to split or form a leaf.
+•	criterion: impurity measure (gini or entropy).
+•	class_weight: adjusts importance of classes (especially for imbalance).
+•	max_features: number of features to consider when looking for the best split.
 
 These parameters control the balance between model complexity and generalization.
 
 ⸻
 
-Evaluation focus
+**Evaluation focus**
 
 Since Decision Trees can overfit easily, evaluation should emphasize generalization performance:
 	•	Use cross-validation or pruning to avoid overly deep trees.
@@ -2346,7 +2350,7 @@ Visualizing the tree structure (via plot_tree or graphviz) also helps validate i
 
 ⸻
 
-When to use / When not to use
+**When to use / When not to use**
 
 Use it when:
 	•	Transparency and interpretability are required.
@@ -2360,18 +2364,20 @@ Avoid it when:
 
 ⸻
 
-References
+**References**
 
 Canonical papers
-	1.	Breiman, L., Friedman, J., Olshen, R., & Stone, C. (1984). Classification and Regression Trees. Wadsworth.
-	2.	Quinlan, J. R. (1993). C4.5: Programs for Machine Learning. Morgan Kaufmann.
-	3.	Loh, W.-Y. (2011). Classification and Regression Trees. Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery.
+
+1.	Breiman, L., Friedman, J., Olshen, R., & Stone, C. (1984). Classification and Regression Trees. Wadsworth.
+2.	Quinlan, J. R. (1993). C4.5: Programs for Machine Learning. Morgan Kaufmann.
+3.	Loh, W.-Y. (2011). Classification and Regression Trees. Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery.
 
 Web resources
-	•	Scikit-learn User Guide — Decision Trees
-https://scikit-learn.org/stable/modules/tree.html￼
-	•	StatQuest — Decision Trees Clearly Explained
-https://www.youtube.com/watch?v=7VeUPuFGJHk￼
+
+•	Scikit-learn User Guide — Decision Trees
+	https://scikit-learn.org/stable/modules/tree.html￼
+•	StatQuest — Decision Trees Clearly Explained
+	https://www.youtube.com/watch?v=7VeUPuFGJHk￼
 
 
 
