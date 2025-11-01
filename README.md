@@ -1918,8 +1918,70 @@ The next family, Instance-based Models, turns this idea inside out: instead of l
 
 --------
 
-
 ### C. Instance-based Models
+
+The models we have explored so far — linear, probabilistic, and margin-based — all build explicit decision functions.
+They learn a set of parameters that define a boundary or rule, summarizing what they have seen.
+Once trained, these models can forget the original data and rely solely on their learned representation to classify new points.
+
+Instance-based models take the opposite approach.
+They do not compress knowledge into coefficients or support vectors — they remember.
+They store the training data itself and classify new observations by comparing them directly to past examples.
+In this sense, they learn not by abstraction, but by analogy.
+
+“Tell me who your neighbors are, and I’ll tell you who you are.”
+
+This is the philosophy behind algorithms such as k-Nearest Neighbors (kNN) and related distance-based methods.
+
+⸻
+
+From Boundaries to Proximity
+
+While margin-based algorithms define decision boundaries globally, instance-based models make decisions locally.
+Each new point is evaluated in the context of its surroundings.
+If most of its neighbors belong to class A, the point is classified as A.
+There is no need to assume linearity, normality, or even continuity — the data itself defines the geometry.
+
+This approach provides flexibility:
+	•	It adapts naturally to non-linear and irregular shapes.
+	•	It can represent complex interactions without explicit feature transformations.
+	•	It works well even when only small regions of the data exhibit structure.
+
+However, that flexibility comes at a cost:
+storing and comparing all instances means high computational cost, and because it learns no global model, it is sensitive to noise and irrelevant features.
+
+⸻
+
+Why Instance-based Thinking Matters
+
+In many real-world problems, decisions are inherently local.
+A rare medical case may resemble only a few other patients in a dataset.
+An unusual image may be best understood by comparing it to its closest matches.
+In these cases, global models can oversimplify patterns that only appear in small neighborhoods.
+
+Instance-based methods capture this granularity.
+They do not generalize through equations, but through similarity —
+an idea that also underlies modern deep learning embeddings and retrieval-based systems.
+
+⸻
+
+Conceptual Shift
+
+This family of models represents another philosophical turn:
+	•	From probability (family A) to geometry (family B),
+	•	and now to memory and proximity (family C).
+
+Instead of asking “What is the separating function?”, we now ask
+
+“Which points are most similar to this one, and what can they tell me?”
+
+The heart of this method lies in the choice of distance metric —
+how we define “similarity” between observations —
+and in how we decide how many neighbors (k) to consider.
+
+These questions define the core of the next model,
+the simplest and most iconic of this family:
+k-Nearest Neighbors (kNN) — a classifier that makes decisions by remembering and comparing, not by generalizing.
 
 #### 9. Distance metrics, scaling, k selection.  (Distance metrics, scaling, k selection.)
 
