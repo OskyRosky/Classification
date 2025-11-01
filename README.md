@@ -2396,7 +2396,7 @@ making decisions not only accurate but also equitable.
 
 #### 11. Cost-sensitive Trees (class weights, impurity adjustments)
 
-What is it?
+**What is it?**
 
 Cost-sensitive Decision Trees extend the standard CART framework to handle imbalanced datasets or unequal misclassification costs.
 While traditional Decision Trees minimize overall impurity as if all errors were equally costly, cost-sensitive variants introduce weighting schemes that prioritize critical classes or reduce bias toward majority outcomes.
@@ -2405,7 +2405,7 @@ This adaptation ensures that the model does not simply aim for accuracy but opti
 
 ⸻
 
-Why use it?
+**Why use it?**
 
 In many real-world problems, accuracy alone is misleading.
 A model predicting “no fraud” for every transaction might achieve 99.9% accuracy if frauds are rare — yet be useless in practice.
@@ -2420,7 +2420,7 @@ Rather than discarding imbalance handling to post-processing (e.g., resampling),
 
 ⸻
 
-Intuition
+**Intuition**
 
 In standard trees, impurity measures (like Gini or entropy) assume each class contributes equally.
 Cost-sensitive trees modify these measures by weighting observations or classes according to their importance.
@@ -2436,7 +2436,7 @@ the model asks
 
 ⸻
 
-Mathematical foundation
+**Mathematical foundation**
 
 Let w_k represent the weight (or cost) associated with class k.
 The weighted Gini impurity at a node t becomes:
@@ -2468,7 +2468,7 @@ $$
 
 ⸻
 
-Training logic
+**Training logic**
 
 Training follows the same recursive partitioning steps as CART but introduces weight-adjusted impurity calculations:
 	1.	Compute class distributions and weights at each node.
@@ -2484,7 +2484,7 @@ This ensures that the tree structure aligns with the application’s true risk p
 
 ⸻
 
-Assumptions and limitations
+**Assumptions and limitations**
 
 Assumptions
 	•	Class imbalance or differential misclassification costs are known or estimable.
@@ -2511,7 +2511,7 @@ These parameters shape how the model distributes focus between majority stabilit
 
 ⸻
 
-Evaluation focus
+**Evaluation focus**
 
 Accuracy is insufficient — evaluation must prioritize cost-aware metrics:
 	•	Precision, Recall, and F1-score, especially per class.
@@ -2523,7 +2523,7 @@ Cross-validation should preserve class ratios (stratified folds) to avoid mislea
 
 ⸻
 
-When to use / When not to use
+**When to use / When not to use**
 
 Use it when:
 	•	Data are imbalanced and certain misclassifications are more serious.
@@ -2537,7 +2537,7 @@ Avoid it when:
 
 ⸻
 
-References
+**References**
 
 Canonical papers
 
@@ -2564,26 +2564,180 @@ Next: E. Ensemble Models — Learning by Aggregation.
 
 -----
 
-
-
 ### E. Ensemble Models - learning by Aggregation.
+
+**From Individual Learners to Collective Intelligence**
+
+Up to this point, each model we explored — linear, geometric, instance-based, or tree-based — made predictions independently.
+They learned a single decision function, a solitary view of the data.
+However, even the best single model is prone to bias, noise, or variance.
+The idea behind ensemble learning is both simple and revolutionary:
+
+“Instead of relying on one imperfect model, let’s combine many of them —
+and let their collective wisdom yield better, more stable predictions.”
+
+This is the core philosophy of ensemble methods: learning by aggregation.
+
+⸻
+
+**The Core Intuition**
+
+Imagine asking several experts to classify an image, predict a disease, or decide on a loan.
+Each will have their own perspective, error tendencies, and biases.
+But if their opinions are aggregated intelligently — by averaging, voting, or weighting —
+the final decision often surpasses that of any individual expert.
+
+In statistical terms, ensemble methods reduce variance and bias by combining multiple weak or moderately strong learners into a single robust predictor.
+Their success relies on a fundamental principle of collective intelligence:
+
+“Diversity + Independence + Aggregation = Accuracy.”
+
+When models make uncorrelated errors, their ensemble tends to cancel noise while reinforcing the true signal.
+
+⸻
+
+**Why Ensembles Work**
+
+1.	Variance Reduction (Stability)
+Averaging many unstable models (like trees) smooths out noise and improves generalization — the essence of Bagging and Random Forests.
+
+2.	Bias Reduction (Precision)
+Sequentially combining weak learners where each corrects the previous one’s mistakes — the logic behind Boosting algorithms (AdaBoost, XGBoost, etc.) — drives models toward higher accuracy.
+
+3.	Feature Interaction and Complexity
+Ensembles automatically model complex relationships by aggregating multiple decision paths, without requiring explicit feature engineering.
+
+4.	Universal Adaptability
+Any base model can be ensembled — decision trees, linear classifiers, neural nets — making the framework extremely flexible.
+
+⸻
+
+**A New Philosophy of Learning**
+
+Ensemble learning reflects a shift from “one best model” to “many cooperating models”.
+It embodies a pragmatic view of intelligence: error is inevitable, but collective reasoning minimizes it.
+
+Each ensemble technique differs mainly in how it builds and aggregates its members:
+	•	Some train learners independently and combine them later (e.g., Bagging, Random Forests, Extra Trees).
+	•	Others train them sequentially, each focusing on correcting prior errors (e.g., AdaBoost, Gradient Boosting, XGBoost, LightGBM, CatBoost).
+
+This diversity of construction gives rise to two main paradigms:
+	•	Parallel ensembles — focus on stability.
+	•	Sequential ensembles — focus on precision.
+
+⸻
+
+**Why They Dominate Modern ML**
+
+In applied machine learning — especially with tabular data — ensemble models have become the gold standard.
+They consistently outperform deep neural networks on structured datasets due to their ability to:
+	•	Handle missing data gracefully.
+	•	Capture complex feature interactions automatically.
+	•	Scale efficiently on large datasets.
+	•	Require minimal preprocessing or tuning to achieve competitive results.
+
+Their performance, interpretability (through feature importance), and ease of deployment make them central to both academic and industrial ML pipelines.
+
+⸻
+
+**Conceptual Transition from Trees to Forests**
+
+Tree-based models (as seen in the previous section) are like individual decision-makers: interpretable but unstable.
+Ensembles transform them into communities of decision-makers — each tree exploring slightly different perspectives of the same problem.
+
+By aggregating hundreds or thousands of shallow trees, the ensemble stabilizes predictions while retaining nonlinearity and interpretability.
+This philosophy underlies nearly all modern classifiers used in data science competitions, enterprise systems, and research pipelines.
+
+⸻
+
+**What’s Next**
+
+We will explore the most influential ensemble methods, grouped by their aggregation logic:
+	1.	Bagging (Bootstrap Aggregating) — parallel model averaging for variance reduction.
+	2.	Random Forests — ensemble of de-correlated trees for balanced performance.
+	3.	Extra Trees — extreme randomization for even lower variance.
+	4.	AdaBoost — sequentially boosted weak learners focusing on hard examples.
+	5.	Gradient Boosting (GBDT) — gradient-based sequential optimization.
+	6.	XGBoost — regularized, optimized GBDT implementation.
+	7.	LightGBM — efficient, leaf-wise gradient boosting for speed and scalability.
+	8.	CatBoost — boosting with categorical encoding and order-based regularization.
+
+Each of these methods represents a refinement of the ensemble idea —
+from statistical aggregation to algorithmic synergy —
+and together they form the backbone of modern supervised learning.
+
+
 
 #### Bagging.
 
+
+-----
+
+
+-----
+
 #### Random Forest.
+
+
+
+-----
+
+
+-----
 
 #### Extra Trees.
 
+
+-----
+
+
+-----
+
 #### AdaBoost.
+
+
+-----
+
+
+-----
 
 #### Gradient Boosting (GBDT).
 
+
+
+-----
+
+
+-----
+
 #### XGBoost.
+
+
+-----
+
+
+-----
 
 #### LightGBM.
 
+
+
+
+-----
+
+
+-----
+
+
 #### CatBoost.
 
+
+
+
+-----
+
+
+-----
 
 
 ### F. Neural Networks for Classification
