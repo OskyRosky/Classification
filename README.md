@@ -2375,8 +2375,12 @@ Canonical papers
 Web resources
 
 •	Scikit-learn User Guide — Decision Trees
+
 	https://scikit-learn.org/stable/modules/tree.html￼
+
+	
 •	StatQuest — Decision Trees Clearly Explained
+
 	https://www.youtube.com/watch?v=7VeUPuFGJHk￼
 
 
@@ -2392,27 +2396,193 @@ making decisions not only accurate but also equitable.
 
 #### 11. Cost-sensitive Trees (class weights, impurity adjustments)
 
+What is it?
+
+Cost-sensitive Decision Trees extend the standard CART framework to handle imbalanced datasets or unequal misclassification costs.
+While traditional Decision Trees minimize overall impurity as if all errors were equally costly, cost-sensitive variants introduce weighting schemes that prioritize critical classes or reduce bias toward majority outcomes.
+
+This adaptation ensures that the model does not simply aim for accuracy but optimizes for risk-adjusted correctness — a crucial distinction in domains such as fraud detection, medical diagnosis, and credit scoring, where false negatives and false positives carry very different consequences.
+
+⸻
+
+Why use it?
+
+In many real-world problems, accuracy alone is misleading.
+A model predicting “no fraud” for every transaction might achieve 99.9% accuracy if frauds are rare — yet be useless in practice.
+Cost-sensitive trees address this by incorporating error cost asymmetry directly into the learning process.
+
+They are especially valuable when:
+	•	One class is rare but important (e.g., fraud, disease, failure).
+	•	The cost of false negatives ≠ false positives.
+	•	Regulatory or ethical contexts demand fair treatment of minority cases.
+
+Rather than discarding imbalance handling to post-processing (e.g., resampling), these trees embed fairness and balance into the tree’s growth criteria.
+
+⸻
+
+Intuition
+
+In standard trees, impurity measures (like Gini or entropy) assume each class contributes equally.
+Cost-sensitive trees modify these measures by weighting observations or classes according to their importance.
+
+During training, a split that correctly classifies a rare but important class is given more credit, while misclassifying it incurs greater penalty.
+This shifts the tree’s growth toward decisions that protect against costly mistakes.
+
+Conceptually, instead of asking
+
+“Which split reduces impurity the most?”
+the model asks
+“Which split reduces weighted impurity — given how important each class is?”
+
+⸻
+
+Mathematical foundation
+
+Let w_k represent the weight (or cost) associated with class k.
+The weighted Gini impurity at a node t becomes:
+
+$$
+G_w(t) = 1 - \sum_{k=1}^{K} \left( \frac{w_k p_{k,t}}{\sum_{j=1}^{K} w_j p_{j,t}} \right)^2
+$$
+
+Similarly, the weighted entropy formulation is:
+
+$$
+H_w(t) = - \sum_{k=1}^{K} w_k p_{k,t} \log_2(p_{k,t})
+$$
+
+The split criterion generalizes to:
+
+$$
+\text{Split}(j, s) = \arg\min_{j,s} \Big[ \frac{N_L}{N} I_w(L) + \frac{N_R}{N} I_w(R) \Big]
+$$
+
+where I_w(\cdot) represents the weighted impurity measure.
+Here, w_k can reflect class imbalance, monetary cost, or policy-driven penalties.
+
+Finally, prediction at each leaf node uses weighted majority voting, not raw frequency:
+
+$$
+\hat{y}(x) = \arg\max_{k} \left( w_k , p_{k,\text{leaf}} \right)
+$$
+
+⸻
+
+Training logic
+
+Training follows the same recursive partitioning steps as CART but introduces weight-adjusted impurity calculations:
+	1.	Compute class distributions and weights at each node.
+	2.	Evaluate all candidate splits based on weighted impurity.
+	3.	Select the split that minimizes weighted impurity loss.
+	4.	Recurse until stopping criteria are met.
+
+Optionally, misclassification cost matrices can be defined explicitly, assigning higher penalties to specific errors — for example:
+
+Cost(false negative) = 10 × Cost(false positive)
+
+This ensures that the tree structure aligns with the application’s true risk profile.
+
+⸻
+
+Assumptions and limitations
+
+Assumptions
+	•	Class imbalance or differential misclassification costs are known or estimable.
+	•	Assigned weights reasonably approximate the real-world importance of errors.
+
+Limitations
+	•	Sensitive to incorrect or arbitrary weight assignment.
+	•	May still overfit if imbalance is extreme.
+	•	Weighted impurities can bias splits toward small subgroups if not carefully regularized.
+	•	Interpretability slightly decreases when costs are implicit or application-specific.
+
+Still, in regulated or high-stakes domains, these trees provide more responsible and realistic decision boundaries.
+
+⸻
+
+Key hyperparameters (conceptual view)
+	•	class_weight: assigns relative importance to each class (balanced, custom dictionary).
+	•	sample_weight: provides per-observation control during training.
+	•	criterion: impurity measure (gini, entropy, or weighted variants).
+	•	min_samples_split / min_samples_leaf: constrain growth to prevent overfitting on minority subsets.
+	•	max_depth: limits complexity, improving generalization on skewed data.
+
+These parameters shape how the model distributes focus between majority stability and minority sensitivity.
+
+⸻
+
+Evaluation focus
+
+Accuracy is insufficient — evaluation must prioritize cost-aware metrics:
+	•	Precision, Recall, and F1-score, especially per class.
+	•	ROC–AUC and PR–AUC for discrimination quality.
+	•	Confusion matrix weighted by cost to visualize trade-offs.
+	•	Balanced accuracy or Matthews Correlation Coefficient (MCC) for overall fairness.
+
+Cross-validation should preserve class ratios (stratified folds) to avoid misleading validation results.
+
+⸻
+
+When to use / When not to use
+
+Use it when:
+	•	Data are imbalanced and certain misclassifications are more serious.
+	•	You can estimate or define realistic cost ratios.
+	•	Fairness, ethics, or policy compliance require equitable treatment.
+
+Avoid it when:
+	•	Costs are unknown or arbitrary.
+	•	Data imbalance is minor (standard CART suffices).
+	•	Simpler rebalancing techniques (SMOTE, class weights) already yield acceptable results.
+
+⸻
+
+References
+
+Canonical papers
+
+1.	Breiman, L., Friedman, J., Olshen, R., & Stone, C. (1984). Classification and Regression Trees. Wadsworth.
+2.	Elkan, C. (2001). The Foundations of Cost-Sensitive Learning. IJCAI.
+3.	Ling, C. X., & Sheng, V. S. (2008). Cost-Sensitive Learning and the Class Imbalance Problem. Springer.
+
+Web resources
+
+•	Scikit-learn User Guide — Class and Sample Weights
+https://scikit-learn.org/stable/modules/tree.html#class-weight￼
+
+•	Medium — Understanding Cost-Sensitive Learning in Decision Trees
+https://medium.com/@dataman-in-ai/cost-sensitive-decision-trees-8faae4b4f40c￼
+
+
+-----
+
+Cost-sensitive Decision Trees remind us that accuracy without context can be deceptive.
+They embed ethical and economic considerations into the decision process — a precursor to responsible AI.
+Yet, even with weighting and pruning, single trees remain unstable and limited in expressiveness.
+The next great leap in classification came from ensembles, which combine the wisdom of many trees to achieve remarkable robustness and precision.
+Next: E. Ensemble Models — Learning by Aggregation.
+
+-----
 
 
 
+### E. Ensemble Models - learning by Aggregation.
 
-### E. Ensemble Models
+#### Bagging.
 
-#### Bagging
+#### Random Forest.
 
-#### Random Forest
+#### Extra Trees.
 
-#### Extra Trees
+#### AdaBoost.
 
-#### AdaBoost
+#### Gradient Boosting (GBDT).
 
-#### Gradient Boosting (GBDT)
+#### XGBoost.
 
-#### XGBoost
+#### LightGBM.
 
-#### LightGBM
-
-#### CatBoost
+#### CatBoost.
 
 
 
