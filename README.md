@@ -3681,21 +3681,339 @@ leveraging histogram-based learning and leaf-wise growth to push efficiency to t
 
 #### 18. LightGBM (Light Gradient Boosting Machine).
 
+**What is it?**
 
+LightGBM, short for Light Gradient Boosting Machine, is a fast, efficient, and scalable implementation of Gradient Boosted Decision Trees (GBDT).
+Developed by Microsoft Research (2017), it was engineered to handle large datasets and high-dimensional features while maintaining high accuracy.
 
+The name “Light” refers to its memory efficiency and computational lightness.
+It achieves this by using histogram-based learning, leaf-wise tree growth, and optimized parallel computation — enabling it to outperform XGBoost in speed and scalability without sacrificing predictive power.
+
+⸻
+
+**Why use it?**
+
+LightGBM is designed for speed, scalability, and efficiency in both training and inference.
+It is widely adopted in production systems and data competitions for its ability to handle:
+	•	Large-scale datasets with millions of rows and hundreds of features.
+	•	Categorical variables natively, without one-hot encoding.
+	•	High-performance computing environments (supports GPU acceleration).
+	•	Highly imbalanced datasets via custom objective functions and weights.
+
+Compared to XGBoost, it typically:
+	•	Trains 10–20× faster.
+	•	Uses less memory.
+	•	Maintains or improves predictive accuracy.
+
+⸻
+
+**Intuition**
+
+LightGBM builds trees in a leaf-wise (best-first) manner rather than level-wise (breadth-first) like XGBoost.
+This means that instead of expanding all nodes at the same depth, LightGBM always splits the leaf with the highest loss reduction, leading to deeper, more accurate trees with fewer overall splits.
+
+However, deeper trees can overfit if not controlled — hence parameters like max_depth and num_leaves are critical for regularization.
+
+Another key idea is the histogram-based algorithm:
+	•	Continuous features are binned into discrete intervals.
+	•	This reduces computation by grouping similar feature values together.
+	•	Split search becomes faster and more memory-efficient.
+
+Conceptually, LightGBM learns just like GBDT, but takes faster, more informed steps through smarter data representation and growth strategies.
+
+⸻
+
+**Mathematical foundation**
+
+Like GBDT and XGBoost, LightGBM minimizes a differentiable loss function using additive trees:
+
+$$
+F_m(x) = F_{m-1}(x) + \eta , h_m(x)
+$$
+
+where each new tree h_m(x) fits the negative gradients of the loss function.
+
+The innovation lies in how LightGBM finds h_m(x):
+	•	It approximates continuous features into discrete bins B_k.
+	•	For each feature j, it builds a histogram of gradients and Hessians across bins:
+
+$$
+G_{j,b} = \sum_{i \in B_{j,b}} g_i \quad \text{and} \quad H_{j,b} = \sum_{i \in B_{j,b}} h_i
+$$
+
+These aggregated statistics allow fast computation of the gain for each split candidate:
+
+$$
+\text{Gain} = \frac{1}{2} \left( \frac{G_L^2}{H_L + \lambda} + \frac{G_R^2}{H_R + \lambda} - \frac{(G_L + G_R)^2}{H_L + H_R + \lambda} \right) - \gamma
+$$
+
+where G_L, G_R and H_L, H_R are gradient and Hessian sums of the left and right child nodes,
+\lambda is the L2 regularization term, and \gamma controls the complexity penalty.
+
+This formula efficiently determines the best split by maximizing information gain while avoiding overfitting.
+
+⸻
+
+**Training logic**
+	1.	Initialize the model with a constant prediction (like GBDT).
+	2.	Compute gradients and Hessians for all samples.
+	3.	Discretize features into histogram bins.
+	4.	Find the best leaf to split based on maximum gain.
+	5.	Update the model by adding the new tree scaled by the learning rate.
+	6.	Repeat until the number of iterations or early-stopping criterion is met.
+
+LightGBM’s leaf-wise growth and histogram binning make it extremely efficient for large data volumes.
+
+⸻
+
+**Assumptions and limitations**
+
+Assumptions
+	•	The underlying loss function is differentiable.
+	•	Weak learners (trees) can approximate residuals effectively.
+
+Limitations
+	•	More prone to overfitting than level-wise methods (requires strong regularization).
+	•	Sensitive to small datasets — leaf-wise splits may over-specialize.
+	•	Slightly less interpretable due to aggressive depth growth.
+
+⸻
+
+**Key hyperparameters (conceptual view)**
+	•	num_leaves: controls the maximum complexity of trees.
+	•	max_depth: limits tree depth (helps prevent overfitting).
+	•	learning_rate: scales each tree’s contribution.
+	•	n_estimators: number of boosting iterations.
+	•	feature_fraction / bagging_fraction: random feature or row sampling for variance reduction.
+	•	lambda_l1, lambda_l2: regularization terms for sparsity and smoothness.
+	•	min_data_in_leaf: minimum samples per leaf (key to regularization).
+	•	boosting_type: gbdt, dart, or goss (Gradient-based One-Side Sampling).
+
+⸻
+
+**Evaluation focus**
+
+Evaluate using the same criteria as GBDT or XGBoost:
+	•	ROC–AUC, PR–AUC, Log-loss, F1-score for classification.
+	•	Early stopping on validation data to detect overfitting.
+	•	Feature importance and SHAP values for interpretability.
+
+Additionally, monitor leaf growth and gain ratios to ensure the model doesn’t overfit through overly deep or imbalanced splits.
+
+⸻
+
+**When to use / When not to use**
+
+Use it when:
+	•	You have large-scale datasets with high-dimensional features.
+	•	You need extremely fast training and deployment.
+	•	You want native categorical handling and GPU acceleration.
+
+Avoid it when:
+	•	The dataset is small or simple (simpler models are more interpretable).
+	•	The data is noisy — leaf-wise splitting can exaggerate noise effects.
+	•	Feature binning may discard important fine-grained distinctions.
+
+⸻
+
+**References**
+
+Canonical papers
+	1.	Ke, G., Meng, Q., Finley, T., Wang, T., Chen, W., Ma, W., Ye, Q., & Liu, T.-Y. (2017). LightGBM: A Highly Efficient Gradient Boosting Decision Tree. Advances in Neural Information Processing Systems (NeurIPS).
+	2.	Friedman, J. H. (2001). Greedy Function Approximation: A Gradient Boosting Machine. Annals of Statistics.
+	3.	Chen, T., & Guestrin, C. (2016). XGBoost: A Scalable Tree Boosting System. KDD Conference.
+
+Web resources
+	•	LightGBM Documentation
+https://lightgbm.readthedocs.io/￼
+	•	Microsoft Research Blog — LightGBM Overview
+https://www.microsoft.com/en-us/research/blog/lightgbm-a-fast-open-source-gradient-boosting-framework/￼
+
+-----
+
+LightGBM redefined gradient boosting efficiency, merging mathematical rigor with software engineering excellence.
+Its ability to handle categorical data, billions of samples, and high-dimensional spaces made it a cornerstone of industrial ML pipelines.
+
+Yet, while LightGBM focused on speed and scale, it still relied on numerical encodings for categorical variables,
+sometimes losing information about their natural order or interaction.
+
+The next model, CatBoost, introduced a breakthrough in how categorical features are handled —
+combining ordered boosting and category encoding directly within the training process to preserve statistical integrity.
 
 -----
 
 
+#### 19. CatBoost (Categorical Boosting).
+
+CatBoost, short for Categorical Boosting, is a high-performance gradient boosting algorithm developed by Yandex (2018).
+It extends the standard GBDT framework (like XGBoost and LightGBM) but introduces unique innovations that make it particularly effective with categorical data and robust against overfitting.
+
+The two defining ideas of CatBoost are:
+	1.	Ordered boosting — a mathematically principled way to prevent prediction shift and target leakage.
+	2.	Efficient categorical encoding — built-in transformation of categorical features into numerical statistics while preserving the training order.
+
+These innovations allow CatBoost to deliver state-of-the-art accuracy with minimal parameter tuning and high interpretability.
+
+⸻
+
+Why use it?
+
+CatBoost is designed to natively handle categorical variables and reduce overfitting in iterative boosting.
+Unlike other algorithms that require preprocessing (e.g., one-hot encoding), CatBoost processes categories internally and efficiently.
+
+It is widely used when:
+	•	Data contain many categorical features or mixed data types.
+	•	Overfitting is a concern (CatBoost’s ordered boosting mitigates it).
+	•	Interpretability and calibration matter alongside predictive power.
+
+Applications include:
+	•	Financial risk scoring.
+	•	E-commerce recommendation systems.
+	•	Customer segmentation and churn modeling.
+	•	Natural language and text classification (token categories).
+
+⸻
+
+Intuition
+
+Traditional gradient boosting introduces a subtle issue known as prediction shift:
+each tree uses the entire training dataset — including its own target values — to generate splits.
+This can lead to target leakage, where future information accidentally influences current predictions.
+
+CatBoost solves this through ordered boosting, a clever trick that simulates how a model would behave if trained on sequentially arriving data:
+each sample’s prediction is made using only the trees trained on previous samples.
+This ensures that no target information from the current sample leaks into its prediction.
+
+At the same time, CatBoost replaces one-hot encoding with ordered target statistics (mean encodings):
+instead of turning categories into long binary vectors, it computes statistics like the average label per category,
+using permutations to preserve independence and avoid bias.
+
+In short:
+	•	LightGBM optimizes for speed.
+	•	CatBoost optimizes for correctness and categorical integrity.
+
+⸻
+
+Mathematical foundation
+
+Like other boosting algorithms, CatBoost minimizes an additive objective:
+
+$$
+F_m(x) = F_{m-1}(x) + \eta , h_m(x)
+$$
+
+but modifies both data representation and gradient updates.
+	1.	Ordered Target Encoding
+For each categorical feature c, CatBoost computes:
+
+$$
+\text{Encoded}(c_i) = \frac{\sum_{j < i} y_j + a \cdot P}{N_{c_i,<i} + a}
+$$
+
+where:
+	•	N_{c_i,<i} is the number of preceding samples with the same category as c_i,
+	•	P is the prior (e.g., global mean of targets),
+	•	a is the smoothing parameter controlling regularization.
+
+This prevents using current or future target values when computing encodings.
+	2.	Ordered Boosting
+Instead of using the full dataset to compute gradients, CatBoost builds multiple random permutations of the training data.
+At each iteration, for a given permutation, the gradient of a sample depends only on previous samples in that ordering.
+
+This mechanism ensures unbiased gradient estimation and reduces overfitting.
+
+⸻
+
+Training logic
+	1.	Convert categorical features into ordered statistics using permutation-based mean encoding.
+	2.	Initialize the model with a baseline prediction (global prior).
+	3.	For each iteration m:
+	•	Compute gradients using ordered boosting (no leakage).
+	•	Fit a decision tree to these residuals.
+	•	Add the tree’s weighted prediction to the ensemble.
+	4.	Repeat until convergence or early-stopping criterion.
+
+CatBoost can also handle text, embeddings, and numerical features simultaneously,
+making it one of the most versatile gradient boosting implementations.
+
+⸻
+
+Assumptions and limitations
+
+Assumptions
+	•	Data can be meaningfully partitioned by categories or interactions.
+	•	Categorical statistics (mean encodings) correlate with the target.
+
+Limitations
+	•	Slightly slower training than LightGBM due to ordered permutations.
+	•	Requires enough samples per category to compute stable statistics.
+	•	Less transparent mathematically (more internal heuristics).
+
+⸻
+
+Key hyperparameters (conceptual view)
+	•	iterations: number of boosting stages.
+	•	learning_rate: shrinkage applied to each tree.
+	•	depth: tree depth (controls interaction strength).
+	•	l2_leaf_reg: L2 regularization coefficient.
+	•	rsm: feature subsampling rate.
+	•	border_count: number of split bins for numerical features.
+	•	cat_features: list of categorical feature indices.
+	•	loss_function: e.g., Logloss, CrossEntropy, RMSE.
+	•	bootstrap_type: sampling strategy (Bayesian, Bernoulli, MVS).
+
+⸻
+
+Evaluation focus
+
+Like other boosting models, CatBoost can be evaluated with:
+	•	ROC–AUC, Log-loss, and PR–AUC for classification.
+	•	MSE and MAE for regression.
+
+Additional diagnostics include:
+	•	Overfitting detector (CatBoost supports built-in early stopping).
+	•	Feature importance and prediction analysis (via CatBoost visualizer).
+	•	Parameter sensitivity — especially learning rate and depth.
+
+⸻
+
+When to use / When not to use
+
+Use it when:
+	•	Your dataset includes categorical or mixed-type variables.
+	•	You want strong accuracy without heavy tuning.
+	•	Data volume is moderate to large and you can afford slightly slower training.
+
+Avoid it when:
+	•	Data are purely numeric and LightGBM or XGBoost already perform optimally.
+	•	The dataset is very small — ordered encodings may overfit.
+	•	You need real-time, ultra-low-latency inference (trees are dense).
+
+⸻
+
+References
+
+Canonical papers
+	1.	Prokhorenkova, L., Gusev, G., Vorobev, A., Dorogush, A. V., & Gulin, A. (2018). CatBoost: Unbiased Boosting with Categorical Features. Advances in Neural Information Processing Systems (NeurIPS).
+	2.	Dorogush, A. V., Ershov, V., & Gulin, A. (2018). CatBoost: Gradient Boosting with Categorical Features Support. arXiv preprint arXiv:1810.11363.
+	3.	Friedman, J. H. (2001). Greedy Function Approximation: A Gradient Boosting Machine. Annals of Statistics.
+
+Web resources
+	•	CatBoost Documentation
+https://catboost.ai/en/docs/￼
+	•	Yandex Research Blog — Introducing CatBoost
+https://research.yandex.com/news/introducing-catboost￼
+
 -----
 
+CatBoost closed the loop on ensemble evolution — combining the predictive strength of gradient boosting with the intelligence of statistical encoding.
+By embedding categorical reasoning directly into the model’s logic, it removed one of the biggest barriers in real-world tabular learning.
 
-#### CatBoost.
+With ensemble methods now fully explored — from randomization to boosting, from bias–variance control to categorical mastery —
+we are ready to step into the next paradigm: representation learning.
 
-
-
-
------
+In the next section, we will introduce F. Neural Networks for Classification,
+where models no longer rely on predefined features, but learn representations directly from the data itself.
 
 
 -----
