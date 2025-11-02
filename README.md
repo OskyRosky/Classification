@@ -4022,6 +4022,93 @@ where models no longer rely on predefined features, but learn representations di
 
 ### F. Neural Networks for Classification
 
+Up to this point, every model we have explored — linear, geometric, instance-based, tree-based, and ensemble — has shared one implicit assumption:
+the features already contain enough information for classification.
+
+Whether through probability, distance, or aggregation, these algorithms rely on humans (or preprocessing pipelines) to define good features.
+Even the most sophisticated ensemble, such as CatBoost or XGBoost, depends on how well the input variables describe the phenomenon.
+
+Neural networks changed that assumption entirely.
+Instead of relying on manual feature engineering, they learn representations automatically — discovering hidden patterns, hierarchies, and abstractions directly from the data.
+
+This marks a profound shift: models stop being consumers of features and become creators of representations.
+
+⸻
+
+From Ensembles to Neural Networks — Why Change?
+
+Ensemble methods like Random Forests or Gradient Boosting Machines remain the gold standard for structured, tabular data.
+They are robust, interpretable, and perform extraordinarily well with limited samples and noisy features.
+
+However, their power has boundaries:
+	1.	Feature dependence
+	•	Ensembles cannot automatically learn spatial, temporal, or contextual dependencies.
+	•	They need explicit input engineering (e.g., lags for time series, pixel intensities for images).
+	2.	Scalability in representation
+	•	Ensembles treat every feature as independent and lack hierarchical understanding.
+	•	They cannot compress, abstract, or recompose information across multiple levels.
+	3.	Generalization beyond tabular data
+	•	Texts, audio, and images are not naturally represented as fixed-length numeric vectors.
+	•	Ensembles fail to capture structure in such modalities (e.g., sequential order, spatial locality).
+
+Neural networks emerged precisely to solve these limitations.
+They introduce the concept of distributed representations, where each neuron encodes part of a pattern,
+and layers compose these local representations into increasingly complex abstractions — a process known as representation learning.
+
+⸻
+
+Why use Neural Networks for Classification?
+
+Neural networks excel when:
+	•	Data are high-dimensional and unstructured (e.g., images, text, audio).
+	•	Relationships are nonlinear and hierarchical.
+	•	You want to automatically learn both features and classifiers in a single system.
+	•	Large datasets are available to train deep architectures effectively.
+
+In classification tasks, neural networks can model almost any decision surface — from simple linear boundaries to complex, curved manifolds — by stacking nonlinear transformations.
+They bridge the gap between statistical modeling and cognitive representation, offering flexibility unmatched by any traditional model.
+
+That said, their power comes at a cost:
+	•	They require large data volumes and significant computational resources.
+	•	They are less interpretable, though methods like SHAP or attention maps help.
+	•	They can overfit easily without proper regularization or architecture design.
+
+In short, ensembles refine human-engineered features; neural networks discover them.
+Both have their place: ensembles dominate tabular tasks, while neural networks reign over perceptual, sequential, and generative domains.
+
+⸻
+
+Roadmap for this Section
+
+In this final section, we will explore how neural architectures perform classification across different data modalities.
+Each model represents a unique way of capturing structure and learning decision boundaries from raw inputs.
+
+We will examine four key architectures:
+	1.	MLP (Feed-Forward Neural Network)
+The foundational form of neural computation — fully connected layers transforming features through nonlinear activations.
+Ideal for tabular and small structured datasets.
+	2.	CNN (Convolutional Neural Network)
+Designed for image and spatial data, CNNs learn local patterns (edges, textures, shapes) and combine them into global concepts.
+	3.	RNN / LSTM / GRU (Recurrent Neural Networks)
+Suited for sequence data — text, speech, sensor readings — where order and temporal dependencies matter.
+They capture dynamics over time using memory cells and recurrent connections.
+	4.	Transformer-based Classifiers
+The most modern paradigm, relying on self-attention rather than recurrence.
+Transformers learn global dependencies efficiently and now dominate NLP and multimodal learning.
+
+-------
+
+The path from linear models to neural architectures mirrors the evolution of machine learning itself —
+from explicit formulas to implicit representation learning.
+
+Each neural architecture we will study next — MLP, CNN, RNN, and Transformer —
+builds upon the same principle: layered abstraction.
+A neuron learns a local pattern; a layer learns a concept; the network learns meaning.
+
+We begin with the simplest of these, the Multilayer Perceptron (MLP) —
+a direct descendant of the Perceptron, yet infinitely more expressive.
+
+-------
 
 #### MLP (Feed-Forward Neural Network)
 	
@@ -4034,7 +4121,7 @@ where models no longer rely on predefined features, but learn representations di
 	
 
 
-
+### Summary.
 
 
 
