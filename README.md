@@ -3845,6 +3845,8 @@ combining ordered boosting and category encoding directly within the training pr
 
 #### 19. CatBoost (Categorical Boosting).
 
+**What is it?**
+
 CatBoost, short for Categorical Boosting, is a high-performance gradient boosting algorithm developed by Yandex (2018).
 It extends the standard GBDT framework (like XGBoost and LightGBM) but introduces unique innovations that make it particularly effective with categorical data and robust against overfitting.
 
@@ -3856,7 +3858,7 @@ These innovations allow CatBoost to deliver state-of-the-art accuracy with minim
 
 ⸻
 
-Why use it?
+**Why use it?**
 
 CatBoost is designed to natively handle categorical variables and reduce overfitting in iterative boosting.
 Unlike other algorithms that require preprocessing (e.g., one-hot encoding), CatBoost processes categories internally and efficiently.
@@ -3874,7 +3876,7 @@ Applications include:
 
 ⸻
 
-Intuition
+**Intuition**
 
 Traditional gradient boosting introduces a subtle issue known as prediction shift:
 each tree uses the entire training dataset — including its own target values — to generate splits.
@@ -3894,7 +3896,7 @@ In short:
 
 ⸻
 
-Mathematical foundation
+**Mathematical foundation**
 
 Like other boosting algorithms, CatBoost minimizes an additive objective:
 
@@ -3924,7 +3926,7 @@ This mechanism ensures unbiased gradient estimation and reduces overfitting.
 
 ⸻
 
-Training logic
+**Training logic**
 	1.	Convert categorical features into ordered statistics using permutation-based mean encoding.
 	2.	Initialize the model with a baseline prediction (global prior).
 	3.	For each iteration m:
@@ -3938,7 +3940,7 @@ making it one of the most versatile gradient boosting implementations.
 
 ⸻
 
-Assumptions and limitations
+**Assumptions and limitations**
 
 Assumptions
 	•	Data can be meaningfully partitioned by categories or interactions.
@@ -3951,7 +3953,7 @@ Limitations
 
 ⸻
 
-Key hyperparameters (conceptual view)
+**Key hyperparameters (conceptual view)**
 	•	iterations: number of boosting stages.
 	•	learning_rate: shrinkage applied to each tree.
 	•	depth: tree depth (controls interaction strength).
@@ -3964,7 +3966,7 @@ Key hyperparameters (conceptual view)
 
 ⸻
 
-Evaluation focus
+**Evaluation focus**
 
 Like other boosting models, CatBoost can be evaluated with:
 	•	ROC–AUC, Log-loss, and PR–AUC for classification.
@@ -3977,7 +3979,7 @@ Additional diagnostics include:
 
 ⸻
 
-When to use / When not to use
+**When to use / When not to use**
 
 Use it when:
 	•	Your dataset includes categorical or mixed-type variables.
@@ -3991,7 +3993,7 @@ Avoid it when:
 
 ⸻
 
-References
+**References**
 
 Canonical papers
 	1.	Prokhorenkova, L., Gusev, G., Vorobev, A., Dorogush, A. V., & Gulin, A. (2018). CatBoost: Unbiased Boosting with Categorical Features. Advances in Neural Information Processing Systems (NeurIPS).
@@ -4006,15 +4008,14 @@ https://research.yandex.com/news/introducing-catboost￼
 
 -----
 
-CatBoost closed the loop on ensemble evolution — combining the predictive strength of gradient boosting with the intelligence of statistical encoding.
+CatBoost closed the loop on ensemble evolution, combining the predictive strength of gradient boosting with the intelligence of statistical encoding.
 By embedding categorical reasoning directly into the model’s logic, it removed one of the biggest barriers in real-world tabular learning.
 
-With ensemble methods now fully explored — from randomization to boosting, from bias–variance control to categorical mastery —
+With ensemble methods now fully explored, from randomization to boosting, from bias–variance control to categorical mastery,
 we are ready to step into the next paradigm: representation learning.
 
 In the next section, we will introduce F. Neural Networks for Classification,
 where models no longer rely on predefined features, but learn representations directly from the data itself.
-
 
 -----
 
