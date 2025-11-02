@@ -4228,7 +4228,7 @@ Key hyperparameters (conceptual view)
 
 ⸻
 
-Evaluation focus
+**Evaluation focus**
 
 MLPs produce probabilities, so evaluation includes:
 	•	Accuracy, ROC–AUC, and F1-score for performance.
@@ -4281,7 +4281,7 @@ the Convolutional Neural Network (CNN).
 	
 #### CNN (Convolutional Neural Network) – overview for image data.
 
-What is it?
+**What is it?**
 
 A Convolutional Neural Network (CNN) is a specialized type of neural network designed to process spatially structured data, most notably images.
 Unlike the MLP, which connects every neuron to every input, a CNN uses local connections (filters) that detect patterns such as edges, textures, and shapes in localized regions.
@@ -4291,7 +4291,7 @@ Since then, CNNs have become the dominant approach in computer vision, powering 
 
 ⸻
 
-Why use it?
+**Why use it?**
 
 CNNs are designed to exploit spatial hierarchies in data.
 They work exceptionally well when nearby features are more informative than distant ones — as in images, maps, and other grid-like structures.
@@ -4308,10 +4308,11 @@ Key advantages include:
 
 ⸻
 
-Intuition
+**Intuition**
 
 A CNN processes an image much like the human eye:
-it focuses on small areas first, then combines local insights into a global understanding.
+
+It focuses on small areas first, then combines local insights into a global understanding.
 
 Each convolutional layer applies multiple small filters (kernels) that “slide” across the image, computing dot products between the filter and local pixel neighborhoods.
 This produces feature maps that highlight where certain patterns occur.
@@ -4340,7 +4341,7 @@ The final layers are typically fully connected, integrating all learned spatial 
 
 ⸻
 
-Mathematical foundation
+**Mathematical foundation**
 
 CNNs minimize the same cross-entropy loss used in MLPs,
 but the difference lies in how they compute intermediate features using convolution rather than dense matrix multiplication.
@@ -4368,7 +4369,7 @@ Training CNNs often involves data augmentation (rotations, flips, crops) to impr
 
 ⸻
 
-Assumptions and limitations
+**Assumptions and limitations**
 
 Assumptions
 	•	Input data have local dependencies (nearby pixels are related).
@@ -4392,7 +4393,7 @@ Key hyperparameters (conceptual view)
 
 ⸻
 
-Evaluation focus
+**Evaluation focus**
 
 For classification tasks, CNNs are typically evaluated using:
 	•	Accuracy, F1-score, and ROC–AUC.
@@ -4402,7 +4403,7 @@ For classification tasks, CNNs are typically evaluated using:
 
 ⸻
 
-When to use / When not to use
+**When to use / When not to use**
 
 Use it when:
 	•	Inputs have spatial or grid-like structure (images, video frames, geospatial data).
@@ -4415,7 +4416,7 @@ Avoid it when:
 
 ⸻
 
-References
+**References**
 
 Canonical papers
 	1.	LeCun, Y., Bottou, L., Bengio, Y., & Haffner, P. (1998). Gradient-Based Learning Applied to Document Recognition. Proceedings of the IEEE.
@@ -4440,21 +4441,365 @@ We need models that can remember, accumulate, and adapt across time.
 
 #### 22. Recurrent Neural Networks (RNN, LSTM, GRU) — Overview for Sequential Data.
 
+What is it?
 
+A Recurrent Neural Network (RNN) is a class of neural architectures specifically designed to model sequential or time-dependent data.
+Unlike feed-forward networks (MLPs, CNNs), which assume independence among inputs, RNNs introduce memory — the ability to retain information from previous steps and use it to influence current predictions.
+
+This makes them essential for tasks where order matters, such as speech recognition, language modeling, time-series forecasting, or sensor data analysis.
+
+RNNs process inputs one element at a time, maintaining an internal state that evolves through time, effectively “remembering” context.
+Variants such as Long Short-Term Memory (LSTM) and Gated Recurrent Unit (GRU) extend this idea by addressing the limitations of basic RNNs, particularly their difficulty in learning long-term dependencies.
+
+⸻
+
+Why use it?
+
+RNNs are built to handle problems that traditional models cannot: those where the current output depends on previous inputs.
+They are ideal when:
+	•	The data are sequential (e.g., text, audio, sensor readings).
+	•	Temporal or contextual dependencies influence classification outcomes.
+	•	You need to process variable-length sequences instead of fixed-length vectors.
+
+Typical applications include:
+	•	Sentiment analysis (based on word order).
+	•	Speech emotion or intent classification.
+	•	Fault detection in industrial sensors.
+	•	Predicting customer behavior from past sequences of actions.
+
+⸻
+
+Intuition
+
+At the heart of an RNN lies a simple but powerful idea:
+the network has a loop.
+
+Each time step’s output depends not only on the current input x_t but also on the previous hidden state h_{t-1}.
+This recurrent connection allows the model to accumulate temporal context.
+
+For a basic RNN, the recurrence is:
+
+$$
+h_t = f(W_{xh} x_t + W_{hh} h_{t-1} + b_h)
+$$
+
+and the output (for classification) is typically:
+
+$$
+\hat{y}t = \text{softmax}(W{hy} h_t + b_y)
+$$
+
+Here, f(\cdot) is a nonlinear activation function (often tanh or ReLU).
+However, this formulation struggles with vanishing or exploding gradients, making it difficult to learn dependencies that span many time steps.
+
+⸻
+
+LSTM and GRU: Overcoming Memory Loss
+
+To address the limitations of basic RNNs, two major gated architectures were introduced:
+LSTM (Long Short-Term Memory) and GRU (Gated Recurrent Unit).
+
+Both use gates — learnable mechanisms that control the flow of information, deciding what to remember and what to forget.
+
+For LSTM, the cell update equations are:
+
+$$
+f_t = \sigma(W_f [h_{t-1}, x_t] + b_f)  \quad \text{(forget gate)}
+$$
+
+$$
+i_t = \sigma(W_i [h_{t-1}, x_t] + b_i)  \quad \text{(input gate)}
+$$
+
+$$
+\tilde{C}t = \tanh(W_C [h{t-1}, x_t] + b_C)  \quad \text{(candidate cell state)}
+$$
+
+$$
+C_t = f_t \odot C_{t-1} + i_t \odot \tilde{C}_t  \quad \text{(cell state update)}
+$$
+
+$$
+h_t = o_t \odot \tanh(C_t)  \quad \text{(hidden state update)}
+$$
+
+where \odot represents element-wise multiplication, and o_t is the output gate.
+
+The GRU simplifies this process using only two gates (update and reset), offering a faster and more efficient alternative while maintaining strong performance.
+
+⸻
+
+Mathematical foundation
+
+All recurrent architectures optimize a loss function similar to cross-entropy, aggregated across time steps:
+
+$$
+\mathcal{L} = - \frac{1}{T} \sum_{t=1}^{T} \sum_{k=1}^{K} y_{t,k} \log(\hat{y}_{t,k})
+$$
+
+Training relies on Backpropagation Through Time (BPTT) —
+a version of gradient descent that unrolls the recurrent network across time and propagates errors backward through all time steps.
+
+This allows the model to adjust both short-term and long-term dependencies, though computational and memory costs can be significant.
+
+⸻
+
+Training logic
+	1.	Sequence unrolling – represent the entire sequence as a chain of interconnected time steps.
+	2.	Forward pass – compute hidden states and outputs sequentially.
+	3.	Loss computation – accumulate cross-entropy across all time steps.
+	4.	Backward pass (BPTT) – propagate gradients through time.
+	5.	Parameter updates – adjust weights using optimizers (Adam or RMSProp).
+
+Regularization strategies like dropout, gradient clipping, and layer normalization are essential for stability and generalization.
+
+⸻
+
+Assumptions and limitations
+
+Assumptions
+	•	The input data have temporal or sequential order.
+	•	The relationship between observations is not independent.
+
+Limitations
+	•	Computationally heavy for long sequences.
+	•	Difficult to parallelize due to sequential processing.
+	•	Still limited in capturing very long-term dependencies (even for LSTMs).
+	•	Harder to interpret than traditional models.
+
+⸻
+
+Key hyperparameters (conceptual view)
+	•	hidden_units – number of neurons in the recurrent layer; controls capacity.
+	•	num_layers – depth of stacked RNN/LSTM/GRU layers.
+	•	dropout_rate – applied between layers to prevent overfitting.
+	•	sequence_length – number of time steps processed per input.
+	•	learning_rate – controls optimization step size.
+	•	bidirectional – processes sequence in both forward and backward directions.
+
+⸻
+
+Evaluation focus
+
+When RNNs are used for classification, the final hidden state (or a pooled sequence representation) is used to predict the label.
+Evaluation depends on task type:
+	•	Accuracy, F1-score, and ROC–AUC for standard classification.
+	•	Perplexity for language modeling tasks.
+	•	Temporal stability or lag sensitivity metrics for time-series evaluation.
+
+Visualization tools like attention heatmaps or hidden-state trajectories can provide insight into what the model “remembers.”
+
+⸻
+
+When to use / When not to use
+
+Use it when:
+	•	Inputs are sequential (text, time series, sensor data).
+	•	Context and temporal dependencies are crucial.
+	•	You need variable-length input handling.
+
+Avoid it when:
+	•	Inputs are spatial (use CNNs) or purely tabular.
+	•	You need full parallelization for efficiency (Transformers are better suited).
+	•	You have limited data; simpler models may generalize better.
+
+⸻
+
+References
+
+Canonical papers
+	1.	Elman, J. L. (1990). Finding Structure in Time. Cognitive Science.
+	2.	Hochreiter, S., & Schmidhuber, J. (1997). Long Short-Term Memory. Neural Computation.
+	3.	Cho, K. et al. (2014). Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation (GRU). arXiv:1406.1078.
+
+Web resources
+	•	Understanding LSTM Networks – Christopher Olah
+https://colah.github.io/posts/2015-08-Understanding-LSTMs/￼
+	•	PyTorch RNN/LSTM/GRU Tutorial
+https://pytorch.org/tutorials/beginner/nlp/sequence_models_tutorial.html￼
 
 --------
 
+Recurrent networks gave machines the power to remember and reason over time,
+transforming how AI interprets sequential data — from language to speech to finance.
 
+Yet, even these models face limits: training is sequential, gradients decay, and capturing long-range dependencies remains hard.
+The next major leap came from attention mechanisms,
+which allowed models to look at all time steps simultaneously and learn global relationships efficiently.
 
 --------
 
-#### Transformer-based Classifier – overview for text or sequential data.
+#### 23. Transformer-based Classifier – overview for text or sequential data.
 	
+What is it?
 
+A Transformer-based Classifier represents the most advanced generation of neural models for sequence and text data.
+Unlike recurrent networks, which process inputs step by step, Transformers handle entire sequences in parallel, using a mechanism called self-attention to learn dependencies between all positions in the input simultaneously.
+
+Introduced by Vaswani et al. (2017) in the seminal paper “Attention Is All You Need”, the Transformer architecture revolutionized machine learning — particularly Natural Language Processing (NLP) — by replacing recurrence with attention and enabling massive scalability.
+
+Transformers are the foundation of today’s large language models (LLMs) like BERT, GPT, and T5, but their classification variant is focused, efficient, and highly adaptable for text, sequences, or tabular time-series tasks.
+
+⸻
+
+Why use it?
+
+Transformers excel in domains where:
+	•	Long-range dependencies matter (e.g., entire paragraphs or long signals).
+	•	Order and context interact in complex ways.
+	•	Data volume supports large model capacity.
+
+They outperform RNNs and CNNs in sequence tasks because:
+	•	Attention lets the model directly connect any two positions in the input, regardless of distance.
+	•	Parallelization allows faster training and better utilization of modern GPUs.
+	•	Pretraining + fine-tuning pipelines make them extremely data-efficient for downstream classification.
+
+Common applications include:
+	•	Sentiment, topic, or intent classification (text).
+	•	Sequence labeling or anomaly detection (time-series).
+	•	Document or paragraph-level categorization.
+	•	Multimodal tasks combining text, sound, or structured data.
+
+⸻
+
+Intuition
+
+While RNNs “remember” the past step by step, Transformers attend to all positions simultaneously.
+This is achieved through self-attention, which computes how much each token (or time step) should influence every other.
+
+At a high level:
+	1.	Each input token x_i is projected into three vectors — query (Q), key (K), and value (V).
+	2.	The attention scores between tokens are computed using scaled dot-products:
+
+$$
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+$$
+	3.	This operation lets the model assign different importance weights to different parts of the sequence when predicting outcomes.
+
+For classification, the Transformer’s final hidden states are pooled — typically using a [CLS] token (in BERT-style models) or a global average — and passed to a feed-forward layer with a softmax output.
+
+Thus, attention transforms sequence learning from sequential dependence to relational understanding.
+
+⸻
+
+Mathematical foundation
+
+At its core, a Transformer encoder layer is built from two main blocks:
+	1.	Multi-Head Self-Attention — computes several attention maps in parallel, capturing different relational patterns.
+	2.	Feed-Forward Network (FFN) — applies nonlinear transformations to the attended representations.
+
+Formally, one encoder layer performs:
+
+$$
+\text{MultiHead}(Q,K,V) = \text{Concat}(\text{head}_1, \dots, \text{head}_h)W^O
+$$
+
+where each head computes:
+
+$$
+\text{head}_i = \text{Attention}(QW_i^Q, KW_i^K, VW_i^V)
+$$
+
+and the output of the layer is:
+
+$$
+H’ = \text{LayerNorm}(H + \text{Dropout}(\text{MultiHead}(H)))
+$$
+
+$$
+H_{out} = \text{LayerNorm}(H’ + \text{Dropout}(\text{FFN}(H’)))
+$$
+
+This structure is stacked across multiple layers, forming deep contextual representations of input sequences.
+For classification, only the final output (e.g., H_{CLS}) feeds the prediction head.
+
+⸻
+
+Training logic
+	1.	Tokenization and embedding – convert text or sequential inputs into numeric representations.
+	2.	Positional encoding – inject sequence order information since Transformers lack recurrence.
+	3.	Forward pass – compute attention across all tokens and pass through stacked encoder layers.
+	4.	Loss computation – use cross-entropy over the predicted class distribution.
+	5.	Backpropagation – gradients flow through all layers and attention weights.
+	6.	Fine-tuning – optionally initialize from pretrained weights (BERT, DistilBERT, RoBERTa) for faster convergence and better generalization.
+
+Transformers are typically trained with large-scale optimizers (AdamW) and require techniques like learning rate warm-up and layer-wise regularization for stability.
+
+⸻
+
+Assumptions and limitations
+
+Assumptions
+	•	Data exhibit contextual dependencies across positions.
+	•	Sequence order can be encoded explicitly (via positional embeddings).
+
+Limitations
+	•	High computational and memory cost (quadratic in sequence length).
+	•	Require substantial data and compute to avoid overfitting.
+	•	Harder to interpret due to distributed attention patterns.
+
+⸻
+
+Key hyperparameters (conceptual view)
+	•	num_layers – depth of encoder blocks (controls model capacity).
+	•	num_heads – number of attention heads (controls parallel attention diversity).
+	•	d_model – dimensionality of embeddings and hidden representations.
+	•	dropout_rate – applied to attention and feed-forward layers for regularization.
+	•	learning_rate – often scheduled with warm-up and decay.
+	•	max_seq_length – limits the context window for attention computation.
+	•	pretrained_model – base architecture (e.g., bert-base-uncased, distilbert-base-cased).
+
+⸻
+
+Evaluation focus
+
+Transformers output class probabilities, making evaluation consistent with other probabilistic models.
+However, their interpretability requires additional techniques:
+	•	Accuracy, F1-score, ROC–AUC for standard evaluation.
+	•	Attention visualization (heatmaps, attention rollouts) for interpretability.
+	•	Layer probing to understand which layers capture syntactic vs. semantic information.
+
+When fine-tuned, Transformers often set new benchmarks across text classification tasks.
+
+⸻
+
+When to use / When not to use
+
+Use it when:
+	•	You work with textual or sequential data with long dependencies.
+	•	You have access to pretrained models and sufficient compute.
+	•	You require high accuracy and contextual reasoning.
+
+Avoid it when:
+	•	The dataset is small and training from scratch would cause overfitting.
+	•	You need lightweight, interpretable, or real-time models.
+	•	Memory and inference speed are critical constraints.
+
+⸻
+
+References
+
+Canonical papers
+	1.	Vaswani, A. et al. (2017). Attention Is All You Need. NeurIPS.
+	2.	Devlin, J. et al. (2018). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. NAACL.
+	3.	Liu, Y. et al. (2019). RoBERTa: A Robustly Optimized BERT Pretraining Approach. arXiv:1907.11692.
+
+Web resources
+	•	The Illustrated Transformer – Jay Alammar
+https://jalammar.github.io/illustrated-transformer/￼
+	•	Hugging Face Transformers Documentation
+https://huggingface.co/docs/transformers￼
 
 --------
 
+Transformers represent the culmination of decades of evolution in classification —
+from linear equations to hierarchical attention systems that learn context, meaning, and structure simultaneously.
 
+They unify geometry, probability, and sequence understanding under one principle:
+“Focus on what matters.”
+
+With this final model, the taxonomy of classification methods reaches its full arc —
+from statistical foundations to modern deep architectures.
 
 --------
 
