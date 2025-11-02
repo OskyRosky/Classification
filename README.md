@@ -4035,7 +4035,7 @@ This marks a profound shift: models stop being consumers of features and become 
 
 ⸻
 
-From Ensembles to Neural Networks — Why Change?
+**From Ensembles to Neural Networks. Why Change?**
 
 Ensemble methods like Random Forests or Gradient Boosting Machines remain the gold standard for structured, tabular data.
 They are robust, interpretable, and perform extraordinarily well with limited samples and noisy features.
@@ -4057,7 +4057,7 @@ and layers compose these local representations into increasingly complex abstrac
 
 ⸻
 
-Why use Neural Networks for Classification?
+**Why use Neural Networks for Classification?**
 
 Neural networks excel when:
 	•	Data are high-dimensional and unstructured (e.g., images, text, audio).
@@ -4078,7 +4078,7 @@ Both have their place: ensembles dominate tabular tasks, while neural networks r
 
 ⸻
 
-Roadmap for this Section
+**Roadmap for this Section**
 
 In this final section, we will explore how neural architectures perform classification across different data modalities.
 Each model represents a unique way of capturing structure and learning decision boundaries from raw inputs.
@@ -4110,10 +4110,184 @@ a direct descendant of the Perceptron, yet infinitely more expressive.
 
 -------
 
-#### MLP (Feed-Forward Neural Network)
+#### 20. Multilayer Perceptron (Feed-Forward Neural Network).
+
+**What is it?**
+
+The Multilayer Perceptron (MLP) is the foundational architecture of neural networks — a fully connected, feed-forward system that maps input features to outputs through a sequence of layers.
+Each layer applies a linear transformation followed by a nonlinear activation, enabling the model to approximate complex decision boundaries.
+
+It can be viewed as the nonlinear generalization of Logistic Regression, capable of learning intricate relationships that simple linear models cannot represent.
+While conceptually simple, the MLP serves as the backbone of deep learning, forming the basis for more advanced architectures like CNNs, RNNs, and Transformers.
+
+⸻
+
+**Why use it?**
+
+The MLP is ideal when:
+	•	The dataset is structured or tabular but may contain nonlinear interactions.
+	•	Relationships between variables cannot be captured by simple linear models.
+	•	You want a flexible baseline for neural classification before moving to more specialized architectures.
+
+Its main advantages include:
+	•	Expressive power: with enough neurons and layers, an MLP can approximate any continuous function (Universal Approximation Theorem).
+	•	End-to-end learning: it learns both features and classification boundaries simultaneously.
+	•	Smooth nonlinearity: activation functions allow curved and complex decision surfaces.
+
+However, MLPs require careful regularization and hyperparameter tuning, as they can easily overfit small datasets.
+
+⸻
+
+**Intuition**
+
+Imagine stacking several Logistic Regressions one after another —
+each layer transforms the input space slightly before passing it to the next.
+The first layers capture low-level patterns; deeper layers combine them into higher-level abstractions.
+
+At each layer, the model performs:
+
+$$
+z^{(l)} = W^{(l)} x^{(l-1)} + b^{(l)}
+$$
+
+and applies a nonlinear activation function:
+
+$$
+x^{(l)} = f(z^{(l)})
+$$
+
+The final layer outputs either:
+	•	a sigmoid (for binary classification), or
+	•	a softmax (for multi-class classification), producing class probabilities that sum to one.
+
+Thus, an MLP builds a hierarchy of transformations where each layer “reshapes” the data until the classes become linearly separable in the final space.
+
+⸻
+
+**Mathematical foundation**
+
+Training an MLP involves minimizing a loss function that measures the difference between predicted and true labels.
+For binary classification, this is typically the cross-entropy loss:
+
+$$
+\mathcal{L} = - \frac{1}{n} \sum_{i=1}^{n} \left[ y_i \log(\hat{y}_i) + (1 - y_i)\log(1 - \hat{y}_i) \right]
+$$
+
+For multi-class problems, the softmax version generalizes this loss:
+
+$$
+\mathcal{L} = - \frac{1}{n} \sum_{i=1}^{n} \sum_{k=1}^{K} y_{i,k} \log(\hat{y}_{i,k})
+$$
+
+Parameters W^{(l)} and b^{(l)} are optimized using backpropagation — a gradient-based algorithm that efficiently computes the partial derivatives of the loss with respect to each parameter.
+
+The update rule for gradient descent is:
+
+$$
+\theta \leftarrow \theta - \eta \frac{\partial \mathcal{L}}{\partial \theta}
+$$
+
+where \eta is the learning rate.
+
+⸻
+
+**Training logic**
+
+The learning process proceeds as follows:
+	1.	Forward pass – propagate the inputs through all layers to compute predictions.
+	2.	Loss computation – compare predictions with true labels via cross-entropy.
+	3.	Backward pass – apply backpropagation to compute gradients of all parameters.
+	4.	Parameter update – adjust weights and biases using an optimizer (e.g., SGD, Adam).
+	5.	Repeat until convergence or early stopping criterion is met.
+
+Each iteration (epoch) slightly improves the model’s ability to map inputs to correct outputs.
+
+⸻
+
+**Assumptions and limitations**
+
+Assumptions
+	•	Data can be represented as fixed-length numeric vectors.
+	•	The relationship between features and labels may be nonlinear but continuous.
+
+Limitations
+	•	Requires scaling and normalization of inputs for stable training.
+	•	Tends to overfit small datasets without dropout or regularization.
+	•	Lacks inherent awareness of structure (e.g., spatial or sequential order).
+
+⸻
+
+Key hyperparameters (conceptual view)
+	•	hidden_layers / hidden_units – number and size of hidden layers; more units increase capacity but risk overfitting.
+	•	activation – nonlinear function (ReLU, tanh, sigmoid); ReLU is standard for deep networks.
+	•	optimizer – learning algorithm (SGD, Adam, RMSProp).
+	•	learning_rate – step size for weight updates.
+	•	dropout_rate – fraction of units randomly turned off per iteration to prevent overfitting.
+	•	batch_size – number of samples processed per training step.
+	•	epochs – total passes through the training data.
+
+⸻
+
+Evaluation focus
+
+MLPs produce probabilities, so evaluation includes:
+	•	Accuracy, ROC–AUC, and F1-score for performance.
+	•	Log-loss for probabilistic calibration.
+	•	Learning curves to monitor overfitting.
+	•	Confusion matrices to inspect class-wise behavior.
+
+Interpretability can be enhanced via feature importance (permutation) or SHAP values,
+which approximate how input features influence predictions.
+
+⸻
+
+**When to use / When not to use**
+
+Use it when:
+	•	You have tabular data with nonlinear interactions.
+	•	You want a neural approach without structural complexity.
+	•	You have moderate data size and computational resources.
+
+Avoid it when:
+	•	Data are small, linear, or easily modeled by Logistic Regression or trees.
+	•	Data contain strong spatial or sequential dependencies (use CNNs or RNNs instead).
+	•	Interpretability is more important than predictive power.
+
+⸻
+
+**References**
+
+Canonical papers
+	1.	Rumelhart, D. E., Hinton, G. E., & Williams, R. J. (1986). Learning Representations by Back-Propagating Errors. Nature.
+	2.	Hornik, K., Stinchcombe, M., & White, H. (1989). Multilayer Feedforward Networks are Universal Approximators. Neural Networks.
+	3.	Bishop, C. M. (1995). Neural Networks for Pattern Recognition. Oxford University Press.
+
+Web resources
+	•	Deep Learning Book (Goodfellow, Bengio, Courville)
+https://www.deeplearningbook.org￼
+	•	Scikit-Learn MLP Classifier Documentation
+https://scikit-learn.org/stable/modules/neural_networks_supervised.html￼
 	
+------
+
+The Multilayer Perceptron showed that stacking simple nonlinear transformations is enough to model complex boundaries.
+Yet, it treats all inputs as equally related — ignoring structure, position, and order.
+
+To move beyond this limitation, researchers designed architectures that exploit spatial locality, learning directly from images, maps, and grids.
+This innovation gave rise to one of the most influential families in modern AI:
+the Convolutional Neural Network (CNN).
+
+------
 	
 #### CNN (Convolutional Neural Network) – overview for image data.
+
+
+
+--------
+
+
+
+--------
 
 #### RNN / LSTM / GRU – overview for sequence data.
 
