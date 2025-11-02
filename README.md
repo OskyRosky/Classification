@@ -4281,6 +4281,165 @@ the Convolutional Neural Network (CNN).
 	
 #### CNN (Convolutional Neural Network) – overview for image data.
 
+What is it?
+
+A Convolutional Neural Network (CNN) is a specialized type of neural network designed to process spatially structured data, most notably images.
+Unlike the MLP, which connects every neuron to every input, a CNN uses local connections (filters) that detect patterns such as edges, textures, and shapes in localized regions.
+
+This architecture was inspired by the human visual cortex and popularized by Yann LeCun’s LeNet-5 (1998) — the first CNN to successfully recognize handwritten digits.
+Since then, CNNs have become the dominant approach in computer vision, powering systems for object recognition, face detection, and medical imaging.
+
+⸻
+
+Why use it?
+
+CNNs are designed to exploit spatial hierarchies in data.
+They work exceptionally well when nearby features are more informative than distant ones — as in images, maps, and other grid-like structures.
+
+They are preferred when:
+	•	Input data have spatial or local structure (e.g., pixels, sensors, spectrograms).
+	•	You need translation invariance (objects recognized regardless of position).
+	•	You want to reduce the parameter count compared to fully connected networks.
+
+Key advantages include:
+	•	Automatic feature extraction — no need for manual edge or texture engineering.
+	•	Parameter efficiency — filters are shared across the image, drastically reducing weights.
+	•	Hierarchical learning — lower layers detect primitives (edges), deeper ones detect complex objects.
+
+⸻
+
+Intuition
+
+A CNN processes an image much like the human eye:
+it focuses on small areas first, then combines local insights into a global understanding.
+
+Each convolutional layer applies multiple small filters (kernels) that “slide” across the image, computing dot products between the filter and local pixel neighborhoods.
+This produces feature maps that highlight where certain patterns occur.
+
+Formally, for a 2D input I and filter K:
+
+$$
+S(i,j) = \sum_m \sum_n I(i+m, j+n) \cdot K(m,n)
+$$
+
+After convolution, a nonlinear activation (like ReLU) introduces nonlinearity:
+
+$$
+f(x) = \max(0, x)
+$$
+
+Finally, a pooling layer (e.g., max pooling) downsamples the spatial dimensions:
+
+$$
+y_{i,j} = \max_{(m,n) \in \text{region}(i,j)} x_{m,n}
+$$
+
+This operation makes the network less sensitive to small shifts or distortions in the input.
+
+The final layers are typically fully connected, integrating all learned spatial features for classification (via softmax).
+
+⸻
+
+Mathematical foundation
+
+CNNs minimize the same cross-entropy loss used in MLPs,
+but the difference lies in how they compute intermediate features using convolution rather than dense matrix multiplication.
+
+For an input tensor X, filter weights W, and bias b:
+
+$$
+h = f(W * X + b)
+$$
+
+where * denotes convolution, and f(\cdot) is an activation function (usually ReLU).
+
+Each layer learns multiple filters to capture different spatial features.
+The output of one layer becomes the input to the next, gradually constructing hierarchical abstractions — from edges → shapes → objects.
+
+⸻
+
+Training logic
+	1.	Forward pass – compute feature maps through convolutions, activations, and pooling.
+	2.	Loss computation – compare predicted vs. true class probabilities using cross-entropy.
+	3.	Backward pass (Backpropagation through convolution) – compute gradients with respect to filters and weights.
+	4.	Update parameters – adjust via optimizers like Adam or SGD with momentum.
+
+Training CNNs often involves data augmentation (rotations, flips, crops) to improve generalization and regularization (dropout, batch normalization) to stabilize learning.
+
+⸻
+
+Assumptions and limitations
+
+Assumptions
+	•	Input data have local dependencies (nearby pixels are related).
+	•	Patterns are spatially stationary — they can appear anywhere in the image.
+
+Limitations
+	•	Require large labeled datasets to achieve generalization.
+	•	Computationally expensive, especially with deep architectures.
+	•	Harder to interpret compared to shallow models.
+
+⸻
+
+Key hyperparameters (conceptual view)
+	•	kernel_size – determines the receptive field of each filter (e.g., 3×3, 5×5).
+	•	stride – step size of the filter during convolution.
+	•	padding – whether edges are preserved (same) or reduced (valid).
+	•	filters / channels – number of feature maps per layer.
+	•	pool_size – region used in pooling operation (e.g., 2×2).
+	•	dropout_rate – percentage of activations randomly ignored to prevent overfitting.
+	•	learning_rate / optimizer – controls convergence behavior.
+
+⸻
+
+Evaluation focus
+
+For classification tasks, CNNs are typically evaluated using:
+	•	Accuracy, F1-score, and ROC–AUC.
+	•	Top-k accuracy for multi-class image classification.
+	•	Confusion matrices to analyze misclassified categories.
+	•	Feature visualization (activation maps, Grad-CAM) to interpret learned spatial patterns.
+
+⸻
+
+When to use / When not to use
+
+Use it when:
+	•	Inputs have spatial or grid-like structure (images, video frames, geospatial data).
+	•	You have enough data and computational resources.
+	•	You need hierarchical representation learning.
+
+Avoid it when:
+	•	Data are tabular, textual, or sequential — CNNs won’t capture temporal or semantic dependencies effectively.
+	•	The dataset is too small to train filters robustly.
+
+⸻
+
+References
+
+Canonical papers
+	1.	LeCun, Y., Bottou, L., Bengio, Y., & Haffner, P. (1998). Gradient-Based Learning Applied to Document Recognition. Proceedings of the IEEE.
+	2.	Krizhevsky, A., Sutskever, I., & Hinton, G. E. (2012). ImageNet Classification with Deep Convolutional Neural Networks (AlexNet). NIPS.
+	3.	Simonyan, K., & Zisserman, A. (2014). Very Deep Convolutional Networks for Large-Scale Image Recognition (VGG). arXiv:1409.1556.
+
+Web resources
+	•	CS231n: Convolutional Neural Networks for Visual Recognition
+https://cs231n.github.io/convolutional-networks/￼
+	•	PyTorch CNN Tutorial
+https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html￼
+
+--------
+
+Convolutional Neural Networks taught machines to see,
+turning raw pixels into structured representations and making deep learning the standard for visual understanding.
+
+However, when the data unfold over time or in sequence — as in speech, sensor readings, or text — spatial filters are not enough.
+We need models that can remember, accumulate, and adapt across time.
+
+--------
+
+#### 22. Recurrent Neural Networks (RNN, LSTM, GRU) — Overview for Sequential Data.
+
 
 
 --------
@@ -4288,12 +4447,16 @@ the Convolutional Neural Network (CNN).
 
 
 --------
-
-#### RNN / LSTM / GRU – overview for sequence data.
 
 #### Transformer-based Classifier – overview for text or sequential data.
 	
 
+
+--------
+
+
+
+--------
 
 ### Summary.
 
