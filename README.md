@@ -1508,15 +1508,22 @@ Naive Bayes is part of the earliest generation of machine-learning algorithms, r
 Why use it?
 
 Naive Bayes excels when:
-	•	Data dimensionality is high (e.g., thousands of words or features).
-	•	Feature dependencies are weak or approximately additive.
-	•	The goal is to get fast, interpretable, and well-calibrated probabilities.
+
+•	Data dimensionality is high (e.g., thousands of words or features).
+
+•	Feature dependencies are weak or approximately additive.
+
+•	The goal is to get fast, interpretable, and well-calibrated probabilities.
 
 Typical applications:
-	•	Email spam filtering (spam vs ham).
-	•	Sentiment analysis in social media.
-	•	Medical diagnosis from categorical symptoms.
-	•	Document topic classification.
+
+•	Email spam filtering (spam vs ham).
+
+•   Sentiment analysis in social media.
+
+•	Medical diagnosis from categorical symptoms.
+
+•	Document topic classification.
 
 Its simplicity allows it to train in seconds even on very large datasets — often outperforming more complex models in sparse domains.
 
@@ -1558,7 +1565,9 @@ Mathematical foundation
 Different Naive Bayes variants differ only in how they model P(x_j \mid y):
 
 1. Gaussian Naive Bayes
+
 Used for continuous numeric features.
+
 Each conditional feature distribution is Gaussian:
 
 $$
@@ -1580,6 +1589,7 @@ $$
 $$
 
 2. Multinomial Naive Bayes
+
 Used for count data (e.g., word frequencies in text).
 The likelihood assumes a multinomial distribution:
 
@@ -1591,9 +1601,11 @@ P(x \mid y = k)
 $$
 
 where \theta_{jk} = P(\text{feature } j \mid y = k).
+
 Laplace (add-one) smoothing prevents zero probabilities.
 
 3. Bernoulli Naive Bayes
+
 Used for binary indicator features (presence/absence).
 
 $$
@@ -1606,6 +1618,7 @@ $$
 This variant captures whether a term appears rather than how many times.
 
 4. Complement Naive Bayes
+
 Designed for imbalanced text classification.
 It estimates feature weights using statistics from complementary classes (all classes except the target) to reduce bias toward frequent categories.
 This often improves performance when certain classes dominate the training data.
@@ -1615,12 +1628,14 @@ This often improves performance when certain classes dominate the training data.
 Training logic
 
 Training Naive Bayes is non-iterative and fully analytical:
-	1.	Compute prior probabilities
-P(y = k) = \frac{n_k}{n}.
-	2.	Estimate conditional distributions
-P(x_j \mid y = k) using counts (Multinomial/Bernoulli) or mean/variance (Gaussian).
-	3.	Apply smoothing (Laplace or Lidstone) to avoid zero probabilities.
-	4.	Store these estimates — classification is just a lookup and product of probabilities.
+
+1.	Compute prior probabilities: P(y = k) = \frac{n_k}{n}.
+
+2.	Estimate conditional distributions: P(x_j \mid y = k) using counts (Multinomial/Bernoulli) or mean/variance (Gaussian).
+
+3.	Apply smoothing (Laplace or Lidstone) to avoid zero probabilities.
+
+4.	Store these estimates — classification is just a lookup and product of probabilities.
 
 Its training complexity is O(n \times p), making it among the fastest learning algorithms available.
 
@@ -1629,26 +1644,38 @@ Its training complexity is O(n \times p), making it among the fastest learning a
 Assumptions and limitations
 
 Assumptions
-	•	Conditional independence of features given the class.
-	•	Feature distributions follow the assumed model (Gaussian, Multinomial, etc.).
-	•	Sufficient sample size per class to estimate reliable probabilities.
+
+•	Conditional independence of features given the class.
+
+•	Feature distributions follow the assumed model (Gaussian, Multinomial, etc.).
+
+•	Sufficient sample size per class to estimate reliable probabilities.
 
 Limitations
-	•	Independence rarely holds perfectly; correlations between features can degrade accuracy.
-	•	Sensitive to how continuous data are modeled — Gaussian assumption may be too restrictive.
-	•	Probabilities can be poorly calibrated when independence is violated.
+
+•	Independence rarely holds perfectly; correlations between features can degrade accuracy.
+
+•	Sensitive to how continuous data are modeled — Gaussian assumption may be too restrictive.
+
+•	Probabilities can be poorly calibrated when independence is violated.
 
 Still, the model is robust, and independence violations often do not destroy predictive power.
 
 ⸻
 
 Key hyperparameters (conceptual view)
-	•	alpha (α) — Smoothing parameter for avoiding zero probabilities.
-	•	α = 1 corresponds to Laplace smoothing.
-	•	α → 0 removes smoothing (can cause instability).
-	•	fit_prior — Whether to learn class priors from data or assume uniform priors.
-	•	var_smoothing (Gaussian NB) — Small constant added to variance estimates to avoid division by zero or numerical instability.
-	•	binarize (Bernoulli NB) — Threshold value to transform numeric features into binary indicators.
+
+•	alpha (α) — Smoothing parameter for avoiding zero probabilities.
+
+•	α = 1 corresponds to Laplace smoothing.
+
+•	α → 0 removes smoothing (can cause instability).
+
+•	fit_prior — Whether to learn class priors from data or assume uniform priors.
+
+•	var_smoothing (Gaussian NB) — Small constant added to variance estimates to avoid division by zero or numerical instability.
+
+•	binarize (Bernoulli NB) — Threshold value to transform numeric features into binary indicators.
 
 These parameters control smoothness, stability, and robustness to rare features.
 
@@ -1657,10 +1684,14 @@ These parameters control smoothness, stability, and robustness to rare features.
 Evaluation focus
 
 Since Naive Bayes outputs probabilities, we assess both discrimination and calibration:
-	•	Accuracy and F1-score for balanced datasets.
-	•	Precision/Recall and PR-AUC for imbalanced text data.
-	•	Log-loss and Brier score to measure probabilistic reliability.
-	•	Confusion matrix to inspect systematic class bias.
+
+•	Accuracy and F1-score for balanced datasets.
+
+•	Precision/Recall and PR-AUC for imbalanced text data.
+
+•	Log-loss and Brier score to measure probabilistic reliability.
+
+•	Confusion matrix to inspect systematic class bias.
 
 Visualization of class posteriors or feature likelihoods often reveals where the independence assumption breaks down.
 
@@ -1669,14 +1700,20 @@ Visualization of class posteriors or feature likelihoods often reveals where the
 When to use / When not to use
 
 Use it when:
-	•	You need a fast, interpretable baseline.
-	•	Data are high-dimensional, sparse, or text-based.
-	•	You prefer a model that works well with small training data.
+
+•	You need a fast, interpretable baseline.
+
+•	Data are high-dimensional, sparse, or text-based.
+
+•	You prefer a model that works well with small training data.
 
 Avoid it when:
-	•	Features are strongly correlated (e.g., pixel intensities in images).
-	•	You need complex, nonlinear decision boundaries.
-	•	Feature distributions deviate substantially from the assumed form.
+	
+•	Features are strongly correlated (e.g., pixel intensities in images).
+
+•	You need complex, nonlinear decision boundaries.
+
+•	Feature distributions deviate substantially from the assumed form.
 
 Despite these caveats, Naive Bayes often provides a competitive baseline that is hard to beat in efficiency and simplicity.
 
@@ -1685,14 +1722,19 @@ Despite these caveats, Naive Bayes often provides a competitive baseline that is
 References
 
 Canonical papers
-	1.	Domingos, P., & Pazzani, M. (1997). On the Optimality of the Simple Bayesian Classifier under Zero–One Loss. Machine Learning.
-	2.	Mitchell, T. (1997). Machine Learning. McGraw-Hill.
-	3.	Rennie, J. D. M., Shih, L., Teevan, J., & Karger, D. R. (2003). Tackling the Poor Assumptions of Naive Bayes Text Classifiers. ICML 2003.
+
+1.	Domingos, P., & Pazzani, M. (1997). On the Optimality of the Simple Bayesian Classifier under Zero–One Loss. Machine Learning.
+2.	Mitchell, T. (1997). Machine Learning. McGraw-Hill.
+3.	Rennie, J. D. M., Shih, L., Teevan, J., & Karger, D. R. (2003). Tackling the Poor Assumptions of Naive Bayes Text Classifiers. ICML 2003.
 
 Web resources
-	•	Scikit-learn User Guide — Naive Bayes
+
+• Scikit-learn User Guide — Naive Bayes
+
 https://scikit-learn.org/stable/modules/naive_bayes.html￼
-	•	StatQuest — Naive Bayes Clearly Explained (video)
+
+• StatQuest — Naive Bayes Clearly Explained (video)
+
 https://www.youtube.com/watch?v=O2L2Uv9pdDA￼
 
 
