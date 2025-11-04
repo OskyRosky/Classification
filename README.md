@@ -1301,6 +1301,8 @@ Quadratic Discriminant Analysis (QDA) is the nonlinear extension of Linear Discr
 While LDA assumes that all classes share the same covariance matrix, QDA allows each class to have its own covariance structure.
 This flexibility enables QDA to learn curved (quadratic) decision boundaries that adapt to more complex data distributions.
 
+ ![class](/ima/ima12.webp)
+
 QDA remains a probabilistic generative model — it models how each class generates data through a multivariate Gaussian distribution and then applies Bayes’ rule to classify observations.
 Historically, it evolved from Fisher’s discriminant work (1936) and later generalized by statisticians such as Rao and Friedman.
 
@@ -1312,7 +1314,9 @@ QDA is useful when the covariance structure of each class differs — that is, w
 It performs particularly well in:
 
 •	Biomedical and diagnostic problems where patient groups have different variability.
+
 •	Fault detection or signal analysis where data dispersion changes by category.
+
 •	Any domain where nonlinear class boundaries are needed but interpretability is still desired.
 
 In short, QDA trades some simplicity for richer geometric representation.
@@ -1332,7 +1336,7 @@ The observation is assigned to the class where it falls within the highest proba
 
 Mathematical foundation
 
-Each class k is assumed to follow a multivariate normal distribution with its own mean vector \mu_k and covariance matrix \Sigma_k:
+Each class k is assumed to follow a multivariate normal distribution with its own mean vector mu_k and covariance matrix Sigma_k:
 
 $$
 P(x \mid y = k) =
@@ -1367,13 +1371,13 @@ Training logic
 
 Training QDA involves closed-form estimation, not iterative optimization:
 
-1.	Compute the class means \mu_k.
+1.	Compute the class means mu_k.
 
-2.	Compute the class-specific covariance matrices \Sigma_k.
+2.	Compute the class-specific covariance matrices Sigma_k.
 
 3.	Estimate prior probabilities P(y = k) from class frequencies or predefined priors.
 
-4.	Plug these estimates into the discriminant function \delta_k(x).
+4.	Plug these estimates into the discriminant function delta_k(x).
 
 5.	Classify each observation by selecting the class with the maximum discriminant score.
 
