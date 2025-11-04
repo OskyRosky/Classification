@@ -563,6 +563,8 @@ This uniform structure ensures that readers can compare models fairly, understan
 Linear and probabilistic models represent the foundation of supervised classification.
 They are rooted in the idea that decision boundaries can be expressed as linear functions of the input variables, and that uncertainty can be modeled probabilistically.
 
+ ![class](/ima/ima8.png)
+
 These models emerged from the intersection of statistics and early pattern recognition in the mid-20th century.
 Rather than memorizing examples, they learn relationships between features and outcomes by estimating parameters that maximize the likelihood of observing the data — a statistical view of learning that precedes modern machine learning.
 
@@ -587,13 +589,15 @@ In this family, we will explore five major techniques that together define the s
 
 Together, these models form the analytical backbone of classical classification — the bridge between pure statistics and the more flexible, data-driven methods that followed.
 
-#### ** 1.Logistic Regression (binary, multinomial)**
+#### **1.Logistic Regression (binary, multinomial)**
 
 **What is it?**
 
 Logistic Regression is the most fundamental probabilistic model for classification.
 Despite its name, it is not a regression method in the traditional sense but a predictive model for categorical outcomes.
 It estimates the probability that an observation belongs to a particular class by modeling the relationship between the input features and the log-odds of the event.
+
+ ![class](/ima/ima9.png)
 
 The model originated in the early 20th century through the work of David Cox (1958), who extended earlier logit models from statistics and epidemiology to binary outcomes.
 It later became a cornerstone of statistical learning theory, serving as the conceptual bridge between linear regression and modern classification algorithms.
