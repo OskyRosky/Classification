@@ -841,15 +841,21 @@ Why use it?
 Regularized Logistic Regression is preferred when:
 
 •	You have many predictors or potential multicollinearity.
+
 •	The model overfits the training data.
+
 •	You want automatic feature selection (especially with L1).
+
 •	You need better stability and generalization without losing interpretability.
 
 Common applications:
 
 •	Credit scoring with dozens of financial indicators.
+
 •	Text or NLP classification (with many sparse features).
+
 •	Biomedical studies where predictors are correlated (e.g., genetic markers).
+
 •	Marketing models where variable selection is needed.
 
 ⸻
@@ -865,12 +871,15 @@ Regularization keeps them small or pushes some to zero (in the case of L1), whic
 Imagine tuning a musical instrument:
 
 •	Without regularization, each string (feature) vibrates freely, sometimes creating noise.
+
 •	With regularization, you tighten them just enough to maintain harmony — a cleaner, more stable sound.
 
 In geometric terms, regularization reshapes the optimization landscape:
 
 •	L2 (Ridge) uses circular (Euclidean) constraints, shrinking all coefficients smoothly.
+
 •	L1 (Lasso) uses diamond-shaped constraints, which naturally “cut” some coefficients to zero.
+
 •	Elastic Net blends both worlds — it shrinks most coefficients (L2) but can also eliminate the weakest (L1).
 
 ⸻
