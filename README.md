@@ -1301,7 +1301,7 @@ Quadratic Discriminant Analysis (QDA) is the nonlinear extension of Linear Discr
 While LDA assumes that all classes share the same covariance matrix, QDA allows each class to have its own covariance structure.
 This flexibility enables QDA to learn curved (quadratic) decision boundaries that adapt to more complex data distributions.
 
- ![class](/ima/ima12.webp)
+ ![class](/ima/ima12.png)
 
 QDA remains a probabilistic generative model — it models how each class generates data through a multivariate Gaussian distribution and then applies Bayes’ rule to classify observations.
 Historically, it evolved from Fisher’s discriminant work (1936) and later generalized by statisticians such as Rao and Friedman.
