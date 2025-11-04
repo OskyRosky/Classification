@@ -1560,60 +1560,37 @@ $$
 
 ⸻
 
-Mathematical foundation
+## Mathematical foundation
 
-Different Naive Bayes variants differ only in how they model P(x_j \mid y):
+Different Naive Bayes variants differ only in how they model P(x_j | y):
 
-1. Gaussian Naive Bayes
-
-Used for continuous numeric features.
-
+### 1. Gaussian Naive Bayes
+Used for continuous numeric features.  
 Each conditional feature distribution is Gaussian:
 
-$$
-P(x_j \mid y = k)
-
-\frac{1}{\sqrt{2\pi\sigma_{jk}^2}}
-\exp!\left(
--\frac{(x_j - \mu_{jk})^2}{2\sigma_{jk}^2}
-\right)
-$$
+$$ P(x_j | y = k) = \frac{1}{\sqrt{2\pi\sigma_{jk}^2}} \exp\left(-\frac{(x_j - \mu_{jk})^2}{2\sigma_{jk}^2}\right) $$
 
 The class-conditional log-posterior (up to constants) is:
 
-$$
-\log P(y = k \mid x)
-\propto
-\log P(y = k)
--\frac{1}{2} \sum_{j} \frac{(x_j - \mu_{jk})^2}{\sigma_{jk}^2}
-$$
+$$ \log P(y = k | x) \propto \log P(y = k) - \frac{1}{2} \sum_{j} \frac{(x_j - \mu_{jk})^2}{\sigma_{jk}^2} $$
 
-2. Multinomial Naive Bayes
+---
 
-Used for count data (e.g., word frequencies in text).
+### 2. Multinomial Naive Bayes
+Used for count data (e.g., word frequencies in text).  
 The likelihood assumes a multinomial distribution:
 
-$$
-P(x \mid y = k)
+$$ P(x | y = k) = \frac{(\sum_j x_j)!}{\prod_j x_j!} \prod_{j=1}^{p} \theta_{jk}^{x_j} $$
 
-\frac{(\sum_j x_j)!}{\prod_j x_j!}
-\prod_{j=1}^{p} \theta_{jk}^{x_j}
-$$
-
-where \theta_{jk} = P(\text{feature } j \mid y = k).
-
+where θ_jk = P(feature j | y = k).  
 Laplace (add-one) smoothing prevents zero probabilities.
 
-3. Bernoulli Naive Bayes
+---
 
-Used for binary indicator features (presence/absence).
+### 3. Bernoulli Naive Bayes
+Used for binary indicator features (presence/absence):
 
-$$
-P(x_j \mid y = k)
-
-\theta_{jk}^{x_j},
-(1 - \theta_{jk})^{(1 - x_j)}
-$$
+$$ P(x_j | y = k) = \theta_{jk}^{x_j} (1 - \theta_{jk})^{(1 - x_j)} $$
 
 This variant captures whether a term appears rather than how many times.
 
