@@ -102,9 +102,9 @@ This repository is dedicated to understanding these models — from the simplest
 Let’s explore how machines learn to **draw boundaries, make decisions, and see patterns in data**.
 
 
- # I. Introduction: what is Classification?
+ # I. Introduction: what is Data Classification?
 
-Classification stands as one of the pillars of modern machine learning. At its essence, it is the act of making a decision — determining to which category or class a given observation belongs. When an email service filters a message as spam, when a hospital system predicts whether a patient is at high or low risk, or when a smartphone recognizes a face to unlock the screen, it is performing a classification task. In each of these situations, a model transforms patterns in the data into meaningful, structured outcomes that help automate everyday decisions.
+Data Classification stands as one of the pillars of modern machine learning. At its essence, it is the act of making a decision — determining to which category or class a given observation belongs. When an email service filters a message as spam, when a hospital system predicts whether a patient is at high or low risk, or when a smartphone recognizes a face to unlock the screen, it is performing a classification task. In each of these situations, a model transforms patterns in the data into meaningful, structured outcomes that help automate everyday decisions.
 
 At its core, classification seeks to answer a timeless question: *Given what I have learned from the past, how should I categorize what I see now?*  
 This question sits at the heart of predictive intelligence, bridging the gap between observation and action.
@@ -154,6 +154,8 @@ To study classification deeply, one must go beyond algorithms and consider the i
 # II. 🧩 Core Components of classication analysis. 🧩
 
 Classification becomes meaningful when we treat it as a complete process, not just a model choice. A robust analysis begins with a precise understanding of the decision we want to support, continues with careful treatment of data and representation, and matures through thoughtful training, evaluation, interpretation, and monitoring. This section describes that end-to-end path. The goal is simple and ambitious at the same time: build models that perform well, explain themselves clearly, and withstand real-world conditions.
+
+ ![class](/ima/ima3.png)
 
 ## 1. Understanding the problem and the data.
 
