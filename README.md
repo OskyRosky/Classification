@@ -18,25 +18,37 @@ Each section builds upon the previous one, guiding the reader from mathematical 
 Languages: Python (primary), optional R references.
 
 •	Core Libraries: scikit-learn, XGBoost, LightGBM, CatBoost, TensorFlow, PyTorch.
+
 •	Data Tools: pandas, NumPy, matplotlib, seaborn, DVC, MLflow.
+
 •	Deployment: FastAPI, Docker, GitHub Actions (for CI/CD).
 
 3.  **Features** 🤳🏽
 
 •	Complete taxonomy of classification families (linear, geometric, instance-based, tree, ensemble, and neural).
+
 •	Unified explanation template for every algorithm.
+
 •	Evaluation and diagnostic framework with all key metrics.
+
 •	Optimization and resampling strategies for better generalization.
+
 •	MLOps and DevOps integration patterns.
+
 •	Reproducible templates for experiments, reports, and deployment.
 
 4.  **Process** 👣
 
 1.	Understand theoretical and mathematical foundations.
+
 2.	Compare algorithms by intuition and assumptions.
+
 3.	Evaluate with robust metrics and diagnostic tools.
+
 4.	Optimize and tune for generalization.
+
 5.	Deploy and monitor using modern MLOps practices.
+
 6.	Reproduce results and share findings transparently.
 
 5.  **Learning** 💡
