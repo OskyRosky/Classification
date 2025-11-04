@@ -464,6 +464,8 @@ Classification models are more than algorithms; they are expressions of how we u
 This section forms the core analytical backbone of the repository.
 Its goal is to explain, model by model, the logic of estimation—how each technique learns, adapts, and makes predictions based on evidence.
 
+ ![class](/ima/ima7.png)
+
 In the previous section, we explored the taxonomy of classification models — a conceptual map of the families and their philosophical foundations.
 Now, we move from that map to the machinery: we will look inside each model, understanding how it transforms inputs into decisions.
 
