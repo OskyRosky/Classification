@@ -1156,17 +1156,17 @@ $$
 \delta_k(x) = x^T \Sigma^{-1} \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1} \mu_k + \log P(y = k)
 $$
 
-The model assigns an observation x to the class with the largest \delta_k(x).
+The model assigns an observation x to the class with the largest delta_k(x).
 Thus, the decision boundaries are linear, as they depend on linear combinations of x.
 
 ⸻
 
 Training logic
 
-1.	Compute the mean vector \mu_k for each class.
-2.	Compute the pooled covariance matrix \Sigma, assuming equal covariance across classes.
+1.	Compute the mean vector mu_k for each class.
+2.	Compute the pooled covariance matrix Sigma, assuming equal covariance across classes.
 3.	Estimate the prior probabilities P(y = k) from class frequencies.
-4.	Plug these estimates into the discriminant function \delta_k(x).
+4.	Plug these estimates into the discriminant function delta_k(x).
 5.	Classify each observation by the class with the highest discriminant score.
 
 This process doesn’t require iterative optimization — it is entirely analytical, making LDA fast, deterministic, and computationally efficient.
@@ -1231,8 +1231,11 @@ Evaluation focus
 LDA’s performance is best assessed via:
 
 •	Accuracy, ROC–AUC, and PR–AUC for discriminative power.
+
 •	Confusion matrix to verify symmetry in misclassifications.
+
 •	Cross-validation stability, since covariance estimation may vary.
+
 •	Visualization of discriminant axes to assess separation quality.
 
 Because it produces class probabilities, calibration and interpretability remain central evaluation points.
@@ -1244,14 +1247,19 @@ When to use / When not to use
 Use it when:
 
 •	The dataset is small to medium-sized and approximately Gaussian.
+
 •	You need a simple, fast, and interpretable linear classifier.
+
 •	Covariances between features are similar across classes.
+
 •	Dimensionality reduction is desired before another classifier.
 
 Avoid it when:
 
 •	Covariance matrices differ significantly between classes (prefer QDA).
+
 •	The data distribution is highly skewed or nonlinear.
+
 •	There are too many features relative to samples (risk of singular covariance).
 
 ⸻
