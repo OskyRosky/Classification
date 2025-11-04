@@ -1,6 +1,6 @@
 # Everything about Data Classification.
 
- ![ut](/ima/ima1.png)
+ ![class](/ima/ima1.png)
 
 
 ---------------------------------------------
