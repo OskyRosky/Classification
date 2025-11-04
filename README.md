@@ -95,8 +95,11 @@ To run the analyses and templates in this repository:
 8 .  **More** 🙌🏽
 
 For collaboration, discussion, or improvements:
+
 •	GitHub Issues: for bugs or feature requests.
+
 •	Pull Requests: for contributions or new examples.
+
 •	Contact: open an issue or connect via LinkedIn / email (author info in profile).
 
 If this project helps you learn or build better models, consider starring ⭐ the repository —
@@ -117,6 +120,8 @@ Netflix decides what you might like next.
 Gmail separates spam from important messages.  
 Spotify predicts the next song that fits your mood.  
 A bank model decides whether to approve your credit card.  
+
+ ![class](/ima/ima2.png)
 
 These are not coincidences. They are **classification models** — algorithms that learn from data to assign categories, make predictions, and help humans make faster, more consistent decisions.
 
