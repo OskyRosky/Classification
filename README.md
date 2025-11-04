@@ -656,9 +656,9 @@ The logit is preferred for interpretability and computational simplicity, but th
 
 **Mathematical foundation**
 
-The core principle is Maximum Likelihood Estimation (MLE).
-Given a dataset with binary outcomes y_i \in \{0,1\} and predictors x_i,
-the model estimates coefficients \beta that maximize the likelihood of observing the data:
+The core principle is Maximum Likelihood Estimation (MLE).  
+Given a dataset with binary outcomes \(y_i \in \{0,1\}\) and predictors \(x_i\),  
+the model estimates coefficients \(\beta\) that maximize the likelihood of observing the data:
 
 $$
 L(\beta) = \prod_{i=1}^{n} P(y_i \mid x_i) = \prod_{i=1}^{n} [p_i]^{y_i} [1 - p_i]^{1 - y_i}
