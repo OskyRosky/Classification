@@ -349,6 +349,8 @@ Classification is a vast landscape, and each model represents a different way of
 This taxonomy serves as a map through that landscape, tracing how ideas have evolved from simple linear equations to deep architectures capable of discovering meaning in text, vision, and sound.
 Here, we focus on understanding the logic behind each family of models, not the formulas or code. We will explore how they were born, what they solve, and why they continue to matter.
 
+ ![class](/ima/ima6.png)
+
 ## 1. Introduction to Model Taxonomy
 
 Every classification model answers a slightly different question.
