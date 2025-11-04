@@ -1294,7 +1294,6 @@ leading to nonlinear decision boundaries that can better capture complex class s
 
 -----
 
-
 #### 4. Quadratic Discriminant Analysis (QDA)
 
 Quadratic Discriminant Analysis (QDA) is the nonlinear extension of Linear Discriminant Analysis (LDA).
@@ -1483,14 +1482,13 @@ https://www.youtube.com/watch?v=EIJG0xHdl3k￼
 
 ------
 
-Quadratic Discriminant Analysis extended linear boundaries into smooth curves,
-offering a probabilistic yet flexible lens for complex class structures.
-However, as the number of parameters grows with every covariance matrix,
-QDA can quickly become unstable in high-dimensional spaces.
+Quadratic Discriminant Analysis brought flexibility to linear boundaries by allowing curved decision surfaces through distinct covariance matrices.
+Yet, estimating full distributions for every class can become computationally expensive and unstable as dimensionality grows.
 
-This limitation motivated a new family of algorithms —
-models that avoid estimating full distributions and instead focus on decision margins.
-The next step in our journey introduces these margin-based learners, beginning with the Perceptron.
+To simplify, another probabilistic approach emerged — one that keeps the spirit of statistical reasoning but trades complexity for speed and scalability.
+Instead of estimating entire covariance matrices, it assumes feature independence given the class, leading to a surprisingly efficient and robust family of models: Naive Bayes.
+
+This next method demonstrates that even strong simplifying assumptions can yield remarkable accuracy when data truly fit their logic.
 
 ------
 
@@ -1500,6 +1498,8 @@ What is it?
 
 Naive Bayes is a family of simple yet remarkably effective probabilistic classifiers based on Bayes’ theorem with the strong assumption that features are conditionally independent given the class label.
 Despite this unrealistic “naive” assumption, it performs surprisingly well in many real-world problems, especially when features contribute additively to the decision.
+
+ ![class](/ima/ima13.jpg)
 
 Naive Bayes is part of the earliest generation of machine-learning algorithms, rooted in statistical inference and pattern recognition since the 1950s. It remains popular for text classification, spam detection, and document categorization because of its scalability and interpretability.
 
