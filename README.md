@@ -144,13 +144,13 @@ This question sits at the heart of predictive intelligence, bridging the gap bet
 
 In the language of data science, classification is a supervised learning task in which a model learns from labeled data how to assign new observations to predefined categories. During training, the algorithm is exposed to examples that contain both the input features — the measurable characteristics of each case — and their corresponding labels — the known outcomes. Over time, it captures patterns that describe the relationship between inputs and outputs. When confronted with unseen data, it predicts the most likely class by applying what it has learned.
 
- ![class](/ima/ima4.png)
-
 Unlike regression, which estimates continuous quantities, classification produces discrete outcomes. These outcomes represent states, events, or entities that are distinct and mutually exclusive. This fundamental difference shapes every aspect of modeling: the type of loss functions we use, the interpretation of accuracy, and the criteria we employ to evaluate success. While regression answers “how much,” classification answers “which one.”
 
 ### 2. Domains and Data Types.
 
 The power of classification lies in its versatility. It extends far beyond spreadsheets or tabular records to virtually every form of information that can be captured and quantified. In text, it identifies whether a tweet expresses positive or negative sentiment, or whether an email belongs in the spam folder. In images, it distinguishes between cats, dogs, and countless objects of daily life, supporting everything from medical diagnostics to autonomous vehicles. In audio, it allows a voice assistant to recognize who is speaking and what is being said. Even in industrial systems, classification monitors sensor data to detect failures or anomalies before they occur.
+
+ ![class](/ima/ima4.png)
 
 If data can be represented numerically — whether as words, pixels, or waveforms — it can be classified. This universality explains why classification has become one of the cornerstones of artificial intelligence. It is the common language that connects different data modalities under a single analytical goal: the pursuit of structured understanding.
 
