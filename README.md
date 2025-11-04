@@ -1098,16 +1098,24 @@ Originally introduced by R. A. Fisher (1936) in his work on iris flower classifi
 Why use it?
 
 LDA is ideal when:
-	•	Classes are linearly separable or approximately so.
-	•	You want a transparent model that provides insight into class structure.
-	•	You have small to medium-sized datasets with well-behaved features (no extreme outliers or heavy nonlinearity).
-	•	You need robust probabilistic classification under Gaussian assumptions.
+
+•	Classes are linearly separable or approximately so.
+
+•	You want a transparent model that provides insight into class structure.
+
+•	You have small to medium-sized datasets with well-behaved features (no extreme outliers or heavy nonlinearity).
+
+•	You need robust probabilistic classification under Gaussian assumptions.
 
 It performs particularly well in:
-	•	Medical diagnosis (e.g., distinguishing healthy vs. diseased patients).
-	•	Marketing (predicting customer segment membership).
-	•	Text classification (as a linear projection step).
-	•	As a preprocessing stage before logistic regression, SVM, or neural networks.
+
+•	Medical diagnosis (e.g., distinguishing healthy vs. diseased patients).
+
+•	Marketing (predicting customer segment membership).
+
+•	Text classification (as a linear projection step).
+
+•	As a preprocessing stage before logistic regression, SVM, or neural networks.
 
 ⸻
 
@@ -1127,7 +1135,7 @@ like aligning a camera to capture maximum separation between the groups.
 
 Mathematical foundation
 
-LDA assumes that the data from each class k follows a multivariate normal distribution with class-specific means \mu_k but a common covariance matrix \Sigma.
+LDA assumes that the data from each class k follows a multivariate normal distribution with class-specific means mu_k but a common covariance matrix Sigma.
 
 The probability density function for class k is:
 
@@ -1154,11 +1162,12 @@ Thus, the decision boundaries are linear, as they depend on linear combinations 
 ⸻
 
 Training logic
-	1.	Compute the mean vector \mu_k for each class.
-	2.	Compute the pooled covariance matrix \Sigma, assuming equal covariance across classes.
-	3.	Estimate the prior probabilities P(y = k) from class frequencies.
-	4.	Plug these estimates into the discriminant function \delta_k(x).
-	5.	Classify each observation by the class with the highest discriminant score.
+
+1.	Compute the mean vector \mu_k for each class.
+2.	Compute the pooled covariance matrix \Sigma, assuming equal covariance across classes.
+3.	Estimate the prior probabilities P(y = k) from class frequencies.
+4.	Plug these estimates into the discriminant function \delta_k(x).
+5.	Classify each observation by the class with the highest discriminant score.
 
 This process doesn’t require iterative optimization — it is entirely analytical, making LDA fast, deterministic, and computationally efficient.
 
@@ -1167,47 +1176,64 @@ This process doesn’t require iterative optimization — it is entirely analyti
 Assumptions and limitations
 
 Assumptions:
-	•	Classes follow Gaussian (normal) distributions.
-	•	Each class shares the same covariance matrix.
-	•	Predictors are linearly related to the discriminant function.
-	•	Observations are independent.
+
+•	Classes follow Gaussian (normal) distributions.
+
+•	Each class shares the same covariance matrix.
+
+•	Predictors are linearly related to the discriminant function.
+
+•	Observations are independent.
 
 Limitations:
-	•	Performance degrades when covariance structures differ substantially (use QDA instead).
-	•	Sensitive to outliers and non-normal data.
-	•	Cannot capture nonlinear boundaries.
-	•	Requires more samples than features to estimate covariance reliably.
+
+•	Performance degrades when covariance structures differ substantially (use QDA instead).
+
+•	Sensitive to outliers and non-normal data.
+
+•	Cannot capture nonlinear boundaries.
+
+•	Requires more samples than features to estimate covariance reliably.
 
 ⸻
 
 Key hyperparameters (conceptual view)
 
 Although LDA has few tunable parameters, each one subtly influences how the model behaves:
-	•	priors → define the prior probability of each class.
+
+•	priors → define the prior probability of each class.
+	
 They adjust how much the classifier favors frequent or rare categories.
+
 When priors are left unspecified, LDA automatically estimates them from the data.
-	•	solver → determines the computational approach used to estimate the discriminant directions.
+
+•	solver → determines the computational approach used to estimate the discriminant directions.
+
 The “svd” solver is the most common and numerically stable;
+
 “lsqr” and “eigen” are more suitable for large datasets or when shrinkage is applied.
-	•	shrinkage → introduces a small regularization term to the covariance matrix estimation.
+
+•	shrinkage → introduces a small regularization term to the covariance matrix estimation.
+
 This improves stability when the number of features approaches or exceeds the number of samples,
 reducing overfitting in high-dimensional spaces.
-	•	n_components → specifies how many discriminant axes are retained.
-While only up to K – 1 axes are meaningful (where K is the number of classes),
-limiting this parameter can be useful for visualization or as a preprocessing step for other models.
 
-Each of these parameters balances stability, interpretability, and computational efficiency,
-allowing LDA to adapt from small academic datasets to large applied problems.
+•	n_components → specifies how many discriminant axes are retained.
+
+While only up to K – 1 axes are meaningful (where K is the number of classes), limiting this parameter can be useful for visualization or as a preprocessing step for other models.
+
+Each of these parameters balances stability, interpretability, and computational efficiency, allowing LDA to adapt from small academic datasets to large applied problems.
 
 ⸻
 
 Evaluation focus
 
 LDA’s performance is best assessed via:
-	•	Accuracy, ROC–AUC, and PR–AUC for discriminative power.
-	•	Confusion matrix to verify symmetry in misclassifications.
-	•	Cross-validation stability, since covariance estimation may vary.
-	•	Visualization of discriminant axes to assess separation quality.
+
+•	Accuracy, ROC–AUC, and PR–AUC for discriminative power.
+•	Confusion matrix to verify symmetry in misclassifications.
+•	Cross-validation stability, since covariance estimation may vary.
+•	Visualization of discriminant axes to assess separation quality.
 
 Because it produces class probabilities, calibration and interpretability remain central evaluation points.
 
@@ -1216,24 +1242,27 @@ Because it produces class probabilities, calibration and interpretability remain
 When to use / When not to use
 
 Use it when:
-	•	The dataset is small to medium-sized and approximately Gaussian.
-	•	You need a simple, fast, and interpretable linear classifier.
-	•	Covariances between features are similar across classes.
-	•	Dimensionality reduction is desired before another classifier.
+
+•	The dataset is small to medium-sized and approximately Gaussian.
+•	You need a simple, fast, and interpretable linear classifier.
+•	Covariances between features are similar across classes.
+•	Dimensionality reduction is desired before another classifier.
 
 Avoid it when:
-	•	Covariance matrices differ significantly between classes (prefer QDA).
-	•	The data distribution is highly skewed or nonlinear.
-	•	There are too many features relative to samples (risk of singular covariance).
+
+•	Covariance matrices differ significantly between classes (prefer QDA).
+•	The data distribution is highly skewed or nonlinear.
+•	There are too many features relative to samples (risk of singular covariance).
 
 ⸻
 
 References
 
 Canonical papers
-	1.	Fisher, R. A. (1936). The Use of Multiple Measurements in Taxonomic Problems. Annals of Eugenics.
-	2.	Rao, C. R. (1948). The Utilization of Multiple Measurements in Problems of Biological Classification. Journal of the Royal Statistical Society.
-	3.	McLachlan, G. J. (2004). Discriminant Analysis and Statistical Pattern Recognition. Wiley.
+
+1.	Fisher, R. A. (1936). The Use of Multiple Measurements in Taxonomic Problems. Annals of Eugenics.
+2.	Rao, C. R. (1948). The Utilization of Multiple Measurements in Problems of Biological Classification. Journal of the Royal Statistical Society.
+3.	McLachlan, G. J. (2004). Discriminant Analysis and Statistical Pattern Recognition. Wiley.
 
 Web resources
 
@@ -1273,9 +1302,10 @@ Why use it?
 
 QDA is useful when the covariance structure of each class differs — that is, when the spread, orientation, or shape of the class clouds in feature space is not homogeneous.
 It performs particularly well in:
-	•	Biomedical and diagnostic problems where patient groups have different variability.
-	•	Fault detection or signal analysis where data dispersion changes by category.
-	•	Any domain where nonlinear class boundaries are needed but interpretability is still desired.
+
+•	Biomedical and diagnostic problems where patient groups have different variability.
+•	Fault detection or signal analysis where data dispersion changes by category.
+•	Any domain where nonlinear class boundaries are needed but interpretability is still desired.
 
 In short, QDA trades some simplicity for richer geometric representation.
 
@@ -1328,11 +1358,16 @@ Because \Sigma_k differs across classes, the resulting decision boundaries are q
 Training logic
 
 Training QDA involves closed-form estimation, not iterative optimization:
-	1.	Compute the class means \mu_k.
-	2.	Compute the class-specific covariance matrices \Sigma_k.
-	3.	Estimate prior probabilities P(y = k) from class frequencies or predefined priors.
-	4.	Plug these estimates into the discriminant function \delta_k(x).
-	5.	Classify each observation by selecting the class with the maximum discriminant score.
+
+1.	Compute the class means \mu_k.
+
+2.	Compute the class-specific covariance matrices \Sigma_k.
+
+3.	Estimate prior probabilities P(y = k) from class frequencies or predefined priors.
+
+4.	Plug these estimates into the discriminant function \delta_k(x).
+
+5.	Classify each observation by selecting the class with the maximum discriminant score.
 
 This makes QDA analytically elegant but computationally heavier than LDA because each class requires a full covariance estimate.
 
@@ -1341,14 +1376,20 @@ This makes QDA analytically elegant but computationally heavier than LDA because
 Assumptions and limitations
 
 Assumptions:
-	•	Each class follows a multivariate Gaussian distribution.
-	•	Observations are independent and identically distributed.
-	•	Sample size per class is large enough to estimate its covariance matrix reliably.
+
+•	Each class follows a multivariate Gaussian distribution.
+
+•	Observations are independent and identically distributed.
+
+•	Sample size per class is large enough to estimate its covariance matrix reliably.
 
 Limitations:
-	•	When the number of features p is large relative to the number of samples n_k per class, covariance estimation can become unstable or singular.
-	•	Sensitive to outliers and feature scaling.
-	•	If class covariances are actually similar, LDA may generalize better because it pools information across classes.
+
+•	When the number of features p is large relative to the number of samples n_k per class, covariance estimation can become unstable or singular.
+
+•	Sensitive to outliers and feature scaling.
+
+•	If class covariances are actually similar, LDA may generalize better because it pools information across classes.
 
 Regularization or covariance shrinkage can partially mitigate these issues.
 
@@ -1357,11 +1398,14 @@ Regularization or covariance shrinkage can partially mitigate these issues.
 Key hyperparameters (conceptual view)
 
 QDA has few but crucial parameters that influence performance and stability:
-	•	priors — Define class prior probabilities P(y = k).
+
+•	priors — Define class prior probabilities P(y = k).
+	
 Adjusting priors changes how strongly the model favors frequent or rare classes.
-	•	reg_param — Adds a small multiple of the identity matrix to each covariance matrix,
-controlling the trade-off between bias and variance. Larger values yield more regularized (spherical) shapes.
-	•	store_covariance / tol — Numerical options controlling precision, storage, and convergence tolerance.
+
+•	reg_param — Adds a small multiple of the identity matrix to each covariance matrix, controlling the trade-off between bias and variance. Larger values yield more regularized (spherical) shapes.
+
+•	store_covariance / tol — Numerical options controlling precision, storage, and convergence tolerance.
 
 In practice, the regularization parameter is the most important, as it stabilizes estimation when data are high-dimensional or imbalanced.
 
@@ -1370,11 +1414,16 @@ In practice, the regularization parameter is the most important, as it stabilize
 Evaluation focus
 
 Because QDA produces posterior probabilities, evaluation goes beyond accuracy.
+
 Typical diagnostics include:
-	•	Log-loss and Brier score for probabilistic calibration.
-	•	ROC–AUC and PR–AUC for discrimination quality.
-	•	Confusion matrix to inspect asymmetric misclassifications.
-	•	Cross-validation stability across folds, especially in small datasets.
+
+•	Log-loss and Brier score for probabilistic calibration.
+
+•	ROC–AUC and PR–AUC for discrimination quality.
+
+•	Confusion matrix to inspect asymmetric misclassifications.
+
+•	Cross-validation stability across folds, especially in small datasets.
 
 Visualizing decision boundaries in 2-D projections can also reveal whether the quadratic surfaces match intuition about class geometry.
 
@@ -1383,15 +1432,22 @@ Visualizing decision boundaries in 2-D projections can also reveal whether the q
 When to use / When not to use
 
 Use QDA when:
-	•	Each class has distinct covariance patterns.
-	•	You have sufficient samples per class to estimate \Sigma_k.
-	•	Curved decision boundaries are necessary.
-	•	Probabilistic interpretability is still desired.
+
+•	Each class has distinct covariance patterns.
+
+•	You have sufficient samples per class to estimate Sigma_k.
+
+•	Curved decision boundaries are necessary.
+
+•	Probabilistic interpretability is still desired.
 
 Avoid QDA when:
-	•	The feature dimension is high relative to sample size (risk of overfitting).
-	•	Covariances are approximately equal — prefer LDA.
-	•	Strong collinearity or outliers distort the covariance estimates.
+
+•	The feature dimension is high relative to sample size (risk of overfitting).
+
+•	Covariances are approximately equal — prefer LDA.
+
+•	Strong collinearity or outliers distort the covariance estimates.
 
 Regularized or hybrid approaches (e.g., Friedman’s Regularized Discriminant Analysis) can act as intermediate solutions between LDA and QDA.
 
@@ -1400,14 +1456,17 @@ Regularized or hybrid approaches (e.g., Friedman’s Regularized Discriminant An
 References
 
 Canonical papers
-	1.	Hastie, T., Tibshirani, R., & Friedman, J. (2009). The Elements of Statistical Learning, Chapter 4. Springer.
-	2.	McLachlan, G. (2004). Discriminant Analysis and Statistical Pattern Recognition. Wiley.
-	3.	Friedman, J. (1989). Regularized Discriminant Analysis. Journal of the American Statistical Association.
+
+1.	Hastie, T., Tibshirani, R., & Friedman, J. (2009). The Elements of Statistical Learning, Chapter 4. Springer.
+2.	McLachlan, G. (2004). Discriminant Analysis and Statistical Pattern Recognition. Wiley.
+3.	Friedman, J. (1989). Regularized Discriminant Analysis. Journal of the American Statistical Association.
 
 Web resources
-	•	Scikit-learn User Guide — Quadratic Discriminant Analysis
+
+•	Scikit-learn User Guide — Quadratic Discriminant Analysis
 https://scikit-learn.org/stable/modules/lda_qda.html#quadratic-discriminant-analysis￼
-	•	StatQuest — LDA and QDA (video overview)
+
+•	StatQuest — LDA and QDA (video overview)
 https://www.youtube.com/watch?v=EIJG0xHdl3k￼
 
 ------
