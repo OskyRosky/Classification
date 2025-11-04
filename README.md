@@ -118,6 +118,8 @@ Gmail separates spam from important messages.
 Spotify predicts the next song that fits your mood.  
 A bank model decides whether to approve your credit card.  
 
+ ![class](/ima/ima2.png)
+
 These are not coincidences. They are **classification models** — algorithms that learn from data to assign categories, make predictions, and help humans make faster, more consistent decisions.
 
 In the modern world, classification is the foundation of intelligent applications.  
