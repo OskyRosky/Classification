@@ -95,8 +95,11 @@ To run the analyses and templates in this repository:
 8 .  **More** 🙌🏽
 
 For collaboration, discussion, or improvements:
+
 •	GitHub Issues: for bugs or feature requests.
+
 •	Pull Requests: for contributions or new examples.
+
 •	Contact: open an issue or connect via LinkedIn / email (author info in profile).
 
 If this project helps you learn or build better models, consider starring ⭐ the repository —
