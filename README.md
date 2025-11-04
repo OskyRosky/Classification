@@ -13,17 +13,21 @@ This repository presents a complete, end-to-end framework for classification mod
 It unifies statistical foundations, model estimation, evaluation, optimization, and reproducibility into a coherent, educational structure.
 Each section builds upon the previous one, guiding the reader from mathematical intuition to practical implementation.
 
+
 2.  **Tech Stack** 🤖
+
 
 Languages: Python (primary), optional R references.
 
-•	Core Libraries: scikit-learn, XGBoost, LightGBM, CatBoost, TensorFlow, PyTorch.
+•Core Libraries: scikit-learn, XGBoost, LightGBM, CatBoost, TensorFlow, PyTorch.
 
-•	Data Tools: pandas, NumPy, matplotlib, seaborn, DVC, MLflow.
+•Data Tools: pandas, NumPy, matplotlib, seaborn, DVC, MLflow.
 
-•	Deployment: FastAPI, Docker, GitHub Actions (for CI/CD).
+•Deployment: FastAPI, Docker, GitHub Actions (for CI/CD).
+
 
 3.  **Features** 🤳🏽
+
 
 	•	Complete taxonomy of classification families (linear, geometric, instance-based, tree, ensemble, and neural).
 
@@ -37,7 +41,9 @@ Languages: Python (primary), optional R references.
 
 	•	Reproducible templates for experiments, reports, and deployment.
 
+
 4.  **Process** 👣
+
 
 	A.	Understand theoretical and mathematical foundations.
 
@@ -51,26 +57,30 @@ Languages: Python (primary), optional R references.
 
 	F.	Reproduce results and share findings transparently.
 
+
 5.  **Learning** 💡
+
 
 This project is not only a reference but a learning pathway.
 It helps bridge academic knowledge and professional application,
 showing how concepts like bias–variance trade-off, regularization, and feature scaling
 translate into real-world model design and interpretation.
 
+
 6.  **Improvement** 🔩
+
 
 Future enhancements include:
 
-	•	Expanding multiclass and multilabel strategy coverage.
+•	Expanding multiclass and multilabel strategy coverage.
 
-	•	Integrating fairness and explainability modules.
+•	Integrating fairness and explainability modules.
 
-	•	Extending examples to time-series and text classification.
+•	Extending examples to time-series and text classification.
 
-	•	Incorporating cloud-native deployment demos (AWS, Azure, GCP).
+•	Incorporating cloud-native deployment demos (AWS, Azure, GCP).
 
-	•	Adding automated notebooks for reproducible experiments.
+•	Adding automated notebooks for reproducible experiments.
 
 7.  **Running the Project** ⚙️
 
@@ -85,9 +95,9 @@ To run the analyses and templates in this repository:
 8 .  **More** 🙌🏽
 
 For collaboration, discussion, or improvements:
-	•	GitHub Issues: for bugs or feature requests.
-	•	Pull Requests: for contributions or new examples.
-	•	Contact: open an issue or connect via LinkedIn / email (author info in profile).
+•	GitHub Issues: for bugs or feature requests.
+•	Pull Requests: for contributions or new examples.
+•	Contact: open an issue or connect via LinkedIn / email (author info in profile).
 
 If this project helps you learn or build better models, consider starring ⭐ the repository —
 it’s the simplest way to support continued open knowledge sharing.
