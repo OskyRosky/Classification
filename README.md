@@ -706,15 +706,17 @@ The model’s simplicity makes training stable, efficient, and reproducible, eve
 **Assumptions and limitations**
 
 Logistic Regression is powerful but relies on several assumptions:
-	•	Linearity in the log-odds: the relationship between predictors and the logit of the outcome must be linear.
-	•	Independent observations: errors across samples should be uncorrelated.
-	•	No extreme multicollinearity: predictors should not be highly correlated, as this destabilizes coefficients.
-	•	Sufficient sample size: large enough to estimate reliable probabilities.
+
+•	Linearity in the log-odds: the relationship between predictors and the logit of the outcome must be linear.
+•	Independent observations: errors across samples should be uncorrelated.
+•	No extreme multicollinearity: predictors should not be highly correlated, as this destabilizes coefficients.
+•	Sufficient sample size: large enough to estimate reliable probabilities.
 
 Limitations include:
-	•	Poor performance when decision boundaries are nonlinear.
-	•	Sensitivity to outliers and missing values.
-	•	Difficulty capturing complex feature interactions without manual feature engineering.
+
+•	Poor performance when decision boundaries are nonlinear.
+•	Sensitivity to outliers and missing values.
+•	Difficulty capturing complex feature interactions without manual feature engineering.
 
 Nonetheless, these same constraints make it highly interpretable, a quality often lost in more complex algorithms.
 
@@ -723,10 +725,11 @@ Nonetheless, these same constraints make it highly interpretable, a quality ofte
 **Key hyperparameters (conceptual view)**
 
 Although Logistic Regression is mathematically straightforward, several configuration choices influence its behavior:
-	•	Regularization strength (C or λ): controls overfitting by shrinking coefficients.
-	•	Penalty type (L1, L2, Elastic Net): determines how regularization is applied (sparse vs smooth solutions).
-	•	Solver: optimization algorithm (e.g., "liblinear", "lbfgs", "saga").
-	•	Class weights: rebalance the influence of minority classes in imbalanced datasets.
+
+•	Regularization strength (C or λ): controls overfitting by shrinking coefficients.
+•	Penalty type (L1, L2, Elastic Net): determines how regularization is applied (sparse vs smooth solutions).
+•	Solver: optimization algorithm (e.g., "liblinear", "lbfgs", "saga").
+•	Class weights: rebalance the influence of minority classes in imbalanced datasets.
 
 These hyperparameters govern the bias–variance trade-off, balancing simplicity and generalization.
 
@@ -738,11 +741,12 @@ Because Logistic Regression produces probabilities, it should be evaluated not o
 how well predicted probabilities match actual observed frequencies.
 
 Key metrics include:
-	•	Log-loss: direct measure of probabilistic accuracy.
-	•	ROC–AUC: overall discrimination power between classes.
-	•	PR–AUC: preferred in imbalanced classification tasks.
-	•	Brier score: calibration and reliability of predicted probabilities.
-	•	Confusion matrix & F1-score: evaluation under chosen decision thresholds.
+
+•	Log-loss: direct measure of probabilistic accuracy.
+•	ROC–AUC: overall discrimination power between classes.
+•	PR–AUC: preferred in imbalanced classification tasks.
+•	Brier score: calibration and reliability of predicted probabilities.
+•	Confusion matrix & F1-score: evaluation under chosen decision thresholds.
 
 Interpreting coefficient signs and magnitudes adds a qualitative layer —
 connecting statistical learning with domain understanding.
@@ -752,25 +756,28 @@ connecting statistical learning with domain understanding.
 **When to use / When not to use**
 
 Use Logistic Regression when:
-	•	The relationship between predictors and the outcome is roughly linear.
-	•	You need interpretable coefficients and well-calibrated probabilities.
-	•	The dataset is of moderate size and not excessively high-dimensional.
-	•	Transparency and explainability are priorities (e.g., healthcare, public policy, credit scoring).
+
+•	The relationship between predictors and the outcome is roughly linear.
+•	You need interpretable coefficients and well-calibrated probabilities.
+•	The dataset is of moderate size and not excessively high-dimensional.
+•	Transparency and explainability are priorities (e.g., healthcare, public policy, credit scoring).
 
 Avoid Logistic Regression when:
-	•	Data exhibit strong nonlinearities or complex feature interactions.
-	•	Predictors are highly correlated or numerous relative to observations.
-	•	Decision boundaries are highly irregular or discontinuous.
-	•	You prioritize pure predictive accuracy over interpretability.
+
+•	Data exhibit strong nonlinearities or complex feature interactions.
+•	Predictors are highly correlated or numerous relative to observations.
+•	Decision boundaries are highly irregular or discontinuous.
+•	You prioritize pure predictive accuracy over interpretability.
 
 ⸻
 
 **References**
 
 Canonical papers
-	1.	Cox, D. R. (1958). The Regression Analysis of Binary Sequences. Journal of the Royal Statistical Society, Series B.
-	2.	McCullagh, P. & Nelder, J. (1989). Generalized Linear Models (2nd ed.). Chapman & Hall.
-	3.	Hosmer, D. W., Lemeshow, S., & Sturdivant, R. X. (2013). Applied Logistic Regression (3rd ed.). Wiley.
+
+1.	Cox, D. R. (1958). The Regression Analysis of Binary Sequences. Journal of the Royal Statistical Society, Series B.
+2.	McCullagh, P. & Nelder, J. (1989). Generalized Linear Models (2nd ed.). Chapman & Hall.
+3.	Hosmer, D. W., Lemeshow, S., & Sturdivant, R. X. (2013). Applied Logistic Regression (3rd ed.). Wiley.
 
 Web resources
 
