@@ -25,31 +25,31 @@ Languages: Python (primary), optional R references.
 
 3.  **Features** 🤳🏽
 
-•	Complete taxonomy of classification families (linear, geometric, instance-based, tree, ensemble, and neural).
+	•	Complete taxonomy of classification families (linear, geometric, instance-based, tree, ensemble, and neural).
 
-•	Unified explanation template for every algorithm.
+	•	Unified explanation template for every algorithm.
 
-•	Evaluation and diagnostic framework with all key metrics.
+	•	Evaluation and diagnostic framework with all key metrics.
 
-•	Optimization and resampling strategies for better generalization.
+	•	Optimization and resampling strategies for better generalization.
 
-•	MLOps and DevOps integration patterns.
+	•	MLOps and DevOps integration patterns.
 
-•	Reproducible templates for experiments, reports, and deployment.
+	•	Reproducible templates for experiments, reports, and deployment.
 
 4.  **Process** 👣
 
-1.	Understand theoretical and mathematical foundations.
+	A.	Understand theoretical and mathematical foundations.
 
-2.	Compare algorithms by intuition and assumptions.
+	B.	Compare algorithms by intuition and assumptions.
 
-3.	Evaluate with robust metrics and diagnostic tools.
+	C.	Evaluate with robust metrics and diagnostic tools.
 
-4.	Optimize and tune for generalization.
+	F.	Optimize and tune for generalization.
 
-5.	Deploy and monitor using modern MLOps practices.
+	E.	Deploy and monitor using modern MLOps practices.
 
-6.	Reproduce results and share findings transparently.
+	F.	Reproduce results and share findings transparently.
 
 5.  **Learning** 💡
 
@@ -62,11 +62,15 @@ translate into real-world model design and interpretation.
 
 Future enhancements include:
 
-•	Expanding multiclass and multilabel strategy coverage.
-•	Integrating fairness and explainability modules.
-•	Extending examples to time-series and text classification.
-•	Incorporating cloud-native deployment demos (AWS, Azure, GCP).
-•	Adding automated notebooks for reproducible experiments.
+	•	Expanding multiclass and multilabel strategy coverage.
+
+	•	Integrating fairness and explainability modules.
+
+	•	Extending examples to time-series and text classification.
+
+	•	Incorporating cloud-native deployment demos (AWS, Azure, GCP).
+
+	•	Adding automated notebooks for reproducible experiments.
 
 7.  **Running the Project** ⚙️
 
