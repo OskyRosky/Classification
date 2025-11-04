@@ -905,6 +905,7 @@ and P(beta) is the penalty term that depends on the chosen regularization type:
 ⸻
 
 L1 (Lasso)
+
 $$
 P(\beta) = \sum_{j=1}^{p} |\beta_j|
 $$
@@ -914,6 +915,7 @@ Encourages sparsity by forcing irrelevant coefficients to zero — effectively p
 ⸻
 
 L2 (Ridge)
+
 $$
 P(\beta) = \sum_{j=1}^{p} \beta_j^2
 $$
