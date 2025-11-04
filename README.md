@@ -150,6 +150,8 @@ Unlike regression, which estimates continuous quantities, classification produce
 
 The power of classification lies in its versatility. It extends far beyond spreadsheets or tabular records to virtually every form of information that can be captured and quantified. In text, it identifies whether a tweet expresses positive or negative sentiment, or whether an email belongs in the spam folder. In images, it distinguishes between cats, dogs, and countless objects of daily life, supporting everything from medical diagnostics to autonomous vehicles. In audio, it allows a voice assistant to recognize who is speaking and what is being said. Even in industrial systems, classification monitors sensor data to detect failures or anomalies before they occur.
 
+ ![class](/ima/ima4.png)
+
 If data can be represented numerically — whether as words, pixels, or waveforms — it can be classified. This universality explains why classification has become one of the cornerstones of artificial intelligence. It is the common language that connects different data modalities under a single analytical goal: the pursuit of structured understanding.
 
 ### 3. Types of Classification problems.
