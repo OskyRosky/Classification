@@ -244,6 +244,8 @@ Classification is not only about choosing an algorithm.
 Before any model can make a fair, reliable, and interpretable decision, we must understand the invisible forces that govern its behavior. These forces—class imbalance, probability calibration, threshold selection, and evaluation metrics—shape how models learn, predict, and fail. They are called cross-cutting topics because they apply to every classifier, regardless of its mathematical form.
 Ignoring them leads to models that perform well on paper but fail in reality; mastering them turns simple models into trustworthy tools.
 
+ ![class](/ima/ima5.png)
+
 ## 1. Introduction: Why Cross-cutting Topics Matter
 
 Every classification model learns patterns, but those patterns emerge inside a context defined by the data and by the decisions we expect to make. These cross-cutting topics form that context. They determine how models interpret uncertainty, how predictions translate into actions, and how performance should be measured in a meaningful way.
