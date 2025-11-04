@@ -1089,6 +1089,8 @@ Linear Discriminant Analysis (LDA) is one of the earliest and most elegant stati
 It seeks to find a linear combination of features that best separates two or more classes.
 Rather than predicting probabilities directly, LDA projects the data into a new space where the distance between class means is maximized while the variance within each class is minimized.
 
+ ![class](/ima/ima11.avif)
+
 Originally introduced by R. A. Fisher (1936) in his work on iris flower classification, LDA has since become a fundamental method in pattern recognition, serving both as a classifier and a dimensionality reduction technique.
 
 ⸻
