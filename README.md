@@ -610,10 +610,14 @@ Logistic Regression is used when the goal is to classify observations into discr
 It is especially valuable in applications where interpretability and probability calibration matter as much as accuracy — such as medicine, finance, and social sciences.
 
 Typical use cases include:
-	•	Predicting whether a patient has a disease given test results.
-	•	Determining if a transaction is fraudulent.
-	•	Estimating whether a customer will churn.
-	•	Modeling the probability of an event (success/failure, default/no default).
+
+•	Predicting whether a patient has a disease given test results.
+
+•	Determining if a transaction is fraudulent.
+
+•	Estimating whether a customer will churn.
+
+•	Modeling the probability of an event (success/failure, default/no default).
 
 Its transparency makes it ideal for regulated industries, where decision-making must be explainable and auditable.
 
