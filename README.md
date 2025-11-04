@@ -144,6 +144,8 @@ This question sits at the heart of predictive intelligence, bridging the gap bet
 
 In the language of data science, classification is a supervised learning task in which a model learns from labeled data how to assign new observations to predefined categories. During training, the algorithm is exposed to examples that contain both the input features — the measurable characteristics of each case — and their corresponding labels — the known outcomes. Over time, it captures patterns that describe the relationship between inputs and outputs. When confronted with unseen data, it predicts the most likely class by applying what it has learned.
 
+ ![class](/ima/ima4.png)
+
 Unlike regression, which estimates continuous quantities, classification produces discrete outcomes. These outcomes represent states, events, or entities that are distinct and mutually exclusive. This fundamental difference shapes every aspect of modeling: the type of loss functions we use, the interpretation of accuracy, and the criteria we employ to evaluate success. While regression answers “how much,” classification answers “which one.”
 
 ### 2. Domains and Data Types.
