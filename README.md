@@ -2242,10 +2242,9 @@ Avoid it when:
 
 **Web resources**
 
-•	Scikit-learn User Guide — SVM Kernels
-	https://scikit-learn.org/stable/modules/svm.html#kernel-functions￼
-•	StatQuest — The Kernel Trick Explained Clearly
-	https://www.youtube.com/watch?v=Qc5IyLW_hns￼
+•	Scikit-learn User Guide — SVM Kernels https://scikit-learn.org/stable/modules/svm.html#kernel-functions￼
+
+•	StatQuest — The Kernel Trick Explained Clearly https://www.youtube.com/watch?v=Qc5IyLW_hns￼
 
 --------
 
@@ -2284,7 +2283,9 @@ There is no need to assume linearity, normality, or even continuity — the data
 This approach provides flexibility:
 
 •	It adapts naturally to non-linear and irregular shapes.
+
 •	It can represent complex interactions without explicit feature transformations.
+
 •	It works well even when only small regions of the data exhibit structure.
 
 However, that flexibility comes at a cost:
@@ -2310,6 +2311,7 @@ an idea that also underlies modern deep learning embeddings and retrieval-based 
 This family of models represents another philosophical turn:
 
 •	From probability (family A) to geometry (family B),
+
 •	and now to memory and proximity (family C).
 
 Instead of asking “What is the separating function?”, we now ask
@@ -2348,7 +2350,9 @@ It adapts naturally to data geometry without assuming any functional form or dis
 Key advantages:
 
 •	Non-parametric flexibility: learns directly from the data, no training optimization required.
+
 •	Intuitive interpretability: decisions depend on observable neighbors.
+
 •	Strong local adaptation: effective when nearby points share the same label.
 
 Typical use cases include pattern recognition, anomaly detection, recommendation systems, and small tabular or image datasets.
@@ -2357,13 +2361,14 @@ Typical use cases include pattern recognition, anomaly detection, recommendation
 
 **Intuition**
 
-Classification in kNN is based entirely on proximity:
-points close in feature space are expected to belong to the same class.
+Classification in kNN is based entirely on proximity: points close in feature space are expected to belong to the same class.
 
 For a new sample x_q:
 
 1.	Compute the distance between x_q and every training sample.
+
 2.	Select the k nearest points.
+
 3.	Assign the class most frequent among those neighbors (majority vote).
 
 Formally, the decision rule can be written as:
@@ -2379,6 +2384,7 @@ where N_k(x_q) is the set of the k nearest neighbors of x_q.
 **Mathematical foundation**
 
 Distance is the essence of kNN.
+
 Common distance functions include:
 
 Euclidean distance
@@ -2420,13 +2426,17 @@ Approximate nearest-neighbor methods (e.g., KD-Trees, Ball-Trees, FAISS) mitigat
 Assumptions
 
 •	Samples close in feature space share the same label.
+
 •	All features contribute equally to distance (hence the need for scaling).
 
 Limitations
 
 •	Computationally expensive for large datasets (O(n) per prediction).
+
 •	Sensitive to irrelevant features and the curse of dimensionality.
+
 •	Memory-intensive — must store the full dataset.
+
 •	No direct probability output (only majority voting).
 
 Despite these challenges, kNN provides a strong baseline for similarity-based reasoning.
@@ -2442,15 +2452,19 @@ Controls smoothness of the decision boundary.
 Small k → flexible, but sensitive to noise.
 
 Large k → stable, but can blur class boundaries.
+
 •	metric:
 	
 Defines the notion of distance — common choices include euclidean, manhattan, minkowski, or cosine.
+
 •	weights:
 	
 Determines voting scheme.
+
 Uniform assigns equal weight to all neighbors; distance gives closer points more influence.
 
 •	scaling method:
+
 Standardization or normalization to ensure comparable feature magnitudes.
 
 ⸻
@@ -2460,7 +2474,9 @@ Standardization or normalization to ensure comparable feature magnitudes.
 Because kNN decisions depend on local density and class balance, evaluation should consider:
 
 •	Accuracy and F1-score for balanced datasets.
+
 •	ROC-AUC and PR-AUC if calibrated scores or distances are used.
+
 •	Cross-validation to tune k — typically using grid search on validation folds.
 
 Visualization of decision boundaries is also valuable for diagnosing overfitting (very jagged regions indicate too small k).
@@ -2478,7 +2494,9 @@ Use it when:
 Avoid it when:
 
 •	Data are high-dimensional (distance loses meaning).
+
 •	Memory or inference speed is critical.
+
 •	Many irrelevant or categorical features dominate the dataset.
 
 ⸻
@@ -2509,8 +2527,7 @@ To overcome these issues, the next family of algorithms introduces hierarchical 
 ### D. Tree-based Models
 
 The families of models we’ve seen so far — linear, margin-based, and instance-based — each interpret learning through a different lens:
-linearity, geometry, or similarity.
-Tree-based models introduce yet another way of thinking: learning through hierarchical decisions.
+linearity, geometry, or similarity. Tree-based models introduce yet another way of thinking: learning through hierarchical decisions.
 
 ![class](/ima/ima20.png)
 
@@ -2532,9 +2549,13 @@ Tree-based models, in contrast, partition that space into discrete, interpretabl
 Each leaf of the tree represents a decision rule derived directly from the data.
 
 For example:
-	•	If income > 50,000 → branch A
-	•	Else → branch B
+
+•	If income > 50,000 → branch A
+
+•	Else → branch B
+
 Then within branch A, if age < 35 → class = “approve loan”
+
 Else → class = “deny loan”
 
 This divide-and-conquer approach allows trees to capture non-linear, non-parametric relationships with exceptional interpretability.
@@ -2543,17 +2564,19 @@ This divide-and-conquer approach allows trees to capture non-linear, non-paramet
 
 **Why Tree-based Models Matter**
 
-Tree algorithms provide a natural balance between flexibility and interpretability.
-They adapt to almost any data distribution without requiring scaling or transformations, yet their internal logic can be visualized and explained to non-technical audiences.
+Tree algorithms provide a natural balance between flexibility and interpretability. They adapt to almost any data distribution without requiring scaling or transformations, yet their internal logic can be visualized and explained to non-technical audiences.
 
 Key advantages include:
-	•	Interpretability: the structure itself is the model — easy to visualize and audit.
-	•	Non-linearity: decision boundaries can be irregular and data-driven.
-	•	Feature selection: the tree automatically identifies informative variables.
-	•	Handling of mixed data: numeric and categorical features coexist seamlessly.
+
+•	Interpretability: the structure itself is the model — easy to visualize and audit.
+•	Non-linearity: decision boundaries can be irregular and data-driven.
+•	Feature selection: the tree automatically identifies informative variables.
+•	Handling of mixed data: numeric and categorical features coexist seamlessly.
 
 However, single trees are also fragile.
+
 They can easily overfit, memorizing noise instead of general patterns.
+
 This limitation led to the rise of ensemble methods (discussed in the next family), which combine multiple trees to enhance stability and accuracy.
 
 ⸻
@@ -2561,11 +2584,12 @@ This limitation led to the rise of ensemble methods (discussed in the next famil
 **Philosophical Shift**
 
 Tree-based models represent a transition from global reasoning to hierarchical segmentation.
+
 They learn not by summarizing all data at once, but by iteratively refining structure — dividing the feature space into progressively purer subsets.
+
 Each split increases local homogeneity, guided by impurity measures such as Gini index or entropy.
 
-In essence, while kNN looks outward to find similarity,
-a decision tree looks inward, carving structure from within.
+In essence, while kNN looks outward to find similarity, a decision tree looks inward, carving structure from within.
 
 ⸻
 
@@ -2598,15 +2622,17 @@ Decision Trees are widely used because they mimic human decision-making.
 Their logic is straightforward, their boundaries are non-linear, and their predictions can be visualized and explained directly.
 
 They work especially well when:
-	•	The relationship between features and labels is non-linear or complex.
-	•	Interpretability and auditability are important (e.g., finance, healthcare, public policy).
-	•	Data include both numerical and categorical variables.
-	•	Feature interactions exist but are difficult to specify manually.
+
+•	The relationship between features and labels is non-linear or complex.
+•	Interpretability and auditability are important (e.g., finance, healthcare, public policy).
+•	Data include both numerical and categorical variables.
+•	Feature interactions exist but are difficult to specify manually.
 
 Advantages:
-	•	No need for feature scaling or normalization.
-	•	Naturally handle missing values.
-	•	Easy to visualize and explain.
+
+•	No need for feature scaling or normalization.
+•	Naturally handle missing values.
+•	Easy to visualize and explain.
 
 ⸻
 
@@ -2623,9 +2649,10 @@ Imagine trying to separate apples from oranges by asking a sequence of yes/no qu
 Each question filters the data into smaller, purer subsets until each group contains mostly one class.
 
 The resulting structure can be visualized as a tree:
-	•	Root node: all samples.
-	•	Internal nodes: decision rules.
-	•	Leaves: final class predictions.
+
+•	Root node: all samples.
+•	Internal nodes: decision rules.
+•	Leaves: final class predictions.
 
 ⸻
 
@@ -2675,14 +2702,16 @@ This recursive partitioning yields a tree structure that can perfectly fit train
 **Assumptions and limitations**
 
 Assumptions
-	•	Data can be effectively separated by axis-aligned splits.
-	•	Each feature contributes independently to the decision process.
+
+•	Data can be effectively separated by axis-aligned splits.
+•	Each feature contributes independently to the decision process.
 
 Limitations
-	•	Highly prone to overfitting without pruning or constraints.
-	•	Small changes in data can cause large structural variations (instability).
-	•	Poor extrapolation beyond training data.
-	•	Prefers features with more levels (bias toward continuous variables).
+
+•	Highly prone to overfitting without pruning or constraints.
+•	Small changes in data can cause large structural variations (instability).
+•	Poor extrapolation beyond training data.
+•	Prefers features with more levels (bias toward continuous variables).
 
 Despite these drawbacks, trees remain the foundation for more advanced ensemble methods (e.g., Random Forest, XGBoost).
 
@@ -2691,9 +2720,13 @@ Despite these drawbacks, trees remain the foundation for more advanced ensemble 
 **Key hyperparameters (conceptual view)**
 
 •	max_depth: maximum depth of the tree (controls overfitting).
+
 •	min_samples_split / min_samples_leaf: minimum number of samples required to split or form a leaf.
+
 •	criterion: impurity measure (gini or entropy).
+
 •	class_weight: adjusts importance of classes (especially for imbalance).
+
 •	max_features: number of features to consider when looking for the best split.
 
 These parameters control the balance between model complexity and generalization.
@@ -2703,9 +2736,10 @@ These parameters control the balance between model complexity and generalization
 **Evaluation focus**
 
 Since Decision Trees can overfit easily, evaluation should emphasize generalization performance:
-	•	Use cross-validation or pruning to avoid overly deep trees.
-	•	Assess accuracy, F1-score, or ROC-AUC, depending on class balance.
-	•	Analyze feature importance — derived from impurity reduction — to interpret the model’s reasoning.
+
+•	Use cross-validation or pruning to avoid overly deep trees.
+•	Assess accuracy, F1-score, or ROC-AUC, depending on class balance.
+•	Analyze feature importance — derived from impurity reduction — to interpret the model’s reasoning.
 
 Visualizing the tree structure (via plot_tree or graphviz) also helps validate interpretability and logic.
 
@@ -2714,14 +2748,16 @@ Visualizing the tree structure (via plot_tree or graphviz) also helps validate i
 **When to use / When not to use**
 
 Use it when:
-	•	Transparency and interpretability are required.
-	•	Data relationships are highly non-linear.
-	•	There are mixed or missing feature types.
+
+•	Transparency and interpretability are required.
+•	Data relationships are highly non-linear.
+•	There are mixed or missing feature types.
 
 Avoid it when:
-	•	Dataset is large and noisy (prefer ensembles).
-	•	Decision boundaries are smooth or continuous (SVMs or neural nets may perform better).
-	•	Stability and reproducibility are critical (trees are sensitive to small perturbations).
+
+•	Dataset is large and noisy (prefer ensembles).
+•	Decision boundaries are smooth or continuous (SVMs or neural nets may perform better).
+•	Stability and reproducibility are critical (trees are sensitive to small perturbations).
 
 ⸻
 
@@ -2743,8 +2779,8 @@ Web resources
 
 ------
 
-Decision Trees bring structure and transparency to classification.
-However, when datasets are imbalanced or certain errors are more costly than others, treating all splits equally becomes inefficient or even unfair.
+Decision Trees bring structure and transparency to classification. However, when datasets are imbalanced or certain errors are more costly than others, treating all splits equally becomes inefficient or even unfair.
+
 The next variant — Cost-sensitive Trees — adapts the same hierarchical framework to account for class imbalance and misclassification costs,
 making decisions not only accurate but also equitable.
 
@@ -2754,8 +2790,7 @@ making decisions not only accurate but also equitable.
 
 **What is it?**
 
-Cost-sensitive Decision Trees extend the standard CART framework to handle imbalanced datasets or unequal misclassification costs.
-While traditional Decision Trees minimize overall impurity as if all errors were equally costly, cost-sensitive variants introduce weighting schemes that prioritize critical classes or reduce bias toward majority outcomes.
+Cost-sensitive Decision Trees extend the standard CART framework to handle imbalanced datasets or unequal misclassification costs. While traditional Decision Trees minimize overall impurity as if all errors were equally costly, cost-sensitive variants introduce weighting schemes that prioritize critical classes or reduce bias toward majority outcomes.
 
 ![class](/ima/ima22.jepg)
 
@@ -2766,13 +2801,16 @@ This adaptation ensures that the model does not simply aim for accuracy but opti
 **Why use it?**
 
 In many real-world problems, accuracy alone is misleading.
+
 A model predicting “no fraud” for every transaction might achieve 99.9% accuracy if frauds are rare — yet be useless in practice.
+
 Cost-sensitive trees address this by incorporating error cost asymmetry directly into the learning process.
 
 They are especially valuable when:
-	•	One class is rare but important (e.g., fraud, disease, failure).
-	•	The cost of false negatives ≠ false positives.
-	•	Regulatory or ethical contexts demand fair treatment of minority cases.
+
+•	One class is rare but important (e.g., fraud, disease, failure).
+•	The cost of false negatives ≠ false positives.
+•	Regulatory or ethical contexts demand fair treatment of minority cases.
 
 Rather than discarding imbalance handling to post-processing (e.g., resampling), these trees embed fairness and balance into the tree’s growth criteria.
 
@@ -2829,10 +2867,11 @@ $$
 **Training logic**
 
 Training follows the same recursive partitioning steps as CART but introduces weight-adjusted impurity calculations:
-	1.	Compute class distributions and weights at each node.
-	2.	Evaluate all candidate splits based on weighted impurity.
-	3.	Select the split that minimizes weighted impurity loss.
-	4.	Recurse until stopping criteria are met.
+
+1.	Compute class distributions and weights at each node.
+2.	Evaluate all candidate splits based on weighted impurity.
+3.	Select the split that minimizes weighted impurity loss.
+4.	Recurse until stopping criteria are met.
 
 Optionally, misclassification cost matrices can be defined explicitly, assigning higher penalties to specific errors — for example:
 
@@ -2845,25 +2884,28 @@ This ensures that the tree structure aligns with the application’s true risk p
 **Assumptions and limitations**
 
 Assumptions
-	•	Class imbalance or differential misclassification costs are known or estimable.
-	•	Assigned weights reasonably approximate the real-world importance of errors.
+
+•	Class imbalance or differential misclassification costs are known or estimable.
+•	Assigned weights reasonably approximate the real-world importance of errors.
 
 Limitations
-	•	Sensitive to incorrect or arbitrary weight assignment.
-	•	May still overfit if imbalance is extreme.
-	•	Weighted impurities can bias splits toward small subgroups if not carefully regularized.
-	•	Interpretability slightly decreases when costs are implicit or application-specific.
+
+•	Sensitive to incorrect or arbitrary weight assignment.
+•	May still overfit if imbalance is extreme.
+•	Weighted impurities can bias splits toward small subgroups if not carefully regularized.
+•	Interpretability slightly decreases when costs are implicit or application-specific.
 
 Still, in regulated or high-stakes domains, these trees provide more responsible and realistic decision boundaries.
 
 ⸻
 
 Key hyperparameters (conceptual view)
-	•	class_weight: assigns relative importance to each class (balanced, custom dictionary).
-	•	sample_weight: provides per-observation control during training.
-	•	criterion: impurity measure (gini, entropy, or weighted variants).
-	•	min_samples_split / min_samples_leaf: constrain growth to prevent overfitting on minority subsets.
-	•	max_depth: limits complexity, improving generalization on skewed data.
+
+•	class_weight: assigns relative importance to each class (balanced, custom dictionary).
+•	sample_weight: provides per-observation control during training.
+•	criterion: impurity measure (gini, entropy, or weighted variants).
+•	min_samples_split / min_samples_leaf: constrain growth to prevent overfitting on minority subsets.
+•	max_depth: limits complexity, improving generalization on skewed data.
 
 These parameters shape how the model distributes focus between majority stability and minority sensitivity.
 
@@ -2872,10 +2914,11 @@ These parameters shape how the model distributes focus between majority stabilit
 **Evaluation focus**
 
 Accuracy is insufficient — evaluation must prioritize cost-aware metrics:
-	•	Precision, Recall, and F1-score, especially per class.
-	•	ROC–AUC and PR–AUC for discrimination quality.
-	•	Confusion matrix weighted by cost to visualize trade-offs.
-	•	Balanced accuracy or Matthews Correlation Coefficient (MCC) for overall fairness.
+
+•	Precision, Recall, and F1-score, especially per class.
+•	ROC–AUC and PR–AUC for discrimination quality.
+•	Confusion matrix weighted by cost to visualize trade-offs.
+•	Balanced accuracy or Matthews Correlation Coefficient (MCC) for overall fairness.
 
 Cross-validation should preserve class ratios (stratified folds) to avoid misleading validation results.
 
@@ -2884,14 +2927,16 @@ Cross-validation should preserve class ratios (stratified folds) to avoid mislea
 **When to use / When not to use**
 
 Use it when:
-	•	Data are imbalanced and certain misclassifications are more serious.
-	•	You can estimate or define realistic cost ratios.
-	•	Fairness, ethics, or policy compliance require equitable treatment.
+
+•	Data are imbalanced and certain misclassifications are more serious.
+•	You can estimate or define realistic cost ratios.
+•	Fairness, ethics, or policy compliance require equitable treatment.
 
 Avoid it when:
-	•	Costs are unknown or arbitrary.
-	•	Data imbalance is minor (standard CART suffices).
-	•	Simpler rebalancing techniques (SMOTE, class weights) already yield acceptable results.
+
+•	Costs are unknown or arbitrary.
+•	Data imbalance is minor (standard CART suffices).
+•	Simpler rebalancing techniques (SMOTE, class weights) already yield acceptable results.
 
 ⸻
 
@@ -2905,19 +2950,17 @@ Canonical papers
 
 Web resources
 
-•	Scikit-learn User Guide — Class and Sample Weights
-https://scikit-learn.org/stable/modules/tree.html#class-weight￼
+•	Scikit-learn User Guide — Class and Sample Weights https://scikit-learn.org/stable/modules/tree.html#class-weight￼
 
-•	Medium — Understanding Cost-Sensitive Learning in Decision Trees
-https://medium.com/@dataman-in-ai/cost-sensitive-decision-trees-8faae4b4f40c￼
+•	Medium — Understanding Cost-Sensitive Learning in Decision Trees https://medium.com/@dataman-in-ai/cost-sensitive-decision-trees-8faae4b4f40c￼
 
 
 -----
 
-Cost-sensitive Decision Trees remind us that accuracy without context can be deceptive.
-They embed ethical and economic considerations into the decision process — a precursor to responsible AI.
-Yet, even with weighting and pruning, single trees remain unstable and limited in expressiveness.
+Cost-sensitive Decision Trees remind us that accuracy without context can be deceptive. They embed ethical and economic considerations into the decision process — a precursor to responsible AI. Yet, even with weighting and pruning, single trees remain unstable and limited in expressiveness.
+
 The next great leap in classification came from ensembles, which combine the wisdom of many trees to achieve remarkable robustness and precision.
+
 Next: E. Ensemble Models — Learning by Aggregation.
 
 -----
@@ -2930,6 +2973,8 @@ Up to this point, each model we explored — linear, geometric, instance-based, 
 They learned a single decision function, a solitary view of the data.
 However, even the best single model is prone to bias, noise, or variance.
 The idea behind ensemble learning is both simple and revolutionary:
+
+![class](/ima/ima23.jepg)
 
 “Instead of relying on one imperfect model, let’s combine many of them —
 and let their collective wisdom yield better, more stable predictions.”
