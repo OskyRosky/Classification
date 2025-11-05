@@ -2071,7 +2071,7 @@ A Kernel Support Vector Machine (SVM) extends the linear SVM to handle non-linea
 It does so by implicitly mapping the input data into a higher-dimensional feature space where a linear separation becomes possible.
 This transformation is achieved through a mathematical function called a kernel, which computes the similarity between points without explicitly performing the mapping.
 
- ![class](/ima/ima17.png)
+![class](/ima/ima17.png)
 
 This concept, known as the kernel trick, allows the SVM to learn complex, curved boundaries while maintaining the elegant geometric formulation of the linear case.
 
@@ -2121,14 +2121,32 @@ $$
 0 \le \alpha_i \le C, \quad \sum_{i=1}^{n} \alpha_i y_i = 0
 $$
 
-The kernel defines the geometry of the transformed space.
+The kernel defines the geometry of the transformed space.  
 Common choices include:
 
-•	Linear kernel: K(x_i, x_j) = x_i^\top x_j (equivalent to the linear SVM).
+• **Linear kernel:**
 
-•	Polynomial kernel: K(x_i, x_j) = (x_i^\top x_j + c)^d (captures polynomial feature interactions).
+$$
+K(x_i, x_j) = x_i^\top x_j
+$$
 
-•	Radial Basis Function (RBF): K(x_i, x_j) = \exp(-\gamma \|x_i - x_j\|^2) (produces flexible, smooth boundaries that adapt locally).
+(equivalent to the linear SVM).
+
+• **Polynomial kernel:**
+
+$$
+K(x_i, x_j) = (x_i^\top x_j + c)^d
+$$
+
+(captures polynomial feature interactions).
+
+• **Radial Basis Function (RBF):**
+
+$$
+K(x_i, x_j) = \exp(-\gamma \|x_i - x_j\|^2)
+$$
+
+(produces flexible, smooth boundaries that adapt locally).
 
 ⸻
 
@@ -2243,6 +2261,8 @@ The models we have explored so far — linear, probabilistic, and margin-based �
 They learn a set of parameters that define a boundary or rule, summarizing what they have seen.
 Once trained, these models can forget the original data and rely solely on their learned representation to classify new points.
 
+![class](/ima/ima18.webp)
+
 Instance-based models take the opposite approach.
 They do not compress knowledge into coefficients or support vectors — they remember.
 They store the training data itself and classify new observations by comparing them directly to past examples.
@@ -2262,9 +2282,10 @@ If most of its neighbors belong to class A, the point is classified as A.
 There is no need to assume linearity, normality, or even continuity — the data itself defines the geometry.
 
 This approach provides flexibility:
-	•	It adapts naturally to non-linear and irregular shapes.
-	•	It can represent complex interactions without explicit feature transformations.
-	•	It works well even when only small regions of the data exhibit structure.
+
+•	It adapts naturally to non-linear and irregular shapes.
+•	It can represent complex interactions without explicit feature transformations.
+•	It works well even when only small regions of the data exhibit structure.
 
 However, that flexibility comes at a cost:
 storing and comparing all instances means high computational cost, and because it learns no global model, it is sensitive to noise and irrelevant features.
@@ -2287,8 +2308,9 @@ an idea that also underlies modern deep learning embeddings and retrieval-based 
 **Conceptual Shift**
 
 This family of models represents another philosophical turn:
-	•	From probability (family A) to geometry (family B),
-	•	and now to memory and proximity (family C).
+
+•	From probability (family A) to geometry (family B),
+•	and now to memory and proximity (family C).
 
 Instead of asking “What is the separating function?”, we now ask
 
@@ -2307,6 +2329,8 @@ k-Nearest Neighbors (kNN) — a classifier that makes decisions by remembering a
 **What is it?**
 
 The k-Nearest Neighbors (kNN) algorithm is one of the simplest and most intuitive methods in machine learning.
+
+![class](/ima/ima19.png)
 
 It classifies a new observation based on the majority class among its k closest points in the training data.
 
@@ -2488,6 +2512,8 @@ The families of models we’ve seen so far — linear, margin-based, and instanc
 linearity, geometry, or similarity.
 Tree-based models introduce yet another way of thinking: learning through hierarchical decisions.
 
+![class](/ima/ima20.png)
+
 Instead of computing distances or probabilities, a tree classifier asks questions about the data — one at a time — and follows the path that best separates the classes.
 At each node, the model evaluates a simple rule such as
 
@@ -2546,10 +2572,10 @@ a decision tree looks inward, carving structure from within.
 **What’s Next**
 
 In this family, we’ll explore two key formulations:
-	1.	Decision Trees (CART formulation):
-The classic recursive partitioning model that builds binary splits to minimize impurity.
-	2.	Cost-sensitive Trees (class weighting and impurity adjustments):
-An adaptation of decision trees for imbalanced datasets and differential misclassification costs,
+
+1.	Decision Trees (CART formulation): the classic recursive partitioning model that builds binary splits to minimize impurity.
+
+2.	Cost-sensitive Trees (class weighting and impurity adjustments): an adaptation of decision trees for imbalanced datasets and differential misclassification costs,
 extending fairness and robustness in practical applications.
 
 #### 10. Decision Trees (CART)
@@ -2558,6 +2584,8 @@ What is it?
 
 A Decision Tree is a non-parametric, hierarchical model that predicts outcomes by recursively splitting data into subsets based on feature values.
 Each internal node represents a question about an input feature (e.g., Is income > 50,000?), each branch represents an answer (Yes/No), and each leaf node corresponds to a final decision or class label.
+
+![class](/ima/ima21.png)
 
 The most common algorithm for constructing classification trees is CART (Classification and Regression Trees), introduced by Breiman, Friedman, Olshen, and Stone (1984).
 CART builds binary trees that maximize class purity at every split, forming a transparent, interpretable decision structure.
@@ -2707,14 +2735,9 @@ Canonical papers
 
 Web resources
 
-•	Scikit-learn User Guide — Decision Trees
-
-	https://scikit-learn.org/stable/modules/tree.html￼
-
+•	Scikit-learn User Guide — Decision Trees https://scikit-learn.org/stable/modules/tree.html￼
 	
-•	StatQuest — Decision Trees Clearly Explained
-
-	https://www.youtube.com/watch?v=7VeUPuFGJHk￼
+•	StatQuest — Decision Trees Clearly Explained https://www.youtube.com/watch?v=7VeUPuFGJHk￼
 
 
 
@@ -2733,6 +2756,8 @@ making decisions not only accurate but also equitable.
 
 Cost-sensitive Decision Trees extend the standard CART framework to handle imbalanced datasets or unequal misclassification costs.
 While traditional Decision Trees minimize overall impurity as if all errors were equally costly, cost-sensitive variants introduce weighting schemes that prioritize critical classes or reduce bias toward majority outcomes.
+
+![class](/ima/ima22.jepg)
 
 This adaptation ensures that the model does not simply aim for accuracy but optimizes for risk-adjusted correctness — a crucial distinction in domains such as fraud detection, medical diagnosis, and credit scoring, where false negatives and false positives carry very different consequences.
 
