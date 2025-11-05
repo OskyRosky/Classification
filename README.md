@@ -2004,21 +2004,30 @@ Optimize the convex objective above (or an equivalent unconstrained hinge-loss f
 **Assumptions and limitations**
 
 Assumptions
-	•	Classes are approximately linearly separable in the chosen feature space.
-	•	Features are scaled (standardization strongly recommended).
+
+•	Classes are approximately linearly separable in the chosen feature space.
+
+•	Features are scaled (standardization strongly recommended).
 
 **Limitations**
-	•	Linear boundary only; complex curvature requires kernels (next section).
-	•	Produces scores, not calibrated probabilities (apply Platt scaling or isotonic calibration if probabilities are needed; see Cross-cutting Topics).
-	•	Sensitive to unscaled features and outliers with very large norm.
+
+•	Linear boundary only; complex curvature requires kernels (next section).
+
+•	Produces scores, not calibrated probabilities (apply Platt scaling or isotonic calibration if probabilities are needed; see Cross-cutting Topics).
+
+•	Sensitive to unscaled features and outliers with very large norm.
 
 ⸻
 
 **Key hyperparameters (conceptual view)**
-	•	C: strength of penalty on margin violations; governs the bias–variance trade-off.
-	•	class_weight: compensates class imbalance by reweighting errors.
-	•	max_iter / tol: convergence controls for the optimizer.
-	•	fit_intercept: whether to estimate b; interacts with feature centering.
+
+•	C: strength of penalty on margin violations; governs the bias–variance trade-off.
+
+•	class_weight: compensates class imbalance by reweighting errors.
+
+•	max_iter / tol: convergence controls for the optimizer.
+
+•	fit_intercept: whether to estimate b; interacts with feature centering.
 
 ⸻
 
@@ -2072,9 +2081,12 @@ This concept, known as the kernel trick, allows the SVM to learn complex, curved
 
 Kernel SVMs are powerful for problems where the relationship between features and labels is non-linear but still structured — meaning the classes can be separated by a smooth surface.
 They are widely used in:
-	•	Image and handwriting recognition (e.g., digits in MNIST).
-	•	Bioinformatics (e.g., protein classification).
-	•	Text categorization and sentiment analysis.
+
+•	Image and handwriting recognition (e.g., digits in MNIST).
+
+•	Bioinformatics (e.g., protein classification).
+
+•	Text categorization and sentiment analysis.
 
 They often perform strongly even on small or medium-sized datasets, where deep neural networks would be unnecessary or prone to overfitting.
 
@@ -2111,12 +2123,12 @@ $$
 
 The kernel defines the geometry of the transformed space.
 Common choices include:
-	•	Linear kernel: K(x_i, x_j) = x_i^\top x_j
-(equivalent to the linear SVM).
-	•	Polynomial kernel: K(x_i, x_j) = (x_i^\top x_j + c)^d
-(captures polynomial feature interactions).
-	•	Radial Basis Function (RBF): K(x_i, x_j) = \exp(-\gamma \|x_i - x_j\|^2)
-(produces flexible, smooth boundaries that adapt locally).
+
+•	Linear kernel: K(x_i, x_j) = x_i^\top x_j (equivalent to the linear SVM).
+
+•	Polynomial kernel: K(x_i, x_j) = (x_i^\top x_j + c)^d (captures polynomial feature interactions).
+
+•	Radial Basis Function (RBF): K(x_i, x_j) = \exp(-\gamma \|x_i - x_j\|^2) (produces flexible, smooth boundaries that adapt locally).
 
 ⸻
 
@@ -2125,32 +2137,42 @@ Common choices include:
 Training involves solving a quadratic optimization problem using algorithms like Sequential Minimal Optimization (SMO).
 Because only a subset of data points (the support vectors) define the decision boundary, the model focuses computational effort on the most informative samples.
 
-Choosing the right kernel and hyperparameters is critical — especially the RBF parameter \gamma and the regularization constant C.
-Too large a \gamma leads to overfitting (narrow bumps around data), while too small a \gamma oversmooths the boundary.
+Choosing the right kernel and hyperparameters is critical — especially the RBF parameter gamma and the regularization constant C.
+Too large a gamma leads to overfitting (narrow bumps around data), while too small a gamma oversmooths the boundary.
 
 ⸻
 
 **Assumptions and limitations**
 
 Assumptions
-	•	The classes are separable in some higher-dimensional space induced by the chosen kernel.
-	•	Features are properly scaled (kernels are sensitive to magnitude).
+
+•	The classes are separable in some higher-dimensional space induced by the chosen kernel.
+
+•	Features are properly scaled (kernels are sensitive to magnitude).
 
 Limitations
-	•	Training can be computationally expensive for large datasets (O(n²) memory).
-	•	Hard to interpret — the model becomes a black box of support vectors.
-	•	Sensitive to hyperparameter choice (C, γ, and kernel type).
+
+•	Training can be computationally expensive for large datasets (O(n²) memory).
+
+•	Hard to interpret — the model becomes a black box of support vectors.
+
+•	Sensitive to hyperparameter choice (C, γ, and kernel type).
 
 Despite these challenges, kernel SVMs remain a gold standard for medium-sized structured data.
 
 ⸻
 
 Key hyperparameters (conceptual view)
-	•	C: regularization constant controlling margin width vs. misclassification tolerance.
-	•	kernel: type of similarity function (“linear”, “poly”, “rbf”).
-	•	γ (gamma): RBF width — small values yield smoother boundaries, large values yield tighter fits.
-	•	degree (d): degree of the polynomial kernel.
-	•	coef0 (c): additive constant in the polynomial kernel, affecting curvature.
+
+•	C: regularization constant controlling margin width vs. misclassification tolerance.
+
+•	kernel: type of similarity function (“linear”, “poly”, “rbf”).
+
+•	γ (gamma): RBF width — small values yield smoother boundaries, large values yield tighter fits.
+
+•	degree (d): degree of the polynomial kernel.
+
+•	coef0 (c): additive constant in the polynomial kernel, affecting curvature.
 
 These parameters together shape the geometry of the decision surface.
 
@@ -2163,7 +2185,9 @@ The model outputs raw decision scores, not probabilities.
 Thus, evaluate with:
 
 •	ROC-AUC and PR-AUC for ranking.
+
 •	Accuracy, precision, and recall for classification thresholds.
+
 •	Apply probability calibration (Platt scaling or isotonic regression) when calibrated outputs are needed.
 
 Visualization of the decision surface can also reveal under- or overfitting patterns — particularly useful in 2-D projections.
@@ -2173,14 +2197,20 @@ Visualization of the decision surface can also reveal under- or overfitting patt
 **When to use / When not to use**
 
 Use it when:
-	•	The relationship between inputs and outputs is non-linear but structured.
-	•	The dataset size is moderate (up to a few tens of thousands).
-	•	You need strong generalization without large models like neural nets.
+
+•	The relationship between inputs and outputs is non-linear but structured.
+
+•	The dataset size is moderate (up to a few tens of thousands).
+
+•	You need strong generalization without large models like neural nets.
 
 Avoid it when:
-	•	Data are huge (training cost grows quadratically).
-	•	Features are extremely sparse (linear SVM may perform just as well).
-	•	Interpretability or probability estimation is required.
+
+•	Data are huge (training cost grows quadratically).
+
+•	Features are extremely sparse (linear SVM may perform just as well).
+
+•	Interpretability or probability estimation is required.
 
 ⸻
 
@@ -2272,12 +2302,14 @@ These questions define the core of the next model,
 the simplest and most iconic of this family:
 k-Nearest Neighbors (kNN) — a classifier that makes decisions by remembering and comparing, not by generalizing.
 
-#### 9. Distance metrics, scaling, k selection.  (Distance metrics, scaling, k selection.)
+#### 9. k-Nearest Neighbors (kNN) algorithm. 
 
 **What is it?**
 
 The k-Nearest Neighbors (kNN) algorithm is one of the simplest and most intuitive methods in machine learning.
+
 It classifies a new observation based on the majority class among its k closest points in the training data.
+
 Rather than learning a parametric function, kNN is a memory-based learner — it stores all training samples and defers decision-making until prediction time.
 
 First introduced by Fix and Hodges (1951) and later popularized by Cover and Hart (1967), kNN remains a foundational model for understanding the concept of similarity-based learning.
@@ -2290,9 +2322,10 @@ kNN excels in situations where the relationship between features and labels is h
 It adapts naturally to data geometry without assuming any functional form or distribution.
 
 Key advantages:
-	•	Non-parametric flexibility: learns directly from the data, no training optimization required.
-	•	Intuitive interpretability: decisions depend on observable neighbors.
-	•	Strong local adaptation: effective when nearby points share the same label.
+
+•	Non-parametric flexibility: learns directly from the data, no training optimization required.
+•	Intuitive interpretability: decisions depend on observable neighbors.
+•	Strong local adaptation: effective when nearby points share the same label.
 
 Typical use cases include pattern recognition, anomaly detection, recommendation systems, and small tabular or image datasets.
 
@@ -2304,9 +2337,10 @@ Classification in kNN is based entirely on proximity:
 points close in feature space are expected to belong to the same class.
 
 For a new sample x_q:
-	1.	Compute the distance between x_q and every training sample.
-	2.	Select the k nearest points.
-	3.	Assign the class most frequent among those neighbors (majority vote).
+
+1.	Compute the distance between x_q and every training sample.
+2.	Select the k nearest points.
+3.	Assign the class most frequent among those neighbors (majority vote).
 
 Formally, the decision rule can be written as:
 
@@ -2324,16 +2358,19 @@ Distance is the essence of kNN.
 Common distance functions include:
 
 Euclidean distance
+
 $$
 d(x_i, x_j) = \sqrt{\sum_{m=1}^{p}(x_{im} - x_{jm})^2}
 $$
 
 Manhattan distance
+
 $$
 d(x_i, x_j) = \sum_{m=1}^{p} |x_{im} - x_{jm}|
 $$
 
 Minkowski distance (general form)
+
 $$
 d(x_i, x_j) = \left(\sum_{m=1}^{p} |x_{im} - x_{jm}|^r \right)^{1/r}
 $$
@@ -2357,30 +2394,39 @@ Approximate nearest-neighbor methods (e.g., KD-Trees, Ball-Trees, FAISS) mitigat
 **Assumptions and limitations**
 
 Assumptions
-	•	Samples close in feature space share the same label.
-	•	All features contribute equally to distance (hence the need for scaling).
+
+•	Samples close in feature space share the same label.
+•	All features contribute equally to distance (hence the need for scaling).
 
 Limitations
-	•	Computationally expensive for large datasets (O(n) per prediction).
-	•	Sensitive to irrelevant features and the curse of dimensionality.
-	•	Memory-intensive — must store the full dataset.
-	•	No direct probability output (only majority voting).
+
+•	Computationally expensive for large datasets (O(n) per prediction).
+•	Sensitive to irrelevant features and the curse of dimensionality.
+•	Memory-intensive — must store the full dataset.
+•	No direct probability output (only majority voting).
 
 Despite these challenges, kNN provides a strong baseline for similarity-based reasoning.
 
 ⸻
 
 Key hyperparameters (conceptual view)
-	•	k (number of neighbors):
+
+•	k (number of neighbors):
+
 Controls smoothness of the decision boundary.
+
 Small k → flexible, but sensitive to noise.
+
 Large k → stable, but can blur class boundaries.
-	•	metric:
+•	metric:
+	
 Defines the notion of distance — common choices include euclidean, manhattan, minkowski, or cosine.
-	•	weights:
+•	weights:
+	
 Determines voting scheme.
 Uniform assigns equal weight to all neighbors; distance gives closer points more influence.
-	•	scaling method:
+
+•	scaling method:
 Standardization or normalization to ensure comparable feature magnitudes.
 
 ⸻
@@ -2388,9 +2434,10 @@ Standardization or normalization to ensure comparable feature magnitudes.
 **Evaluation focus**
 
 Because kNN decisions depend on local density and class balance, evaluation should consider:
-	•	Accuracy and F1-score for balanced datasets.
-	•	ROC-AUC and PR-AUC if calibrated scores or distances are used.
-	•	Cross-validation to tune k — typically using grid search on validation folds.
+
+•	Accuracy and F1-score for balanced datasets.
+•	ROC-AUC and PR-AUC if calibrated scores or distances are used.
+•	Cross-validation to tune k — typically using grid search on validation folds.
 
 Visualization of decision boundaries is also valuable for diagnosing overfitting (very jagged regions indicate too small k).
 
@@ -2399,14 +2446,16 @@ Visualization of decision boundaries is also valuable for diagnosing overfitting
 **When to use / When not to use**
 
 Use it when:
-	•	The dataset is small or moderate in size.
-	•	Relationships are complex but locally smooth.
-	•	Interpretability and simplicity are preferred over training efficiency.
+
+•	The dataset is small or moderate in size.
+•	Relationships are complex but locally smooth.
+•	Interpretability and simplicity are preferred over training efficiency.
 
 Avoid it when:
-	•	Data are high-dimensional (distance loses meaning).
-	•	Memory or inference speed is critical.
-	•	Many irrelevant or categorical features dominate the dataset.
+
+•	Data are high-dimensional (distance loses meaning).
+•	Memory or inference speed is critical.
+•	Many irrelevant or categorical features dominate the dataset.
 
 ⸻
 
@@ -2420,10 +2469,9 @@ Canonical papers
 
 Web resources
 
-•	Scikit-learn User Guide — Nearest Neighbors
-	https://scikit-learn.org/stable/modules/neighbors.html￼
-•	StatQuest — k-Nearest Neighbors Explained Clearly
-https://www.youtube.com/watch?v=HVXime0nQeI￼
+•	Scikit-learn User Guide — Nearest Neighbors https://scikit-learn.org/stable/modules/neighbors.html￼
+	
+•	StatQuest — k-Nearest Neighbors Explained Clearly https://www.youtube.com/watch?v=HVXime0nQeI￼
 
 
 -------
