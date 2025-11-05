@@ -1974,16 +1974,19 @@ $$
 Learning consists of balancing a large margin with few violations via the hinge loss.
 
 Hinge loss (per sample) aggregates into the empirical risk:
+
 $$
 \mathcal{L}\text{hinge} = \sum{i=1}^{n} \max\big(0,; 1 - y_i (w^\top x_i + b)\big)
 $$
 
 Soft-margin primal objective:
+
 $$
 \min_{w,b,\xi}; \tfrac{1}{2},|w|^2 + C \sum_{i=1}^{n} \xi_i
 $$
 
 Constraints:
+
 $$
 \text{subject to } ; y_i (w^\top x_i + b) \ge 1 - \xi_i, \quad \xi_i \ge 0
 $$
@@ -2035,15 +2038,15 @@ Avoid when boundaries are clearly nonlinear or interactions dominate; prefer Ker
 **References**
 
 Canonical papers
-	1.	Cortes, C., & Vapnik, V. (1995). Support-Vector Networks. Machine Learning.
-	2.	Boser, B., Guyon, I., & Vapnik, V. (1992). A Training Algorithm for Optimal Margin Classifiers. COLT.
-	3.	Hastie, Tibshirani, Friedman (2009). The Elements of Statistical Learning (Ch. 12). Springer.
 
-Web resources**
-	•	Scikit-learn User Guide — Linear SVM (LinearSVC)
-https://scikit-learn.org/stable/modules/svm.html#svm-classification￼
-	•	StatQuest — SVMs Clearly Explained
-https://www.youtube.com/watch?v=efR1C6CvhmE￼
+1.	Cortes, C., & Vapnik, V. (1995). Support-Vector Networks. Machine Learning.
+2.	Boser, B., Guyon, I., & Vapnik, V. (1992). A Training Algorithm for Optimal Margin Classifiers. COLT.
+3.	Hastie, Tibshirani, Friedman (2009). The Elements of Statistical Learning (Ch. 12). Springer.
+
+Web resources
+
+•	Scikit-learn User Guide — Linear SVM (LinearSVC): https://scikit-learn.org/stable/modules/svm.html#svm-classification￼
+•	StatQuest — SVMs Clearly Explained: https://www.youtube.com/watch?v=efR1C6CvhmE￼
 
 ------
 
@@ -2058,6 +2061,8 @@ Linear SVM gives us a strong boundary when linear signals dominate. When the dat
 A Kernel Support Vector Machine (SVM) extends the linear SVM to handle non-linear decision boundaries.
 It does so by implicitly mapping the input data into a higher-dimensional feature space where a linear separation becomes possible.
 This transformation is achieved through a mathematical function called a kernel, which computes the similarity between points without explicitly performing the mapping.
+
+ ![class](/ima/ima17.png)
 
 This concept, known as the kernel trick, allows the SVM to learn complex, curved boundaries while maintaining the elegant geometric formulation of the linear case.
 
