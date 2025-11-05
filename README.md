@@ -1,4 +1,4 @@
-# Everything about Data Classification.
+# Everything about Algorithms Classification.
 
  ![class](/ima/ima1.png)
 
