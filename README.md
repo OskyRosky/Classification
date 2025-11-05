@@ -1744,23 +1744,26 @@ A classifier is now seen as a surface in feature space — a hyperplane that div
 Each training sample exerts a geometric “pull” on that boundary; the model learns by balancing these opposing forces until the separation is maximized.
 
 Why this matters:
-	1.	Freedom from distributional assumptions
-Margin-based algorithms do not require features to be Gaussian, independent, or even linearly correlated.
-They rely solely on the geometry of the data — distances and orientations — making them robust in heterogeneous, high-dimensional environments.
-	2.	Focus on boundaries, not densities
-Probabilistic models approximate how data are distributed within each class.
-Margin-based models focus on where classes meet, learning decision surfaces that adapt even when densities overlap or are non-parametric.
-	3.	Better generalization via margins
-Maximizing the separation between classes naturally reduces overfitting.
-A larger margin implies that the model commits only when evidence is strong, yielding smoother and more stable decision regions.
-	4.	Gateway to modern geometric learning
+
+1.	Freedom from distributional assumptions.
+
+Margin-based algorithms do not require features to be Gaussian, independent, or even linearly correlated. They rely solely on the geometry of the data — distances and orientations — making them robust in heterogeneous, high-dimensional environments.
+
+2.	Focus on boundaries, not densities.
+
+Probabilistic models approximate how data are distributed within each class. Margin-based models focus on where classes meet, learning decision surfaces that adapt even when densities overlap or are non-parametric.
+
+3.	Better generalization via margins.
+
+Maximizing the separation between classes naturally reduces overfitting. A larger margin implies that the model commits only when evidence is strong, yielding smoother and more stable decision regions.
+
+4.	Gateway to modern geometric learning.
+
 This concept of margins and separating hyperplanes became the foundation for Support Vector Machines and, indirectly, for many modern neural methods that also learn hierarchical geometric boundaries.
 
 In summary
 
-If probabilistic models represent reasoning under uncertainty,
-margin-based models embody decision through geometry.
-They define classification not as an act of inference but as the art of drawing the clearest possible line between competing explanations.
+If probabilistic models represent reasoning under uncertainty, margin-based models embody decision through geometry. They define classification not as an act of inference but as the art of drawing the clearest possible line between competing explanations.
 
 With that new lens, we now step into the first and most historic of these geometric learners — the Perceptron, the algorithm that first taught machines how to learn a boundary from experience.
 
@@ -1783,9 +1786,12 @@ Why use it?
 The Perceptron is used mainly for linearly separable classification problems and as a conceptual foundation for more advanced models such as Support Vector Machines (SVMs) and Artificial Neural Networks.
 
 Its main advantages are:
-	•	Simplicity: the training algorithm is intuitive and fast.
-	•	Interpretability: the learned weights define the orientation of the separating hyperplane.
-	•	Historical and pedagogical value: it teaches the principles of iterative learning and convergence.
+
+•	Simplicity: the training algorithm is intuitive and fast.
+
+•	Interpretability: the learned weights define the orientation of the separating hyperplane.
+
+•	Historical and pedagogical value: it teaches the principles of iterative learning and convergence.
 
 Typical use cases are educational examples, prototype experiments, or low-dimensional datasets where a linear boundary suffices.
 
@@ -1812,9 +1818,10 @@ Mathematical foundation
 The Perceptron minimizes a simple misclassification loss by updating the weights whenever an error occurs.
 
 For each sample (x_i, y_i), where y_i \in \{-1, +1\}:
-	1.	Compute the prediction:
-\hat{y}_i = \text{sign}(w^T x_i + b)
-	2.	If the prediction is wrong (y_i \neq \hat{y}_i), update:
+
+1.	Compute the prediction: hat{y}_i = \text{sign}(w^T x_i + b)
+
+2.	If the prediction is wrong (y_i \neq \hat{y}_i), update:
 
 $$
 w \leftarrow w + \eta, y_i, x_i
@@ -1824,7 +1831,8 @@ $$
 b \leftarrow b + \eta, y_i
 $$
 
-Here \eta (eta) is the learning rate — a small constant controlling the step size.
+Here eta (eta) is the learning rate — a small constant controlling the step size.
+
 The algorithm repeats until all points are correctly classified or a maximum number of iterations is reached.
 
 Because this rule adjusts only on errors, the model naturally converges for linearly separable data.
@@ -1834,6 +1842,7 @@ Because this rule adjusts only on errors, the model naturally converges for line
 Training logic
 
 Training is incremental and deterministic:
+
 Each misclassified point “teaches” the model by shifting the decision boundary toward the correct side.
 The updates continue until either all points are correctly classified or the model cycles between a few errors (if the data are not linearly separable).
 
@@ -1845,23 +1854,32 @@ This simplicity makes it computationally efficient but also limits its applicabi
 Assumptions and limitations
 
 Assumptions
-	•	Data must be linearly separable (a single hyperplane can divide the classes).
-	•	Features should be scaled or normalized for stable learning.
+
+•	Data must be linearly separable (a single hyperplane can divide the classes).
+
+•	Features should be scaled or normalized for stable learning.
 
 Limitations
-	•	Fails to converge when data are not linearly separable.
-	•	Sensitive to feature scaling and initialization.
-	•	Produces hard decisions (no probabilities or confidence).
-	•	Cannot handle multiclass problems natively (requires one-vs-rest extensions).
+
+•	Fails to converge when data are not linearly separable.
+	
+•	Sensitive to feature scaling and initialization.
+	
+•	Produces hard decisions (no probabilities or confidence).
+
+•	Cannot handle multiclass problems natively (requires one-vs-rest extensions).
 
 Despite these limits, its geometric simplicity made it the stepping stone for nearly all future linear classifiers.
 
 ⸻
 
 Key hyperparameters (conceptual view)
-	•	Learning rate (η): controls the step size of weight updates.
-	•	Max iterations: prevents infinite loops when data are not separable.
-	•	Shuffle or random seed: affects convergence order and stability.
+
+•	Learning rate (η): controls the step size of weight updates.
+
+•	Max iterations: prevents infinite loops when data are not separable.
+
+•	Shuffle or random seed: affects convergence order and stability.
 
 These parameters influence how quickly and smoothly the model converges.
 
@@ -1870,9 +1888,12 @@ These parameters influence how quickly and smoothly the model converges.
 Evaluation focus
 
 Because it produces binary hard outputs, evaluation typically relies on:
-	•	Accuracy and confusion matrix for balanced datasets.
-	•	Precision, recall, and F1-score when classes are imbalanced.
-	•	ROC–AUC can be used when applying score-based variants (averaged raw activations).
+
+•	Accuracy and confusion matrix for balanced datasets.
+
+•	Precision, recall, and F1-score when classes are imbalanced.
+
+•	ROC–AUC can be used when applying score-based variants (averaged raw activations).
 
 The Perceptron’s performance is best interpreted geometrically — by visualizing the boundary and the margin between classes.
 
@@ -1881,29 +1902,36 @@ The Perceptron’s performance is best interpreted geometrically — by visualiz
 When to use / When not to use
 
 Use it when:
-	•	The classes are roughly linearly separable.
-	•	You want a fast, interpretable, and educational model.
-	•	The task involves small or low-dimensional data.
+
+•	The classes are roughly linearly separable.
+
+•	You want a fast, interpretable, and educational model.
+
+•	The task involves small or low-dimensional data.
 
 Avoid it when:
-	•	The data are nonlinear or noisy.
-	•	You need probabilistic outputs.
-	•	Convergence or margin optimization matters (SVMs are superior in such cases).
+
+•	The data are nonlinear or noisy.
+
+•	You need probabilistic outputs.
+
+•	Convergence or margin optimization matters (SVMs are superior in such cases).
 
 ⸻
 
 References
 
 Canonical papers
-	1.	Rosenblatt, F. (1958). The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain. Psychological Review.
-	2.	Minsky, M., & Papert, S. (1969). Perceptrons. MIT Press.
-	3.	Novikoff, A. B. J. (1962). On Convergence Proofs on Perceptrons. Proceedings of the Symposium on the Mathematical Theory of Automata.
+
+1.	Rosenblatt, F. (1958). The Perceptron: A Probabilistic Model for Information Storage and Organization in the Brain. Psychological Review.
+2.	Minsky, M., & Papert, S. (1969). Perceptrons. MIT Press.
+3.	Novikoff, A. B. J. (1962). On Convergence Proofs on Perceptrons. Proceedings of the Symposium on the Mathematical Theory of Automata.
 
 Web resources
-	•	Scikit-learn User Guide — Perceptron
-https://scikit-learn.org/stable/modules/linear_model.html#perceptron￼
-	•	StatQuest — The Perceptron Clearly Explained (video)
-https://www.youtube.com/watch?v=3Xc3CA655Y4￼
+
+•	Scikit-learn User Guide — Perceptron: https://scikit-learn.org/stable/modules/linear_model.html#perceptron￼
+
+•	StatQuest — The Perceptron Clearly Explained (video) : https://www.youtube.com/watch?v=3Xc3CA655Y4￼
 
 -----
 
@@ -1920,6 +1948,8 @@ The next model, the Support Vector Machine (SVM), formalizes that intuition into
 **What is it?**
 
 A Linear Support Vector Machine learns a separating hyperplane that maximizes the margin between classes. Instead of modeling class densities, it focuses on the decision boundary itself. The soft-margin variant adds slack to tolerate overlap and noise, which makes it practical for real data.
+
+ ![class](/ima/ima16.webp)
 
 ⸻
 
