@@ -1732,16 +1732,18 @@ They assume that data follow certain statistical patterns: distributions (often 
 These methods work beautifully when their assumptions are approximately true, offering interpretability, calibrated probabilities, and direct links to statistical theory.
 Yet, as data became richer and more irregular, those assumptions began to constrain rather than empower.
 
+ ![class](/ima/ima14.jpg)
+
 Margin-based models emerged as a paradigm shift.
 Instead of asking “Which class is most probable given this point?”, they ask
 
-“Where should the boundary lie so that classes are best separated?”
+**Where should the boundary lie so that classes are best separated?**
 
 This shift replaces the probabilistic framework with a geometric one.
 A classifier is now seen as a surface in feature space — a hyperplane that divides points of different labels with the widest possible margin between them.
 Each training sample exerts a geometric “pull” on that boundary; the model learns by balancing these opposing forces until the separation is maximized.
 
-Why this matters
+Why this matters:
 	1.	Freedom from distributional assumptions
 Margin-based algorithms do not require features to be Gaussian, independent, or even linearly correlated.
 They rely solely on the geometry of the data — distances and orientations — making them robust in heterogeneous, high-dimensional environments.
@@ -1768,6 +1770,8 @@ What is it?
 
 The Perceptron is the earliest and simplest algorithm for supervised classification based purely on geometry.
 Introduced by Frank Rosenblatt (1958), it represents one of the first attempts to make a machine learn from experience — by adjusting a decision boundary through exposure to data.
+
+ ![class](/ima/ima15.png)
 
 It learns a linear separator between two classes by iteratively updating weights whenever a sample is misclassified.
 Though simple, the Perceptron introduced the core idea that still underlies modern neural networks: a neuron that combines inputs, applies a transformation, and outputs a decision.
