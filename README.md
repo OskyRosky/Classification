@@ -2121,35 +2121,29 @@ $$
 0 \le \alpha_i \le C, \quad \sum_{i=1}^{n} \alpha_i y_i = 0
 $$
 
-The kernel defines the geometry of the transformed space.
+The kernel defines the geometry of the transformed space.  
 Common choices include:
 
-•	Linear kernel: 
+• **Linear kernel:**
 
 $$
-
-K(x_i, x_j) = x_i^\top x_j 
-
+K(x_i, x_j) = x_i^\top x_j
 $$
 
 (equivalent to the linear SVM).
 
-•	Polynomial kernel: 
+• **Polynomial kernel:**
 
 $$
-
-K(x_i, x_j) = (x_i^\top x_j + c)^d 
-
+K(x_i, x_j) = (x_i^\top x_j + c)^d
 $$
 
 (captures polynomial feature interactions).
 
-•	Radial Basis Function (RBF): 
+• **Radial Basis Function (RBF):**
 
 $$
-
-K(x_i, x_j) = \exp(-\gamma \|x_i - x_j\|^2) 
-
+K(x_i, x_j) = \exp(-\gamma \|x_i - x_j\|^2)
 $$
 
 (produces flexible, smooth boundaries that adapt locally).
@@ -2267,7 +2261,7 @@ The models we have explored so far — linear, probabilistic, and margin-based �
 They learn a set of parameters that define a boundary or rule, summarizing what they have seen.
 Once trained, these models can forget the original data and rely solely on their learned representation to classify new points.
 
-
+![class](/ima/ima18.webp)
 
 Instance-based models take the opposite approach.
 They do not compress knowledge into coefficients or support vectors — they remember.
@@ -2288,9 +2282,10 @@ If most of its neighbors belong to class A, the point is classified as A.
 There is no need to assume linearity, normality, or even continuity — the data itself defines the geometry.
 
 This approach provides flexibility:
-	•	It adapts naturally to non-linear and irregular shapes.
-	•	It can represent complex interactions without explicit feature transformations.
-	•	It works well even when only small regions of the data exhibit structure.
+
+•	It adapts naturally to non-linear and irregular shapes.
+•	It can represent complex interactions without explicit feature transformations.
+•	It works well even when only small regions of the data exhibit structure.
 
 However, that flexibility comes at a cost:
 storing and comparing all instances means high computational cost, and because it learns no global model, it is sensitive to noise and irrelevant features.
@@ -2303,8 +2298,6 @@ In many real-world problems, decisions are inherently local.
 A rare medical case may resemble only a few other patients in a dataset.
 An unusual image may be best understood by comparing it to its closest matches.
 In these cases, global models can oversimplify patterns that only appear in small neighborhoods.
-
-![class](/ima/ima18.webp)
 
 Instance-based methods capture this granularity.
 They do not generalize through equations, but through similarity —
