@@ -3928,7 +3928,7 @@ a continuous optimization process that generalizes AdaBoost’s idea to arbitrar
 Gradient Boosting, or Gradient Boosted Decision Trees (GBDT), is one of the most powerful and flexible ensemble learning methods in modern machine learning.
 It generalizes the idea of AdaBoost by viewing boosting as an optimization problem, where each new model corrects the residual errors of the previous ones by following the gradient of a loss function.
 
-![class](/ima/ima28.png)
+![class](/ima/ima28.jpg)
 
 Originally introduced by Jerome H. Friedman (2001), Gradient Boosting provides a unified framework that can optimize any differentiable loss — from classification (log-loss) to regression (squared error) or ranking objectives.
 It became the conceptual foundation for later algorithms such as XGBoost, LightGBM, and CatBoost.
@@ -4136,7 +4136,7 @@ brought boosting from research labs to real-world production systems.
 XGBoost, short for Extreme Gradient Boosting, is an advanced and highly optimized implementation of Gradient Boosted Decision Trees (GBDT).
 Developed by Tianqi Chen (2016), it revolutionized machine learning practice by introducing a fast, scalable, and regularized version of gradient boosting that could efficiently handle large datasets.
 
-![class](/ima/ima29.png)
+![class](/ima/ima29.jpg)
 
 Unlike the original GBDT, which was primarily theoretical and computationally heavy, XGBoost was built for speed, scalability, and control over overfitting —
 making it the algorithm of choice for data scientists across industries and competitions.
@@ -4513,7 +4513,7 @@ combining ordered boosting and category encoding directly within the training pr
 CatBoost, short for Categorical Boosting, is a high-performance gradient boosting algorithm developed by Yandex (2018).
 It extends the standard GBDT framework (like XGBoost and LightGBM) but introduces unique innovations that make it particularly effective with categorical data and robust against overfitting.
 
-![class](/ima/ima31.webp)
+![class](/ima/ima31.png)
 
 The two defining ideas of CatBoost are:
 
