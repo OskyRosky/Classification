@@ -9,8 +9,7 @@
 
 1.  **Intro** 🧳
 
-This repository presents a complete, end-to-end framework for classification modeling — from theory to deployment.
-It unifies statistical foundations, model estimation, evaluation, optimization, and reproducibility into a coherent, educational structure.
+This repository presents a complete, end-to-end framework for classification modeling — from theory to deployment. It unifies statistical foundations, model estimation, evaluation, optimization, and reproducibility into a coherent, educational structure.
 Each section builds upon the previous one, guiding the reader from mathematical intuition to practical implementation.
 
 
@@ -3072,12 +3071,14 @@ Ensemble learning reflects a shift from “one best model” to “many cooperat
 It embodies a pragmatic view of intelligence: error is inevitable, but collective reasoning minimizes it.
 
 Each ensemble technique differs mainly in how it builds and aggregates its members:
-	•	Some train learners independently and combine them later (e.g., Bagging, Random Forests, Extra Trees).
-	•	Others train them sequentially, each focusing on correcting prior errors (e.g., AdaBoost, Gradient Boosting, XGBoost, LightGBM, CatBoost).
+
+•	Some train learners independently and combine them later (e.g., Bagging, Random Forests, Extra Trees).
+•	Others train them sequentially, each focusing on correcting prior errors (e.g., AdaBoost, Gradient Boosting, XGBoost, LightGBM, CatBoost).
 
 This diversity of construction gives rise to two main paradigms:
-	•	Parallel ensembles — focus on stability.
-	•	Sequential ensembles — focus on precision.
+
+•	Parallel ensembles — focus on stability.
+•	Sequential ensembles — focus on precision.
 
 ⸻
 
@@ -3085,10 +3086,14 @@ This diversity of construction gives rise to two main paradigms:
 
 In applied machine learning — especially with tabular data — ensemble models have become the gold standard.
 They consistently outperform deep neural networks on structured datasets due to their ability to:
-	•	Handle missing data gracefully.
-	•	Capture complex feature interactions automatically.
-	•	Scale efficiently on large datasets.
-	•	Require minimal preprocessing or tuning to achieve competitive results.
+
+•	Handle missing data gracefully.
+
+•	Capture complex feature interactions automatically.
+
+•	Scale efficiently on large datasets.
+
+•	Require minimal preprocessing or tuning to achieve competitive results.
 
 Their performance, interpretability (through feature importance), and ease of deployment make them central to both academic and industrial ML pipelines.
 
@@ -3107,20 +3112,18 @@ This philosophy underlies nearly all modern classifiers used in data science com
 **What’s Next**
 
 We will explore the most influential ensemble methods, grouped by their aggregation logic:
-	1.	Bagging (Bootstrap Aggregating) — parallel model averaging for variance reduction.
-	2.	Random Forests — ensemble of de-correlated trees for balanced performance.
-	3.	Extra Trees — extreme randomization for even lower variance.
-	4.	AdaBoost — sequentially boosted weak learners focusing on hard examples.
-	5.	Gradient Boosting (GBDT) — gradient-based sequential optimization.
-	6.	XGBoost — regularized, optimized GBDT implementation.
-	7.	LightGBM — efficient, leaf-wise gradient boosting for speed and scalability.
-	8.	CatBoost — boosting with categorical encoding and order-based regularization.
 
-Each of these methods represents a refinement of the ensemble idea —
-from statistical aggregation to algorithmic synergy —
+1.	Bagging (Bootstrap Aggregating) — parallel model averaging for variance reduction.
+2.	Random Forests — ensemble of de-correlated trees for balanced performance.
+3.	Extra Trees — extreme randomization for even lower variance.
+4.	AdaBoost — sequentially boosted weak learners focusing on hard examples.
+5.	Gradient Boosting (GBDT) — gradient-based sequential optimization.
+6.	XGBoost — regularized, optimized GBDT implementation.
+7.	LightGBM — efficient, leaf-wise gradient boosting for speed and scalability.
+8.	CatBoost — boosting with categorical encoding and order-based regularization.
+
+Each of these methods represents a refinement of the ensemble idea — from statistical aggregation to algorithmic synergy —
 and together they form the backbone of modern supervised learning.
-
-
 
 #### 12. Bagging (Bootstrap Aggregating)
 
@@ -3128,6 +3131,8 @@ and together they form the backbone of modern supervised learning.
 
 Bagging, short for Bootstrap Aggregating, is one of the simplest yet most powerful ensemble methods in machine learning.
 Proposed by Leo Breiman (1996), it combines multiple models trained on different random subsets of the same dataset and averages their predictions to reduce variance and improve stability.
+
+![class](/ima/ima24.png)
 
 Each model (often a decision tree) learns from a slightly different perspective of the data, thanks to bootstrap sampling — random sampling with replacement.
 By aggregating their outputs, Bagging creates a smoother, more robust prediction than any single model could achieve.
@@ -3208,17 +3213,18 @@ Bagging leaves bias mostly unchanged but substantially decreases the variance co
 
 **Training logic**
 
-1.	Bootstrap sampling:
-Draw B random datasets from the original data, each of size n, sampling with replacement.
+1.	Bootstrap sampling: Draw B random datasets from the original data, each of size n, sampling with replacement.
 
-2.	Train base learners:
-Fit one model f^{(b)} on each bootstrap sample independently.
+2.	Train base learners: Fit one model f^{(b)} on each bootstrap sample independently.
 
 3.	Aggregate predictions:
+
 •	For regression → take the average.
+
 •	For classification → take the majority vote.
 
 4.	(Optional) Out-of-Bag (OOB) estimation:
+
 Since about 37% of data are left out of each bootstrap sample, Bagging can estimate its own test error using those unseen samples — no need for a separate validation set.
 
 ⸻
@@ -3226,24 +3232,27 @@ Since about 37% of data are left out of each bootstrap sample, Bagging can estim
 **Assumptions and limitations**
 
 Assumptions
-	•	The base learner has high variance and benefits from averaging (e.g., decision trees).
-	•	Samples are independent and identically distributed (i.i.d.).
+
+•	The base learner has high variance and benefits from averaging (e.g., decision trees).
+•	Samples are independent and identically distributed (i.i.d.).
 
 Limitations
-	•	Ineffective for low-variance, high-bias models (e.g., linear models).
-	•	Aggregation reduces interpretability — the ensemble becomes opaque.
-	•	Computationally heavier (many models trained in parallel).
+
+•	Ineffective for low-variance, high-bias models (e.g., linear models).
+•	Aggregation reduces interpretability — the ensemble becomes opaque.
+•	Computationally heavier (many models trained in parallel).
 
 Bagging is less about sophistication and more about stability through redundancy.
 
 ⸻
 
 Key hyperparameters (conceptual view)
-	•	n_estimators: number of models in the ensemble (B).
-	•	max_samples: fraction or number of samples drawn per bootstrap.
-	•	max_features: number of features considered when training each model.
-	•	bootstrap: whether to sample with replacement (True = Bagging).
-	•	oob_score: whether to estimate generalization error using out-of-bag samples.
+
+•	n_estimators: number of models in the ensemble (B).
+•	max_samples: fraction or number of samples drawn per bootstrap.
+•	max_features: number of features considered when training each model.
+•	bootstrap: whether to sample with replacement (True = Bagging).
+•	oob_score: whether to estimate generalization error using out-of-bag samples.
 
 These parameters control the trade-off between diversity and computational cost.
 
@@ -3252,9 +3261,10 @@ These parameters control the trade-off between diversity and computational cost.
 **Evaluation focus**
 
 Bagging improves variance-driven metrics, such as:
-	•	Accuracy or ROC–AUC on noisy datasets.
-	•	Stability across folds (lower variance in cross-validation).
-	•	OOB score, a direct estimate of test error.
+
+•	Accuracy or ROC–AUC on noisy datasets.
+•	Stability across folds (lower variance in cross-validation).
+•	OOB score, a direct estimate of test error.
 
 Inspecting feature importance (averaged across models) also helps explain ensemble decisions.
 
@@ -3263,14 +3273,16 @@ Inspecting feature importance (averaged across models) also helps explain ensemb
 **When to use / When not to use**
 
 Use it when:
-	•	The base model is unstable (e.g., Decision Trees).
-	•	Dataset is moderately noisy or small.
-	•	You want a simple ensemble with strong variance reduction.
+
+•	The base model is unstable (e.g., Decision Trees).
+•	Dataset is moderately noisy or small.
+•	You want a simple ensemble with strong variance reduction.
 
 Avoid it when:
-	•	The base model is already stable (e.g., linear regression).
-	•	You need highly interpretable models.
-	•	The dataset is extremely large and computation is constrained.
+
+•	The base model is already stable (e.g., linear regression).
+•	You need highly interpretable models.
+•	The dataset is extremely large and computation is constrained.
 
 ⸻
 
@@ -3284,11 +3296,9 @@ Canonical papers
 
 Web resources
 
-•	Scikit-learn User Guide — Bagging Classifier
-https://scikit-learn.org/stable/modules/ensemble.html#bagging￼
+•	Scikit-learn User Guide — Bagging Classifier https://scikit-learn.org/stable/modules/ensemble.html#bagging￼
 
-•	StatQuest — Bagging and Random Forests Explained
-https://www.youtube.com/watch?v=nyxTdL_4Q-Q￼
+•	StatQuest — Bagging and Random Forests Explained https://www.youtube.com/watch?v=nyxTdL_4Q-Q￼
 
 
 -----
@@ -3307,6 +3317,8 @@ creating a forest of de-correlated trees that balance accuracy, robustness, and 
 Random Forests are one of the most widely used and successful classification algorithms ever developed.
 Introduced by Leo Breiman (2001), they extend the Bagging idea by adding an additional layer of randomness — not only do they sample the data (bootstrapping), but they also sample the features used to grow each tree.
 
+![class](/ima/ima25.png)
+
 Each tree in the forest learns from a slightly different subset of data and features, ensuring that the individual trees are decorrelated.
 When these trees vote together, their errors tend to cancel out while their predictive signals reinforce one another.
 
@@ -3318,10 +3330,11 @@ This dual randomness — in rows and columns — is what makes Random Forests bo
 
 Random Forests combine the interpretability of Decision Trees with the stability and predictive power of ensembles.
 They are particularly effective when:
-	•	Data are non-linear, noisy, or high-dimensional.
-	•	You need strong performance with minimal tuning.
-	•	You value feature importance and partial interpretability.
-	•	The dataset mixes categorical and numerical variables.
+
+•	Data are non-linear, noisy, or high-dimensional.
+•	You need strong performance with minimal tuning.
+•	You value feature importance and partial interpretability.
+•	The dataset mixes categorical and numerical variables.
 
 Applications span nearly every domain: credit scoring, bioinformatics, text classification, remote sensing, fraud detection, and industrial quality control.
 
@@ -3344,7 +3357,13 @@ Think of it as a committee where each member has access to different information
 
 **Mathematical foundation**
 
-For a training dataset D = \{(x_i, y_i)\}_{i=1}^{n}, Random Forests train B trees independently:
+For a training dataset 
+
+$$
+D = \{(x_i, y_i)\}_{i=1}^{n}
+$$
+
+Random Forests train B trees independently:
 
 Each tree T_b is trained on a bootstrap sample D^{(b)}.
 At each node split, a random subset of m features is drawn (from total p).
@@ -3372,17 +3391,21 @@ $$
 \text{Var}(\hat{y}) = \rho , \text{Var}(T) + \frac{1 - \rho}{B} \text{Var}(T)
 $$
 
-where \rho is the average correlation between trees.
-Reducing \rho — through feature randomness — is the key to Random Forest’s strength.
+where rho is the average correlation between trees.
+Reducing rho — through feature randomness — is the key to Random Forest’s strength.
 
 ⸻
 
 **Training logic**
 
 1.	Bootstrap sampling: draw multiple datasets with replacement.
+
 2.	Tree construction: at each split, select a random subset of features (mtry).
+
 3.	Grow trees fully (no pruning): this maximizes diversity among trees.
+
 4.	Aggregation: combine tree outputs by voting or averaging.
+
 5.	Out-of-Bag (OOB) error estimation: use the ~37% of samples left out of each bootstrap to measure generalization.
 
 Random Forests grow hundreds or thousands of trees in parallel, each exploring a unique “view” of the problem.
@@ -3392,14 +3415,16 @@ Random Forests grow hundreds or thousands of trees in parallel, each exploring a
 **Assumptions and limitations**
 
 Assumptions
-	•	The signal can be captured through feature interactions and splits.
-	•	Trees are uncorrelated enough for averaging to reduce variance.
+
+•	The signal can be captured through feature interactions and splits.
+•	Trees are uncorrelated enough for averaging to reduce variance.
 
 Limitations
-	•	Interpretability decreases as the number of trees grows.
-	•	Predictions are slower with large forests.
-	•	Feature importance may be biased toward variables with many categories or scales.
-	•	Struggles slightly on extremely high-dimensional sparse data (where linear models shine).
+
+•	Interpretability decreases as the number of trees grows.
+•	Predictions are slower with large forests.
+•	Feature importance may be biased toward variables with many categories or scales.
+•	Struggles slightly on extremely high-dimensional sparse data (where linear models shine).
 
 Despite these, Random Forests remain one of the best general-purpose models in existence.
 
@@ -3421,10 +3446,11 @@ These parameters jointly balance bias, variance, and correlation among trees.
 **Evaluation focus**
 
 Random Forests should be evaluated for:
-	•	Accuracy, F1-score, ROC–AUC, and PR–AUC.
-	•	OOB score for internal validation.
-	•	Feature importance (Gini importance or permutation importance).
-	•	Stability across random seeds — reliable models show minimal variance across runs.
+
+•	Accuracy, F1-score, ROC–AUC, and PR–AUC.
+•	OOB score for internal validation.
+•	Feature importance (Gini importance or permutation importance).
+•	Stability across random seeds — reliable models show minimal variance across runs.
 
 They tend to perform exceptionally well on structured, tabular datasets with minimal preprocessing.
 
@@ -3433,10 +3459,11 @@ They tend to perform exceptionally well on structured, tabular datasets with min
 **When to use / When not to use**
 
 Use it when:
-	•	The dataset has complex feature interactions.
-	•	You need a strong baseline without much tuning.
-	•	Data are noisy or moderately imbalanced.
-	•	Interpretability via feature importance is sufficient.
+
+•	The dataset has complex feature interactions.
+•	You need a strong baseline without much tuning.
+•	Data are noisy or moderately imbalanced.
+•	Interpretability via feature importance is sufficient.
 
 Avoid it when:
 
@@ -3449,15 +3476,16 @@ Avoid it when:
 **References**
 
 Canonical papers
-	1.	Breiman, L. (2001). Random Forests. Machine Learning, 45(1), 5–32.
-	2.	Liaw, A., & Wiener, M. (2002). Classification and Regression by randomForest. R News, 2(3), 18–22.
-	3.	Biau, G., & Scornet, E. (2016). A Random Forest Guided Tour. TEST Journal, 25(2), 197–227.
+
+1.	Breiman, L. (2001). Random Forests. Machine Learning, 45(1), 5–32.
+2.	Liaw, A., & Wiener, M. (2002). Classification and Regression by randomForest. R News, 2(3), 18–22.
+3.	Biau, G., & Scornet, E. (2016). A Random Forest Guided Tour. TEST Journal, 25(2), 197–227.
 
 Web resources
-	•	Scikit-learn User Guide — Random Forests
-https://scikit-learn.org/stable/modules/ensemble.html#random-forests￼
-	•	StatQuest — Random Forests Explained Clearly
-https://www.youtube.com/watch?v=J4Wdy0Wc_xQ￼
+
+•	Scikit-learn User Guide — Random Forests https://scikit-learn.org/stable/modules/ensemble.html#random-forests￼
+	
+•	StatQuest — Random Forests Explained Clearly https://www.youtube.com/watch?v=J4Wdy0Wc_xQ￼
 
 
 -----
@@ -3477,6 +3505,8 @@ The next algorithm — Extra Trees (Extremely Randomized Trees) — pushes rando
 Extra Trees, short for Extremely Randomized Trees, extend the idea of Random Forests by injecting even more randomness into the tree-building process.
 Proposed by Pierre Geurts, Damien Ernst, and Louis Wehenkel (2006), this method aims to further reduce model variance by increasing diversity among trees.
 
+![class](/ima/ima26.png)
+
 While Random Forests randomize both data samples (bootstrapping) and feature subsets, Extra Trees go a step further —
 they randomize the split thresholds themselves instead of searching for the optimal ones.
 
@@ -3487,16 +3517,18 @@ This deliberate randomization might sound counterintuitive, but it creates a str
 **Why use it?**
 
 Extra Trees are particularly useful when:
-	•	You want a fast and robust ensemble for large, high-dimensional datasets.
-	•	The dataset contains noisy or redundant features.
-	•	You need variance reduction without overfitting.
+
+•	You want a fast and robust ensemble for large, high-dimensional datasets.
+•	The dataset contains noisy or redundant features.
+•	You need variance reduction without overfitting.
 
 Because Extra Trees use the entire training set (no bootstrapping by default) and avoid exhaustive split searches, they are faster to train and sometimes generalize even better than Random Forests.
 
 They are widely used in industrial and academic applications such as:
-	•	Fraud detection and anomaly detection.
-	•	Sensor-based fault prediction.
-	•	Bioinformatics and genomics (large p, small n settings).
+
+•	Fraud detection and anomaly detection.
+•	Sensor-based fault prediction.
+•	Bioinformatics and genomics (large p, small n settings).
 
 ⸻
 
@@ -3506,8 +3538,9 @@ Random Forests already reduce variance through feature randomness, but each spli
 Extra Trees add another layer of randomness by choosing both the feature and the split threshold randomly, without evaluating all possible cut points.
 
 This has two main consequences:
-	1.	Faster training, since the best split is not searched exhaustively.
-	2.	Higher tree diversity, since trees differ even more in structure, reducing correlation and variance.
+
+1.	Faster training, since the best split is not searched exhaustively.
+2.	Higher tree diversity, since trees differ even more in structure, reducing correlation and variance.
 
 In practice, Extra Trees tend to have slightly higher bias than Random Forests but lower variance, leading to similar or improved overall performance.
 
@@ -3516,9 +3549,10 @@ In practice, Extra Trees tend to have slightly higher bias than Random Forests b
 **Mathematical foundation**
 
 At each node in a tree:
-	1.	Randomly select a subset of features of size m.
-	2.	For each selected feature x_j, draw a random split threshold s_j uniformly within its value range.
-	3.	Choose one random pair (x_j, s_j) to perform the split.
+
+1.	Randomly select a subset of features of size m.
+2.	For each selected feature x_j, draw a random split threshold s_j uniformly within its value range.
+3.	Choose one random pair (x_j, s_j) to perform the split.
 
 Thus, the decision rule is defined as:
 
@@ -3541,16 +3575,13 @@ This added randomness decorrelates the trees, improving the generalization of th
 ⸻
 
 Training logic
-	1.	Sample generation (optional):
-Unlike Bagging and Random Forests, Extra Trees often use the entire dataset for each tree.
-	2.	Random feature selection:
-At each node, select a random subset of features.
-	3.	Random threshold selection:
-Instead of computing the best split, draw a threshold uniformly at random for each chosen feature.
-	4.	Recursive splitting:
-Repeat until a stopping criterion is reached (max depth, min samples per leaf).
-	5.	Aggregation:
-Average or vote across all trees for the final prediction.
+
+1.	Sample generation (optional): Unlike Bagging and Random Forests, Extra Trees often use the entire dataset for each tree.
+
+2.	Random feature selection: at each node, select a random subset of features.
+3.	Random threshold selection: instead of computing the best split, draw a threshold uniformly at random for each chosen feature.
+4.	Recursive splitting: Repeat until a stopping criterion is reached (max depth, min samples per leaf).
+5.	Aggregation: average or vote across all trees for the final prediction.
 
 This randomness may appear naive, but the ensemble effect smooths individual imperfections into strong generalization.
 
@@ -3559,24 +3590,27 @@ This randomness may appear naive, but the ensemble effect smooths individual imp
 **Assumptions and limitations**
 
 Assumptions
-	•	The signal is complex but stable enough to tolerate random partitioning.
-	•	Diversity among models improves ensemble performance.
+
+•	The signal is complex but stable enough to tolerate random partitioning.
+•	Diversity among models improves ensemble performance.
 
 Limitations
-	•	Slightly higher bias than Random Forests.
-	•	Less interpretable due to greater randomness.
-	•	Random thresholds may underperform when precise split boundaries are crucial.
+
+•	Slightly higher bias than Random Forests.
+•	Less interpretable due to greater randomness.
+•	Random thresholds may underperform when precise split boundaries are crucial.
 
 Despite these, Extra Trees often equal or surpass Random Forests in real-world tasks, especially with many noisy or irrelevant features.
 
 ⸻
 
 **Key hyperparameters (conceptual view)**
-	•	n_estimators: number of trees in the ensemble.
-	•	max_features: number of features considered for each split.
-	•	max_depth, min_samples_split, min_samples_leaf: control complexity and prevent overfitting.
-	•	bootstrap: whether to sample data with replacement (False by default).
-	•	criterion: measure of split quality (e.g., Gini or entropy).
+
+•	n_estimators: number of trees in the ensemble.
+•	max_features: number of features considered for each split.
+•	max_depth, min_samples_split, min_samples_leaf: control complexity and prevent overfitting.
+•	bootstrap: whether to sample data with replacement (False by default).
+•	criterion: measure of split quality (e.g., Gini or entropy).
 
 Increasing max_features raises correlation (lower diversity), while decreasing it enhances randomness but may increase bias.
 
@@ -3585,10 +3619,11 @@ Increasing max_features raises correlation (lower diversity), while decreasing i
 **Evaluation focusv
 
 Evaluate Extra Trees similarly to Random Forests, emphasizing:
-	•	Accuracy and F1-score for balanced datasets.
-	•	ROC–AUC and PR–AUC for imbalanced problems.
-	•	Stability across folds — Extra Trees should show low variance in cross-validation results.
-	•	Feature importance (permutation-based) to gauge interpretability.
+
+•	Accuracy and F1-score for balanced datasets.
+•	ROC–AUC and PR–AUC for imbalanced problems.
+•	Stability across folds — Extra Trees should show low variance in cross-validation results.
+•	Feature importance (permutation-based) to gauge interpretability.
 
 Their performance tends to be more consistent across noisy datasets.
 
@@ -3597,28 +3632,30 @@ Their performance tends to be more consistent across noisy datasets.
 **When to use / When not to use**
 
 Use it when:
-	•	The dataset has many noisy or irrelevant features.
-	•	Speed and robustness are priorities.
-	•	You want a simple ensemble with minimal tuning.
+
+•	The dataset has many noisy or irrelevant features.
+•	Speed and robustness are priorities.
+•	You want a simple ensemble with minimal tuning.
 
 Avoid it when:
-	•	Precise split optimization is critical (e.g., highly structured or rule-based data).
-	•	Interpretability is a top concern.
+
+•	Precise split optimization is critical (e.g., highly structured or rule-based data).
+•	Interpretability is a top concern.
 
 ⸻
 
 **References**
 
 Canonical papers
-	1.	Geurts, P., Ernst, D., & Wehenkel, L. (2006). Extremely Randomized Trees. Machine Learning, 63(1), 3–42.
-	2.	Breiman, L. (2001). Random Forests. Machine Learning, 45(1), 5–32.
-	3.	Fernández-Delgado, M. et al. (2014). Do We Need Hundreds of Classifiers to Solve Real World Problems? Journal of Machine Learning Research, 15, 3133–3181.
+
+1.	Geurts, P., Ernst, D., & Wehenkel, L. (2006). Extremely Randomized Trees. Machine Learning, 63(1), 3–42.
+2.	Breiman, L. (2001). Random Forests. Machine Learning, 45(1), 5–32.
+3.	Fernández-Delgado, M. et al. (2014). Do We Need Hundreds of Classifiers to Solve Real World Problems? Journal of Machine Learning Research, 15, 3133–3181.
 
 Web resources
-	•	Scikit-learn User Guide — Extra Trees
-https://scikit-learn.org/stable/modules/ensemble.html#extra-trees￼
-	•	StatQuest — Random Forests vs Extra Trees Explained
-https://www.youtube.com/watch?v=sQ870aTKqiM￼
+
+•	Scikit-learn User Guide — Extra Trees https://scikit-learn.org/stable/modules/ensemble.html#extra-trees￼
+•	StatQuest — Random Forests vs Extra Trees Explained https://www.youtube.com/watch?v=sQ870aTKqiM￼
 
 
 -----
@@ -3640,6 +3677,8 @@ AdaBoost, short for Adaptive Boosting, is one of the earliest and most influenti
 Developed by Yoav Freund and Robert Schapire (1997), AdaBoost introduced a new idea in machine learning:
 rather than training multiple independent models (as in Bagging or Random Forests), AdaBoost trains models sequentially,
 where each new model focuses on the mistakes of the previous ones.
+
+![class](/ima/ima27.png)
 
 In essence, AdaBoost builds a strong classifier by combining multiple weak learners (usually shallow decision trees)
 that iteratively correct each other’s errors.
