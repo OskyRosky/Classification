@@ -4846,16 +4846,22 @@ They are robust, interpretable, and perform extraordinarily well with limited sa
 However, their power has boundaries:
 
 1.	Feature dependence
-	•	Ensembles cannot automatically learn spatial, temporal, or contextual dependencies.
-	•	They need explicit input engineering (e.g., lags for time series, pixel intensities for images).
+
+•	Ensembles cannot automatically learn spatial, temporal, or contextual dependencies.
+	
+•	They need explicit input engineering (e.g., lags for time series, pixel intensities for images).
 	
 2.	Scalability in representation
-	•	Ensembles treat every feature as independent and lack hierarchical understanding.
-	•	They cannot compress, abstract, or recompose information across multiple levels.
+
+•	Ensembles treat every feature as independent and lack hierarchical understanding.
+
+•	They cannot compress, abstract, or recompose information across multiple levels.
 	
 3.	Generalization beyond tabular data
-	•	Texts, audio, and images are not naturally represented as fixed-length numeric vectors.
-	•	Ensembles fail to capture structure in such modalities (e.g., sequential order, spatial locality).
+
+•	Texts, audio, and images are not naturally represented as fixed-length numeric vectors.
+
+•	Ensembles fail to capture structure in such modalities (e.g., sequential order, spatial locality).
 
 Neural networks emerged precisely to solve these limitations.
 
@@ -4869,8 +4875,11 @@ and layers compose these local representations into increasingly complex abstrac
 Neural networks excel when:
 
 •	Data are high-dimensional and unstructured (e.g., images, text, audio).
+
 •	Relationships are nonlinear and hierarchical.
+
 •	You want to automatically learn both features and classifiers in a single system.
+
 •	Large datasets are available to train deep architectures effectively.
 
 In classification tasks, neural networks can model almost any decision surface — from simple linear boundaries to complex, curved manifolds — by stacking nonlinear transformations.
@@ -4879,7 +4888,9 @@ They bridge the gap between statistical modeling and cognitive representation, o
 That said, their power comes at a cost:
 
 •	They require large data volumes and significant computational resources.
+
 •	They are less interpretable, though methods like SHAP or attention maps help.
+
 •	They can overfit easily without proper regularization or architecture design.
 
 In short, ensembles refine human-engineered features; neural networks discover them.
@@ -4894,18 +4905,21 @@ Each model represents a unique way of capturing structure and learning decision 
 
 We will examine four key architectures:
 
-1.	MLP (Feed-Forward Neural Network)
+1.	**MLP (Feed-Forward Neural Network)**
+
 The foundational form of neural computation — fully connected layers transforming features through nonlinear activations.
 Ideal for tabular and small structured datasets.
 
-2.	CNN (Convolutional Neural Network)
+2.	**CNN (Convolutional Neural Network)**
 Designed for image and spatial data, CNNs learn local patterns (edges, textures, shapes) and combine them into global concepts.
 
-3.	RNN / LSTM / GRU (Recurrent Neural Networks)
+3.	**RNN / LSTM / GRU (Recurrent Neural Networks)**
+
 Suited for sequence data — text, speech, sensor readings — where order and temporal dependencies matter.
 They capture dynamics over time using memory cells and recurrent connections.
 
-4.	Transformer-based Classifiers
+4.	**Transformer-based Classifiers**
+
 The most modern paradigm, relying on self-attention rather than recurrence.
 Transformers learn global dependencies efficiently and now dominate NLP and multimodal learning.
 
@@ -4930,6 +4944,8 @@ a direct descendant of the Perceptron, yet infinitely more expressive.
 The Multilayer Perceptron (MLP) is the foundational architecture of neural networks — a fully connected, feed-forward system that maps input features to outputs through a sequence of layers.
 Each layer applies a linear transformation followed by a nonlinear activation, enabling the model to approximate complex decision boundaries.
 
+![class](/ima/ima33.webp)
+
 It can be viewed as the nonlinear generalization of Logistic Regression, capable of learning intricate relationships that simple linear models cannot represent.
 While conceptually simple, the MLP serves as the backbone of deep learning, forming the basis for more advanced architectures like CNNs, RNNs, and Transformers.
 
@@ -4938,14 +4954,20 @@ While conceptually simple, the MLP serves as the backbone of deep learning, form
 **Why use it?**
 
 The MLP is ideal when:
-	•	The dataset is structured or tabular but may contain nonlinear interactions.
-	•	Relationships between variables cannot be captured by simple linear models.
-	•	You want a flexible baseline for neural classification before moving to more specialized architectures.
+
+•	The dataset is structured or tabular but may contain nonlinear interactions.
+
+•	Relationships between variables cannot be captured by simple linear models.
+
+•	You want a flexible baseline for neural classification before moving to more specialized architectures.
 
 Its main advantages include:
-	•	Expressive power: with enough neurons and layers, an MLP can approximate any continuous function (Universal Approximation Theorem).
-	•	End-to-end learning: it learns both features and classification boundaries simultaneously.
-	•	Smooth nonlinearity: activation functions allow curved and complex decision surfaces.
+
+•	Expressive power: with enough neurons and layers, an MLP can approximate any continuous function (Universal Approximation Theorem).
+
+•	End-to-end learning: it learns both features and classification boundaries simultaneously.
+
+•	Smooth nonlinearity: activation functions allow curved and complex decision surfaces.
 
 However, MLPs require careful regularization and hyperparameter tuning, as they can easily overfit small datasets.
 
@@ -4970,8 +4992,10 @@ x^{(l)} = f(z^{(l)})
 $$
 
 The final layer outputs either:
-	•	a sigmoid (for binary classification), or
-	•	a softmax (for multi-class classification), producing class probabilities that sum to one.
+
+•	a sigmoid (for binary classification), or
+
+•	a softmax (for multi-class classification), producing class probabilities that sum to one.
 
 Thus, an MLP builds a hierarchy of transformations where each layer “reshapes” the data until the classes become linearly separable in the final space.
 
@@ -5007,11 +5031,16 @@ where \eta is the learning rate.
 **Training logic**
 
 The learning process proceeds as follows:
-	1.	Forward pass – propagate the inputs through all layers to compute predictions.
-	2.	Loss computation – compare predictions with true labels via cross-entropy.
-	3.	Backward pass – apply backpropagation to compute gradients of all parameters.
-	4.	Parameter update – adjust weights and biases using an optimizer (e.g., SGD, Adam).
-	5.	Repeat until convergence or early stopping criterion is met.
+
+1.	Forward pass – propagate the inputs through all layers to compute predictions.
+
+2.	Loss computation – compare predictions with true labels via cross-entropy.
+
+3.	Backward pass – apply backpropagation to compute gradients of all parameters.
+
+4.	Parameter update – adjust weights and biases using an optimizer (e.g., SGD, Adam).
+
+5.	Repeat until convergence or early stopping criterion is met.
 
 Each iteration (epoch) slightly improves the model’s ability to map inputs to correct outputs.
 
@@ -5020,34 +5049,50 @@ Each iteration (epoch) slightly improves the model’s ability to map inputs to 
 **Assumptions and limitations**
 
 Assumptions
-	•	Data can be represented as fixed-length numeric vectors.
-	•	The relationship between features and labels may be nonlinear but continuous.
+
+•	Data can be represented as fixed-length numeric vectors.
+
+•	The relationship between features and labels may be nonlinear but continuous.
 
 Limitations
-	•	Requires scaling and normalization of inputs for stable training.
-	•	Tends to overfit small datasets without dropout or regularization.
-	•	Lacks inherent awareness of structure (e.g., spatial or sequential order).
+
+•	Requires scaling and normalization of inputs for stable training.
+
+•	Tends to overfit small datasets without dropout or regularization.
+
+•	Lacks inherent awareness of structure (e.g., spatial or sequential order).
 
 ⸻
 
 Key hyperparameters (conceptual view)
-	•	hidden_layers / hidden_units – number and size of hidden layers; more units increase capacity but risk overfitting.
-	•	activation – nonlinear function (ReLU, tanh, sigmoid); ReLU is standard for deep networks.
-	•	optimizer – learning algorithm (SGD, Adam, RMSProp).
-	•	learning_rate – step size for weight updates.
-	•	dropout_rate – fraction of units randomly turned off per iteration to prevent overfitting.
-	•	batch_size – number of samples processed per training step.
-	•	epochs – total passes through the training data.
+
+•	hidden_layers / hidden_units – number and size of hidden layers; more units increase capacity but risk overfitting.
+
+•	activation – nonlinear function (ReLU, tanh, sigmoid); ReLU is standard for deep networks.
+
+•	optimizer – learning algorithm (SGD, Adam, RMSProp).
+
+•	learning_rate – step size for weight updates.
+
+•	dropout_rate – fraction of units randomly turned off per iteration to prevent overfitting.
+
+•	batch_size – number of samples processed per training step.
+
+•	epochs – total passes through the training data.
 
 ⸻
 
 **Evaluation focus**
 
 MLPs produce probabilities, so evaluation includes:
-	•	Accuracy, ROC–AUC, and F1-score for performance.
-	•	Log-loss for probabilistic calibration.
-	•	Learning curves to monitor overfitting.
-	•	Confusion matrices to inspect class-wise behavior.
+
+•	Accuracy, ROC–AUC, and F1-score for performance.
+
+•	Log-loss for probabilistic calibration.
+
+•	Learning curves to monitor overfitting.
+
+•	Confusion matrices to inspect class-wise behavior.
 
 Interpretability can be enhanced via feature importance (permutation) or SHAP values,
 which approximate how input features influence predictions.
@@ -5057,29 +5102,38 @@ which approximate how input features influence predictions.
 **When to use / When not to use**
 
 Use it when:
-	•	You have tabular data with nonlinear interactions.
-	•	You want a neural approach without structural complexity.
-	•	You have moderate data size and computational resources.
+
+•	You have tabular data with nonlinear interactions.
+
+•	You want a neural approach without structural complexity.
+
+•	You have moderate data size and computational resources.
 
 Avoid it when:
-	•	Data are small, linear, or easily modeled by Logistic Regression or trees.
-	•	Data contain strong spatial or sequential dependencies (use CNNs or RNNs instead).
-	•	Interpretability is more important than predictive power.
+
+•	Data are small, linear, or easily modeled by Logistic Regression or trees.
+
+•	Data contain strong spatial or sequential dependencies (use CNNs or RNNs instead).
+
+•	Interpretability is more important than predictive power.
 
 ⸻
 
 **References**
 
 Canonical papers
-	1.	Rumelhart, D. E., Hinton, G. E., & Williams, R. J. (1986). Learning Representations by Back-Propagating Errors. Nature.
-	2.	Hornik, K., Stinchcombe, M., & White, H. (1989). Multilayer Feedforward Networks are Universal Approximators. Neural Networks.
-	3.	Bishop, C. M. (1995). Neural Networks for Pattern Recognition. Oxford University Press.
+
+1.	Rumelhart, D. E., Hinton, G. E., & Williams, R. J. (1986). Learning Representations by Back-Propagating Errors. Nature.
+
+2.	Hornik, K., Stinchcombe, M., & White, H. (1989). Multilayer Feedforward Networks are Universal Approximators. Neural Networks.
+
+3.	Bishop, C. M. (1995). Neural Networks for Pattern Recognition. Oxford University Press.
 
 Web resources
-	•	Deep Learning Book (Goodfellow, Bengio, Courville)
-https://www.deeplearningbook.org￼
-	•	Scikit-Learn MLP Classifier Documentation
-https://scikit-learn.org/stable/modules/neural_networks_supervised.html￼
+
+•	Deep Learning Book (Goodfellow, Bengio, Courville) https://www.deeplearningbook.org￼
+
+•	Scikit-Learn MLP Classifier Documentation https://scikit-learn.org/stable/modules/neural_networks_supervised.html￼
 	
 ------
 
@@ -5096,28 +5150,33 @@ the Convolutional Neural Network (CNN).
 
 **What is it?**
 
-A Convolutional Neural Network (CNN) is a specialized type of neural network designed to process spatially structured data, most notably images.
-Unlike the MLP, which connects every neuron to every input, a CNN uses local connections (filters) that detect patterns such as edges, textures, and shapes in localized regions.
+A Convolutional Neural Network (CNN) is a specialized type of neural network designed to process spatially structured data, most notably images. Unlike the MLP, which connects every neuron to every input, a CNN uses local connections (filters) that detect patterns such as edges, textures, and shapes in localized regions.
 
-This architecture was inspired by the human visual cortex and popularized by Yann LeCun’s LeNet-5 (1998) — the first CNN to successfully recognize handwritten digits.
-Since then, CNNs have become the dominant approach in computer vision, powering systems for object recognition, face detection, and medical imaging.
+![class](/ima/ima34.png)
+
+This architecture was inspired by the human visual cortex and popularized by Yann LeCun’s LeNet-5 (1998) — the first CNN to successfully recognize handwritten digits. Since then, CNNs have become the dominant approach in computer vision, powering systems for object recognition, face detection, and medical imaging.
 
 ⸻
 
 **Why use it?**
 
-CNNs are designed to exploit spatial hierarchies in data.
-They work exceptionally well when nearby features are more informative than distant ones — as in images, maps, and other grid-like structures.
+CNNs are designed to exploit spatial hierarchies in data. They work exceptionally well when nearby features are more informative than distant ones — as in images, maps, and other grid-like structures.
 
 They are preferred when:
-	•	Input data have spatial or local structure (e.g., pixels, sensors, spectrograms).
-	•	You need translation invariance (objects recognized regardless of position).
-	•	You want to reduce the parameter count compared to fully connected networks.
+
+•	Input data have spatial or local structure (e.g., pixels, sensors, spectrograms).
+
+•	You need translation invariance (objects recognized regardless of position).
+
+•	You want to reduce the parameter count compared to fully connected networks.
 
 Key advantages include:
-	•	Automatic feature extraction — no need for manual edge or texture engineering.
-	•	Parameter efficiency — filters are shared across the image, drastically reducing weights.
-	•	Hierarchical learning — lower layers detect primitives (edges), deeper ones detect complex objects.
+
+•	Automatic feature extraction — no need for manual edge or texture engineering.
+
+•	Parameter efficiency — filters are shared across the image, drastically reducing weights.
+
+•	Hierarchical learning — lower layers detect primitives (edges), deeper ones detect complex objects.
 
 ⸻
 
@@ -5173,10 +5232,14 @@ The output of one layer becomes the input to the next, gradually constructing hi
 ⸻
 
 Training logic
-	1.	Forward pass – compute feature maps through convolutions, activations, and pooling.
-	2.	Loss computation – compare predicted vs. true class probabilities using cross-entropy.
-	3.	Backward pass (Backpropagation through convolution) – compute gradients with respect to filters and weights.
-	4.	Update parameters – adjust via optimizers like Adam or SGD with momentum.
+
+1.	Forward pass – compute feature maps through convolutions, activations, and pooling.
+
+2.	Loss computation – compare predicted vs. true class probabilities using cross-entropy.
+
+3.	Backward pass (Backpropagation through convolution) – compute gradients with respect to filters and weights.
+
+4.	Update parameters – adjust via optimizers like Adam or SGD with momentum.
 
 Training CNNs often involves data augmentation (rotations, flips, crops) to improve generalization and regularization (dropout, batch normalization) to stabilize learning.
 
@@ -5185,67 +5248,90 @@ Training CNNs often involves data augmentation (rotations, flips, crops) to impr
 **Assumptions and limitations**
 
 Assumptions
-	•	Input data have local dependencies (nearby pixels are related).
-	•	Patterns are spatially stationary — they can appear anywhere in the image.
+
+•	Input data have local dependencies (nearby pixels are related).
+
+•	Patterns are spatially stationary — they can appear anywhere in the image.
 
 Limitations
-	•	Require large labeled datasets to achieve generalization.
-	•	Computationally expensive, especially with deep architectures.
-	•	Harder to interpret compared to shallow models.
+
+•	Require large labeled datasets to achieve generalization.
+
+•	Computationally expensive, especially with deep architectures.
+
+•	Harder to interpret compared to shallow models.
 
 ⸻
 
 Key hyperparameters (conceptual view)
-	•	kernel_size – determines the receptive field of each filter (e.g., 3×3, 5×5).
-	•	stride – step size of the filter during convolution.
-	•	padding – whether edges are preserved (same) or reduced (valid).
-	•	filters / channels – number of feature maps per layer.
-	•	pool_size – region used in pooling operation (e.g., 2×2).
-	•	dropout_rate – percentage of activations randomly ignored to prevent overfitting.
-	•	learning_rate / optimizer – controls convergence behavior.
+
+•	kernel_size – determines the receptive field of each filter (e.g., 3×3, 5×5).
+
+•	stride – step size of the filter during convolution.
+
+•	padding – whether edges are preserved (same) or reduced (valid).
+
+•	filters / channels – number of feature maps per layer.
+
+•	pool_size – region used in pooling operation (e.g., 2×2).
+
+•	dropout_rate – percentage of activations randomly ignored to prevent overfitting.
+
+•	learning_rate / optimizer – controls convergence behavior.
 
 ⸻
 
 **Evaluation focus**
 
 For classification tasks, CNNs are typically evaluated using:
-	•	Accuracy, F1-score, and ROC–AUC.
-	•	Top-k accuracy for multi-class image classification.
-	•	Confusion matrices to analyze misclassified categories.
-	•	Feature visualization (activation maps, Grad-CAM) to interpret learned spatial patterns.
+
+•	Accuracy, F1-score, and ROC–AUC.
+
+•	Top-k accuracy for multi-class image classification.
+
+•	Confusion matrices to analyze misclassified categories.
+
+•	Feature visualization (activation maps, Grad-CAM) to interpret learned spatial patterns.
 
 ⸻
 
 **When to use / When not to use**
 
 Use it when:
-	•	Inputs have spatial or grid-like structure (images, video frames, geospatial data).
-	•	You have enough data and computational resources.
-	•	You need hierarchical representation learning.
+
+•	Inputs have spatial or grid-like structure (images, video frames, geospatial data).
+
+•	You have enough data and computational resources.
+
+•	You need hierarchical representation learning.
 
 Avoid it when:
-	•	Data are tabular, textual, or sequential — CNNs won’t capture temporal or semantic dependencies effectively.
-	•	The dataset is too small to train filters robustly.
+
+•	Data are tabular, textual, or sequential — CNNs won’t capture temporal or semantic dependencies effectively.
+
+•	The dataset is too small to train filters robustly.
 
 ⸻
 
 **References**
 
 Canonical papers
-	1.	LeCun, Y., Bottou, L., Bengio, Y., & Haffner, P. (1998). Gradient-Based Learning Applied to Document Recognition. Proceedings of the IEEE.
-	2.	Krizhevsky, A., Sutskever, I., & Hinton, G. E. (2012). ImageNet Classification with Deep Convolutional Neural Networks (AlexNet). NIPS.
-	3.	Simonyan, K., & Zisserman, A. (2014). Very Deep Convolutional Networks for Large-Scale Image Recognition (VGG). arXiv:1409.1556.
+
+1.	LeCun, Y., Bottou, L., Bengio, Y., & Haffner, P. (1998). Gradient-Based Learning Applied to Document Recognition. Proceedings of the IEEE.
+
+2.	Krizhevsky, A., Sutskever, I., & Hinton, G. E. (2012). ImageNet Classification with Deep Convolutional Neural Networks (AlexNet). NIPS.
+
+3.	Simonyan, K., & Zisserman, A. (2014). Very Deep Convolutional Networks for Large-Scale Image Recognition (VGG). arXiv:1409.1556.
 
 Web resources
-	•	CS231n: Convolutional Neural Networks for Visual Recognition
-https://cs231n.github.io/convolutional-networks/￼
-	•	PyTorch CNN Tutorial
-https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html￼
+
+•	CS231n: Convolutional Neural Networks for Visual Recognition https://cs231n.github.io/convolutional-networks/￼
+
+•	PyTorch CNN Tutorial https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html￼
 
 --------
 
-Convolutional Neural Networks taught machines to see,
-turning raw pixels into structured representations and making deep learning the standard for visual understanding.
+Convolutional Neural Networks taught machines to see, turning raw pixels into structured representations and making deep learning the standard for visual understanding.
 
 However, when the data unfold over time or in sequence — as in speech, sensor readings, or text — spatial filters are not enough.
 We need models that can remember, accumulate, and adapt across time.
@@ -5270,22 +5356,30 @@ Why use it?
 
 RNNs are built to handle problems that traditional models cannot: those where the current output depends on previous inputs.
 They are ideal when:
-	•	The data are sequential (e.g., text, audio, sensor readings).
-	•	Temporal or contextual dependencies influence classification outcomes.
-	•	You need to process variable-length sequences instead of fixed-length vectors.
+
+•	The data are sequential (e.g., text, audio, sensor readings).
+
+•	Temporal or contextual dependencies influence classification outcomes.
+
+•	You need to process variable-length sequences instead of fixed-length vectors.
 
 Typical applications include:
-	•	Sentiment analysis (based on word order).
-	•	Speech emotion or intent classification.
-	•	Fault detection in industrial sensors.
-	•	Predicting customer behavior from past sequences of actions.
+
+•	Sentiment analysis (based on word order).
+
+•	Speech emotion or intent classification.
+
+•	Fault detection in industrial sensors.
+
+•	Predicting customer behavior from past sequences of actions.
 
 ⸻
 
 Intuition
 
 At the heart of an RNN lies a simple but powerful idea:
-the network has a loop.
+
+**the network has a loop.**
 
 Each time step’s output depends not only on the current input x_t but also on the previous hidden state h_{t-1}.
 This recurrent connection allows the model to accumulate temporal context.
@@ -5350,19 +5444,23 @@ $$
 \mathcal{L} = - \frac{1}{T} \sum_{t=1}^{T} \sum_{k=1}^{K} y_{t,k} \log(\hat{y}_{t,k})
 $$
 
-Training relies on Backpropagation Through Time (BPTT) —
-a version of gradient descent that unrolls the recurrent network across time and propagates errors backward through all time steps.
+Training relies on Backpropagation Through Time (BPTT) — a version of gradient descent that unrolls the recurrent network across time and propagates errors backward through all time steps.
 
 This allows the model to adjust both short-term and long-term dependencies, though computational and memory costs can be significant.
 
 ⸻
 
 Training logic
-	1.	Sequence unrolling – represent the entire sequence as a chain of interconnected time steps.
-	2.	Forward pass – compute hidden states and outputs sequentially.
-	3.	Loss computation – accumulate cross-entropy across all time steps.
-	4.	Backward pass (BPTT) – propagate gradients through time.
-	5.	Parameter updates – adjust weights using optimizers (Adam or RMSProp).
+
+1.	Sequence unrolling – represent the entire sequence as a chain of interconnected time steps.
+
+2.	Forward pass – compute hidden states and outputs sequentially.
+
+3.	Loss computation – accumulate cross-entropy across all time steps.
+
+4.	Backward pass (BPTT) – propagate gradients through time.
+
+5.	Parameter updates – adjust weights using optimizers (Adam or RMSProp).
 
 Regularization strategies like dropout, gradient clipping, and layer normalization are essential for stability and generalization.
 
@@ -5371,24 +5469,36 @@ Regularization strategies like dropout, gradient clipping, and layer normalizati
 Assumptions and limitations
 
 Assumptions
-	•	The input data have temporal or sequential order.
-	•	The relationship between observations is not independent.
+
+•	The input data have temporal or sequential order.
+
+•	The relationship between observations is not independent.
 
 Limitations
-	•	Computationally heavy for long sequences.
-	•	Difficult to parallelize due to sequential processing.
-	•	Still limited in capturing very long-term dependencies (even for LSTMs).
-	•	Harder to interpret than traditional models.
+
+•	Computationally heavy for long sequences.
+
+•	Difficult to parallelize due to sequential processing.
+
+•	Still limited in capturing very long-term dependencies (even for LSTMs).
+
+•	Harder to interpret than traditional models.
 
 ⸻
 
 Key hyperparameters (conceptual view)
-	•	hidden_units – number of neurons in the recurrent layer; controls capacity.
-	•	num_layers – depth of stacked RNN/LSTM/GRU layers.
-	•	dropout_rate – applied between layers to prevent overfitting.
-	•	sequence_length – number of time steps processed per input.
-	•	learning_rate – controls optimization step size.
-	•	bidirectional – processes sequence in both forward and backward directions.
+
+•	hidden_units – number of neurons in the recurrent layer; controls capacity.
+
+•	num_layers – depth of stacked RNN/LSTM/GRU layers.
+
+•	dropout_rate – applied between layers to prevent overfitting.
+
+•	sequence_length – number of time steps processed per input.
+
+•	learning_rate – controls optimization step size.
+
+•	bidirectional – processes sequence in both forward and backward directions.
 
 ⸻
 
@@ -5396,9 +5506,12 @@ Evaluation focus
 
 When RNNs are used for classification, the final hidden state (or a pooled sequence representation) is used to predict the label.
 Evaluation depends on task type:
-	•	Accuracy, F1-score, and ROC–AUC for standard classification.
-	•	Perplexity for language modeling tasks.
-	•	Temporal stability or lag sensitivity metrics for time-series evaluation.
+
+•	Accuracy, F1-score, and ROC–AUC for standard classification.
+
+•	Perplexity for language modeling tasks.
+
+•	Temporal stability or lag sensitivity metrics for time-series evaluation.
 
 Visualization tools like attention heatmaps or hidden-state trajectories can provide insight into what the model “remembers.”
 
@@ -5407,29 +5520,36 @@ Visualization tools like attention heatmaps or hidden-state trajectories can pro
 When to use / When not to use
 
 Use it when:
-	•	Inputs are sequential (text, time series, sensor data).
-	•	Context and temporal dependencies are crucial.
-	•	You need variable-length input handling.
+
+•	Inputs are sequential (text, time series, sensor data).
+
+•	Context and temporal dependencies are crucial.
+
+•	You need variable-length input handling.
 
 Avoid it when:
-	•	Inputs are spatial (use CNNs) or purely tabular.
-	•	You need full parallelization for efficiency (Transformers are better suited).
-	•	You have limited data; simpler models may generalize better.
+
+•	Inputs are spatial (use CNNs) or purely tabular.
+
+•	You need full parallelization for efficiency (Transformers are better suited).
+
+•	You have limited data; simpler models may generalize better.
 
 ⸻
 
 References
 
 Canonical papers
-	1.	Elman, J. L. (1990). Finding Structure in Time. Cognitive Science.
-	2.	Hochreiter, S., & Schmidhuber, J. (1997). Long Short-Term Memory. Neural Computation.
-	3.	Cho, K. et al. (2014). Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation (GRU). arXiv:1406.1078.
+
+1.	Elman, J. L. (1990). Finding Structure in Time. Cognitive Science.
+2.	Hochreiter, S., & Schmidhuber, J. (1997). Long Short-Term Memory. Neural Computation.
+3.	Cho, K. et al. (2014). Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation (GRU). arXiv:1406.1078.
 
 Web resources
-	•	Understanding LSTM Networks – Christopher Olah
-https://colah.github.io/posts/2015-08-Understanding-LSTMs/￼
-	•	PyTorch RNN/LSTM/GRU Tutorial
-https://pytorch.org/tutorials/beginner/nlp/sequence_models_tutorial.html￼
+
+•	Understanding LSTM Networks – Christopher Olah https://colah.github.io/posts/2015-08-Understanding-LSTMs/￼
+
+•	PyTorch RNN/LSTM/GRU Tutorial https://pytorch.org/tutorials/beginner/nlp/sequence_models_tutorial.html￼
 
 --------
 
@@ -5449,6 +5569,8 @@ What is it?
 A Transformer-based Classifier represents the most advanced generation of neural models for sequence and text data.
 Unlike recurrent networks, which process inputs step by step, Transformers handle entire sequences in parallel, using a mechanism called self-attention to learn dependencies between all positions in the input simultaneously.
 
+
+
 Introduced by Vaswani et al. (2017) in the seminal paper “Attention Is All You Need”, the Transformer architecture revolutionized machine learning — particularly Natural Language Processing (NLP) — by replacing recurrence with attention and enabling massive scalability.
 
 Transformers are the foundation of today’s large language models (LLMs) like BERT, GPT, and T5, but their classification variant is focused, efficient, and highly adaptable for text, sequences, or tabular time-series tasks.
@@ -5458,20 +5580,23 @@ Transformers are the foundation of today’s large language models (LLMs) like B
 Why use it?
 
 Transformers excel in domains where:
-	•	Long-range dependencies matter (e.g., entire paragraphs or long signals).
-	•	Order and context interact in complex ways.
-	•	Data volume supports large model capacity.
+
+•	Long-range dependencies matter (e.g., entire paragraphs or long signals).
+•	Order and context interact in complex ways.
+•	Data volume supports large model capacity.
 
 They outperform RNNs and CNNs in sequence tasks because:
-	•	Attention lets the model directly connect any two positions in the input, regardless of distance.
-	•	Parallelization allows faster training and better utilization of modern GPUs.
-	•	Pretraining + fine-tuning pipelines make them extremely data-efficient for downstream classification.
+
+•	Attention lets the model directly connect any two positions in the input, regardless of distance.
+•	Parallelization allows faster training and better utilization of modern GPUs.
+•	Pretraining + fine-tuning pipelines make them extremely data-efficient for downstream classification.
 
 Common applications include:
-	•	Sentiment, topic, or intent classification (text).
-	•	Sequence labeling or anomaly detection (time-series).
-	•	Document or paragraph-level categorization.
-	•	Multimodal tasks combining text, sound, or structured data.
+
+•	Sentiment, topic, or intent classification (text).
+•	Sequence labeling or anomaly detection (time-series).
+•	Document or paragraph-level categorization.
+•	Multimodal tasks combining text, sound, or structured data.
 
 ⸻
 
@@ -5481,13 +5606,15 @@ While RNNs “remember” the past step by step, Transformers attend to all posi
 This is achieved through self-attention, which computes how much each token (or time step) should influence every other.
 
 At a high level:
-	1.	Each input token x_i is projected into three vectors — query (Q), key (K), and value (V).
-	2.	The attention scores between tokens are computed using scaled dot-products:
+
+1.	Each input token x_i is projected into three vectors — query (Q), key (K), and value (V).
+2.	The attention scores between tokens are computed using scaled dot-products:
 
 $$
 \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
 $$
-	3.	This operation lets the model assign different importance weights to different parts of the sequence when predicting outcomes.
+
+3.	This operation lets the model assign different importance weights to different parts of the sequence when predicting outcomes.
 
 For classification, the Transformer’s final hidden states are pooled — typically using a [CLS] token (in BERT-style models) or a global average — and passed to a feed-forward layer with a softmax output.
 
@@ -5498,8 +5625,10 @@ Thus, attention transforms sequence learning from sequential dependence to relat
 Mathematical foundation
 
 At its core, a Transformer encoder layer is built from two main blocks:
-	1.	Multi-Head Self-Attention — computes several attention maps in parallel, capturing different relational patterns.
-	2.	Feed-Forward Network (FFN) — applies nonlinear transformations to the attended representations.
+
+1.	Multi-Head Self-Attention — computes several attention maps in parallel, capturing different relational patterns.
+
+2.	Feed-Forward Network (FFN) — applies nonlinear transformations to the attended representations.
 
 Formally, one encoder layer performs:
 
@@ -5529,12 +5658,18 @@ For classification, only the final output (e.g., H_{CLS}) feeds the prediction h
 ⸻
 
 Training logic
-	1.	Tokenization and embedding – convert text or sequential inputs into numeric representations.
-	2.	Positional encoding – inject sequence order information since Transformers lack recurrence.
-	3.	Forward pass – compute attention across all tokens and pass through stacked encoder layers.
-	4.	Loss computation – use cross-entropy over the predicted class distribution.
-	5.	Backpropagation – gradients flow through all layers and attention weights.
-	6.	Fine-tuning – optionally initialize from pretrained weights (BERT, DistilBERT, RoBERTa) for faster convergence and better generalization.
+
+1.	Tokenization and embedding – convert text or sequential inputs into numeric representations.
+
+2.	Positional encoding – inject sequence order information since Transformers lack recurrence.
+
+3.	Forward pass – compute attention across all tokens and pass through stacked encoder layers.
+
+4.	Loss computation – use cross-entropy over the predicted class distribution.
+
+5.	Backpropagation – gradients flow through all layers and attention weights.
+
+6.	Fine-tuning – optionally initialize from pretrained weights (BERT, DistilBERT, RoBERTa) for faster convergence and better generalization.
 
 Transformers are typically trained with large-scale optimizers (AdamW) and require techniques like learning rate warm-up and layer-wise regularization for stability.
 
@@ -5543,24 +5678,36 @@ Transformers are typically trained with large-scale optimizers (AdamW) and requi
 Assumptions and limitations
 
 Assumptions
-	•	Data exhibit contextual dependencies across positions.
-	•	Sequence order can be encoded explicitly (via positional embeddings).
+
+•	Data exhibit contextual dependencies across positions.
+
+•	Sequence order can be encoded explicitly (via positional embeddings).
 
 Limitations
-	•	High computational and memory cost (quadratic in sequence length).
-	•	Require substantial data and compute to avoid overfitting.
-	•	Harder to interpret due to distributed attention patterns.
+
+•	High computational and memory cost (quadratic in sequence length).
+
+•	Require substantial data and compute to avoid overfitting.
+
+•	Harder to interpret due to distributed attention patterns.
 
 ⸻
 
 Key hyperparameters (conceptual view)
-	•	num_layers – depth of encoder blocks (controls model capacity).
-	•	num_heads – number of attention heads (controls parallel attention diversity).
-	•	d_model – dimensionality of embeddings and hidden representations.
-	•	dropout_rate – applied to attention and feed-forward layers for regularization.
-	•	learning_rate – often scheduled with warm-up and decay.
-	•	max_seq_length – limits the context window for attention computation.
-	•	pretrained_model – base architecture (e.g., bert-base-uncased, distilbert-base-cased).
+
+•	num_layers – depth of encoder blocks (controls model capacity).
+
+•	num_heads – number of attention heads (controls parallel attention diversity).
+
+•	d_model – dimensionality of embeddings and hidden representations.
+
+•	dropout_rate – applied to attention and feed-forward layers for regularization.
+
+•	learning_rate – often scheduled with warm-up and decay.
+
+•	max_seq_length – limits the context window for attention computation.
+
+•	pretrained_model – base architecture (e.g., bert-base-uncased, distilbert-base-cased).
 
 ⸻
 
@@ -5568,9 +5715,12 @@ Evaluation focus
 
 Transformers output class probabilities, making evaluation consistent with other probabilistic models.
 However, their interpretability requires additional techniques:
-	•	Accuracy, F1-score, ROC–AUC for standard evaluation.
-	•	Attention visualization (heatmaps, attention rollouts) for interpretability.
-	•	Layer probing to understand which layers capture syntactic vs. semantic information.
+
+•	Accuracy, F1-score, ROC–AUC for standard evaluation.
+
+•	Attention visualization (heatmaps, attention rollouts) for interpretability.
+
+•	Layer probing to understand which layers capture syntactic vs. semantic information.
 
 When fine-tuned, Transformers often set new benchmarks across text classification tasks.
 
@@ -5579,29 +5729,38 @@ When fine-tuned, Transformers often set new benchmarks across text classificatio
 When to use / When not to use
 
 Use it when:
-	•	You work with textual or sequential data with long dependencies.
-	•	You have access to pretrained models and sufficient compute.
-	•	You require high accuracy and contextual reasoning.
+
+•	You work with textual or sequential data with long dependencies.
+
+•	You have access to pretrained models and sufficient compute.
+
+•	You require high accuracy and contextual reasoning.
 
 Avoid it when:
-	•	The dataset is small and training from scratch would cause overfitting.
-	•	You need lightweight, interpretable, or real-time models.
-	•	Memory and inference speed are critical constraints.
+
+•	The dataset is small and training from scratch would cause overfitting.
+
+•	You need lightweight, interpretable, or real-time models.
+
+•	Memory and inference speed are critical constraints.
 
 ⸻
 
 References
 
 Canonical papers
-	1.	Vaswani, A. et al. (2017). Attention Is All You Need. NeurIPS.
-	2.	Devlin, J. et al. (2018). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. NAACL.
-	3.	Liu, Y. et al. (2019). RoBERTa: A Robustly Optimized BERT Pretraining Approach. arXiv:1907.11692.
+
+1.	Vaswani, A. et al. (2017). Attention Is All You Need. NeurIPS.
+
+2.	Devlin, J. et al. (2018). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. NAACL.
+
+3.	Liu, Y. et al. (2019). RoBERTa: A Robustly Optimized BERT Pretraining Approach. arXiv:1907.11692.
 
 Web resources
-	•	The Illustrated Transformer – Jay Alammar
-https://jalammar.github.io/illustrated-transformer/￼
-	•	Hugging Face Transformers Documentation
-https://huggingface.co/docs/transformers￼
+
+•	The Illustrated Transformer – Jay Alammar  https://jalammar.github.io/illustrated-transformer/￼
+
+•	Hugging Face Transformers Documentation https://huggingface.co/docs/transformers￼
 
 --------
 
