@@ -4213,13 +4213,9 @@ It has been used successfully in:
 
 **Intuition**
 
-While classical GBDT updates models using only the first derivative (the gradient),
-XGBoost goes further by using both the first and second derivatives of the loss function —
-allowing it to approximate the optimization landscape more precisely and converge faster.
+While classical GBDT updates models using only the first derivative (the gradient), XGBoost goes further by using both the first and second derivatives of the loss function — allowing it to approximate the optimization landscape more precisely and converge faster.
 
-Each new tree minimizes a regularized objective function that balances model accuracy and complexity.
-This means that XGBoost not only learns to reduce the loss but also to penalize unnecessary complexity,
-making the model inherently resistant to overfitting.
+Each new tree minimizes a regularized objective function that balances model accuracy and complexity. This means that XGBoost not only learns to reduce the loss but also to penalize unnecessary complexity, making the model inherently resistant to overfitting.
 
 In simpler terms:
 
@@ -4308,12 +4304,19 @@ Nevertheless, XGBoost remains a gold standard in tabular machine learning.
 **Key hyperparameters (conceptual view)**
 
 •	n_estimators: number of boosting rounds.
+
 •	learning_rate (eta): controls the contribution of each tree.
+
 •	max_depth: limits tree complexity.
+
 •	min_child_weight: minimum sum of Hessians in a leaf (controls overfitting).
+
 •	subsample / colsample_bytree: sample fractions for rows and columns.
+
 •	lambda, alpha: L2 and L1 regularization terms, respectively.
+
 •	gamma: penalty for creating new leaves.
+
 •	booster: algorithm type (gbtree, gblinear, or dart).
 
 ⸻
