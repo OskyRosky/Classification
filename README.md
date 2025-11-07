@@ -5345,7 +5345,7 @@ What is it?
 A Recurrent Neural Network (RNN) is a class of neural architectures specifically designed to model sequential or time-dependent data.
 Unlike feed-forward networks (MLPs, CNNs), which assume independence among inputs, RNNs introduce memory — the ability to retain information from previous steps and use it to influence current predictions.
 
-![class](/ima/ima35.png)
+![class](/ima/ima35.webp)
 
 This makes them essential for tasks where order matters, such as speech recognition, language modeling, time-series forecasting, or sensor data analysis.
 
@@ -5573,7 +5573,7 @@ What is it?
 A Transformer-based Classifier represents the most advanced generation of neural models for sequence and text data.
 Unlike recurrent networks, which process inputs step by step, Transformers handle entire sequences in parallel, using a mechanism called self-attention to learn dependencies between all positions in the input simultaneously.
 
-![class](/ima/ima37.jpeg)
+![class](/ima/ima37.jpg)
 
 Introduced by Vaswani et al. (2017) in the seminal paper “Attention Is All You Need”, the Transformer architecture revolutionized machine learning — particularly Natural Language Processing (NLP) — by replacing recurrence with attention and enabling massive scalability.
 
