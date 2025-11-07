@@ -3733,6 +3733,7 @@ Canonical papers
 Web resources
 
 •	Scikit-learn User Guide — Extra Trees https://scikit-learn.org/stable/modules/ensemble.html#extra-trees￼
+
 •	StatQuest — Random Forests vs Extra Trees Explained https://www.youtube.com/watch?v=sQ870aTKqiM￼
 
 
