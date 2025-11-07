@@ -3552,7 +3552,7 @@ The next algorithm — Extra Trees (Extremely Randomized Trees) — pushes rando
 
 -----
 
-#### Extra Trees.
+#### Extra Trees (Extremely Randomized Trees).
 
 **What is it?**
 
