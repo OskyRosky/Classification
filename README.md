@@ -5345,10 +5345,14 @@ What is it?
 A Recurrent Neural Network (RNN) is a class of neural architectures specifically designed to model sequential or time-dependent data.
 Unlike feed-forward networks (MLPs, CNNs), which assume independence among inputs, RNNs introduce memory — the ability to retain information from previous steps and use it to influence current predictions.
 
+![class](/ima/ima35.png)
+
 This makes them essential for tasks where order matters, such as speech recognition, language modeling, time-series forecasting, or sensor data analysis.
 
 RNNs process inputs one element at a time, maintaining an internal state that evolves through time, effectively “remembering” context.
 Variants such as Long Short-Term Memory (LSTM) and Gated Recurrent Unit (GRU) extend this idea by addressing the limitations of basic RNNs, particularly their difficulty in learning long-term dependencies.
+
+![class](/ima/ima36.jpeg)
 
 ⸻
 
