@@ -5152,6 +5152,8 @@ the Convolutional Neural Network (CNN).
 
 A Convolutional Neural Network (CNN) is a specialized type of neural network designed to process spatially structured data, most notably images. Unlike the MLP, which connects every neuron to every input, a CNN uses local connections (filters) that detect patterns such as edges, textures, and shapes in localized regions.
 
+![class](/ima/ima34.png)
+
 This architecture was inspired by the human visual cortex and popularized by Yann LeCun’s LeNet-5 (1998) — the first CNN to successfully recognize handwritten digits. Since then, CNNs have become the dominant approach in computer vision, powering systems for object recognition, face detection, and medical imaging.
 
 ⸻
