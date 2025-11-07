@@ -3076,11 +3076,13 @@ It embodies a pragmatic view of intelligence: error is inevitable, but collectiv
 Each ensemble technique differs mainly in how it builds and aggregates its members:
 
 •	Some train learners independently and combine them later (e.g., Bagging, Random Forests, Extra Trees).
+
 •	Others train them sequentially, each focusing on correcting prior errors (e.g., AdaBoost, Gradient Boosting, XGBoost, LightGBM, CatBoost).
 
 This diversity of construction gives rise to two main paradigms:
 
 •	Parallel ensembles — focus on stability.
+
 •	Sequential ensembles — focus on precision.
 
 ⸻
@@ -3115,12 +3117,19 @@ By aggregating hundreds or thousands of shallow trees, the ensemble stabilizes p
 We will explore the most influential ensemble methods, grouped by their aggregation logic:
 
 1.	Bagging (Bootstrap Aggregating) — parallel model averaging for variance reduction.
+
 2.	Random Forests — ensemble of de-correlated trees for balanced performance.
+
 3.	Extra Trees — extreme randomization for even lower variance.
+
 4.	AdaBoost — sequentially boosted weak learners focusing on hard examples.
+
 5.	Gradient Boosting (GBDT) — gradient-based sequential optimization.
+
 6.	XGBoost — regularized, optimized GBDT implementation.
+
 7.	LightGBM — efficient, leaf-wise gradient boosting for speed and scalability.
+
 8.	CatBoost — boosting with categorical encoding and order-based regularization.
 
 Each of these methods represents a refinement of the ensemble idea — from statistical aggregation to algorithmic synergy —
@@ -3149,13 +3158,17 @@ Bagging combats this by averaging multiple overfit models so that their random e
 It is especially effective when:
 
 •	The base learner is unstable (small data changes → large model changes).
+
 •	The dataset has moderate noise or complex non-linear relationships.
+
 •	The goal is to improve generalization without increasing bias.
 
 Common applications include:
 
 •	Classification tasks with noisy or heterogeneous data.
+
 •	Risk prediction in finance and healthcare.
+
 •	Foundation for modern ensemble methods (e.g., Random Forest).
 
 ⸻
@@ -3238,12 +3251,15 @@ Since about 37% of data are left out of each bootstrap sample, Bagging can estim
 Assumptions
 
 •	The base learner has high variance and benefits from averaging (e.g., decision trees).
+
 •	Samples are independent and identically distributed (i.i.d.).
 
 Limitations
 
 •	Ineffective for low-variance, high-bias models (e.g., linear models).
+
 •	Aggregation reduces interpretability — the ensemble becomes opaque.
+
 •	Computationally heavier (many models trained in parallel).
 
 Bagging is less about sophistication and more about stability through redundancy.
@@ -3253,9 +3269,13 @@ Bagging is less about sophistication and more about stability through redundancy
 Key hyperparameters (conceptual view)
 
 •	n_estimators: number of models in the ensemble (B).
+
 •	max_samples: fraction or number of samples drawn per bootstrap.
+
 •	max_features: number of features considered when training each model.
+
 •	bootstrap: whether to sample with replacement (True = Bagging).
+
 •	oob_score: whether to estimate generalization error using out-of-bag samples.
 
 These parameters control the trade-off between diversity and computational cost.
@@ -3267,7 +3287,9 @@ These parameters control the trade-off between diversity and computational cost.
 Bagging improves variance-driven metrics, such as:
 
 •	Accuracy or ROC–AUC on noisy datasets.
+
 •	Stability across folds (lower variance in cross-validation).
+
 •	OOB score, a direct estimate of test error.
 
 Inspecting feature importance (averaged across models) also helps explain ensemble decisions.
@@ -3279,13 +3301,17 @@ Inspecting feature importance (averaged across models) also helps explain ensemb
 Use it when:
 
 •	The base model is unstable (e.g., Decision Trees).
+
 •	Dataset is moderately noisy or small.
+
 •	You want a simple ensemble with strong variance reduction.
 
 Avoid it when:
 
 •	The base model is already stable (e.g., linear regression).
+
 •	You need highly interpretable models.
+
 •	The dataset is extremely large and computation is constrained.
 
 ⸻
@@ -3333,6 +3359,7 @@ This dual randomness — in rows and columns — is what makes Random Forests bo
 **Why use it?**
 
 Random Forests combine the interpretability of Decision Trees with the stability and predictive power of ensembles.
+
 They are particularly effective when:
 
 •	Data are non-linear, noisy, or high-dimensional.
@@ -3525,7 +3552,7 @@ The next algorithm — Extra Trees (Extremely Randomized Trees) — pushes rando
 
 -----
 
-#### Extra Trees.
+#### Extra Trees (Extremely Randomized Trees).
 
 **What is it?**
 
@@ -3566,6 +3593,7 @@ They are widely used in industrial and academic applications such as:
 **Intuition**
 
 Random Forests already reduce variance through feature randomness, but each split still chooses the best threshold for splitting data.
+
 Extra Trees add another layer of randomness by choosing both the feature and the split threshold randomly, without evaluating all possible cut points.
 
 This has two main consequences:
@@ -3705,6 +3733,7 @@ Canonical papers
 Web resources
 
 •	Scikit-learn User Guide — Extra Trees https://scikit-learn.org/stable/modules/ensemble.html#extra-trees￼
+
 •	StatQuest — Random Forests vs Extra Trees Explained https://www.youtube.com/watch?v=sQ870aTKqiM￼
 
 
@@ -3723,10 +3752,9 @@ The next family of models — Boosting algorithms — transforms this independen
 
 **What is it?**
 
-AdaBoost, short for Adaptive Boosting, is one of the earliest and most influential ensemble learning methods.
-Developed by Yoav Freund and Robert Schapire (1997), AdaBoost introduced a new idea in machine learning:
-rather than training multiple independent models (as in Bagging or Random Forests), AdaBoost trains models sequentially,
-where each new model focuses on the mistakes of the previous ones.
+AdaBoost, short for Adaptive Boosting, is one of the earliest and most influential ensemble learning methods. Developed by Yoav Freund and Robert Schapire (1997), AdaBoost introduced a new idea in machine learning:
+
+**rather than training multiple independent models (as in Bagging or Random Forests), AdaBoost trains models sequentially, where each new model focuses on the mistakes of the previous ones.**
 
 ![class](/ima/ima27.png)
 
@@ -3842,12 +3870,15 @@ where it matters most — on the hard-to-classify regions of the data.
 Assumptions
 
 •	The base learner can perform slightly better than random guessing.
+
 •	Errors of individual learners are independent enough to combine effectively.
 
 Limitations
 
 •	Sensitive to noisy data and outliers (since misclassified samples gain high weights).
+
 •	Can overfit if the number of learners is too large.
+
 •	Training is sequential, so less parallelizable than Bagging or Random Forests.
 
 Despite these constraints, AdaBoost remains a foundational algorithm that shaped all modern boosting frameworks (e.g., XGBoost, LightGBM, CatBoost).
@@ -3857,11 +3888,15 @@ Despite these constraints, AdaBoost remains a foundational algorithm that shaped
 **Key hyperparameters (conceptual view)**
 
 •	n_estimators: number of weak learners in the ensemble.
+
 •	learning_rate (shrinkage): scales each learner’s contribution; lower values increase robustness but require more learners.
+
 •	base_estimator: the weak learner type (commonly decision stumps).
+
 •	algorithm:
-•	SAMME for multi-class classification.
-•	SAMME.R for a probabilistic variant using class probabilities.
+
+i.     SAMME for multi-class classification.
+ii.    SAMME.R for a probabilistic variant using class probabilities.
 
 ⸻
 
@@ -3870,12 +3905,15 @@ Despite these constraints, AdaBoost remains a foundational algorithm that shaped
 AdaBoost’s success depends on the bias–variance trade-off:
 
 •	Fewer learners → underfitting (high bias).
+
 •	Too many learners → overfitting (high variance).
 
 Evaluate using:
 
 •	Accuracy, ROC–AUC, or F1-score for balanced datasets.
+
 •	PR–AUC for imbalanced ones.
+
 •	Learning curves (training vs. validation accuracy) to detect overfitting.
 
 AdaBoost’s feature importance (based on cumulative model weights) is also a valuable interpretability tool.
@@ -3887,13 +3925,17 @@ AdaBoost’s feature importance (based on cumulative model weights) is also a va
 Use it when:
 
 •	The base learner is simple but slightly better than random.
+
 •	You have clean, moderately sized data.
+
 •	Interpretability and compactness matter.
 
 Avoid it when:
 
 •	The dataset contains many noisy or mislabeled samples.
+
 •	Extreme class imbalance dominates the learning process.
+
 •	You need fast, parallelizable training (consider Gradient Boosting instead).
 
 ⸻
@@ -4133,8 +4175,7 @@ brought boosting from research labs to real-world production systems.
 
 **What is it?**
 
-XGBoost, short for Extreme Gradient Boosting, is an advanced and highly optimized implementation of Gradient Boosted Decision Trees (GBDT).
-Developed by Tianqi Chen (2016), it revolutionized machine learning practice by introducing a fast, scalable, and regularized version of gradient boosting that could efficiently handle large datasets.
+XGBoost, short for Extreme Gradient Boosting, is an advanced and highly optimized implementation of Gradient Boosted Decision Trees (GBDT). Developed by Tianqi Chen (2016), it revolutionized machine learning practice by introducing a fast, scalable, and regularized version of gradient boosting that could efficiently handle large datasets.
 
 ![class](/ima/ima29.jpg)
 
@@ -4149,33 +4190,37 @@ XGBoost combines strong theoretical foundations with extensive engineering optim
 Its core innovations include:
 
 •	Second-order gradient optimization (using both gradient and Hessian for updates).
+
 •	Regularization built into the objective function (L1 and L2).
+
 •	Parallelized tree construction for faster training.
+
 •	Handling of missing values and sparse data internally.
+
 •	Shrinkage and column subsampling to reduce overfitting.
 
 It has been used successfully in:
 
 •	Credit risk and fraud detection.
+
 •	Customer churn and retention models.
+
 •	Industrial and health diagnostics.
+
 •	Kaggle competitions (often outperforming deep learning on structured data).
 
 ⸻
 
 **Intuition**
 
-While classical GBDT updates models using only the first derivative (the gradient),
-XGBoost goes further by using both the first and second derivatives of the loss function —
-allowing it to approximate the optimization landscape more precisely and converge faster.
+While classical GBDT updates models using only the first derivative (the gradient), XGBoost goes further by using both the first and second derivatives of the loss function — allowing it to approximate the optimization landscape more precisely and converge faster.
 
-Each new tree minimizes a regularized objective function that balances model accuracy and complexity.
-This means that XGBoost not only learns to reduce the loss but also to penalize unnecessary complexity,
-making the model inherently resistant to overfitting.
+Each new tree minimizes a regularized objective function that balances model accuracy and complexity. This means that XGBoost not only learns to reduce the loss but also to penalize unnecessary complexity, making the model inherently resistant to overfitting.
 
 In simpler terms:
 
 •	GBDT corrects mistakes using gradient descent.
+
 •	XGBoost corrects mistakes and regularizes itself while doing so.
 
 ⸻
@@ -4196,11 +4241,17 @@ $$
 
 where:
 
-•	g_i = \frac{\partial L(y_i, \hat{y}_i)}{\partial \hat{y}_i} is the gradient,
+$$
+g_i = \frac{\partial L(y_i, \hat{y}_i)}{\partial \hat{y}_i} \quad \text{is the gradient.}
+$$
 
-•	h_i = \frac{\partial^2 L(y_i, \hat{y}_i)}{\partial \hat{y}_i^2} is the Hessian,
+$$
+h_i = \frac{\partial^2 L(y_i, \hat{y}_i)}{\partial \hat{y}_i^2} \quad \text{is the Hessian.}
+$$
 
-•	\Omega(f_t) = \gamma T + \frac{1}{2} \lambda \sum_{j=1}^{T} w_j^2 penalizes the number of leaves T and leaf weights w_j.
+$$
+\Omega(f_t) = \gamma T + \frac{1}{2} \lambda \sum_{j=1}^{T} w_j^2 \quad \text{penalizes the number of leaves } T \text{ and leaf weights } w_j.
+$$
 
 Each tree f_t(x) is optimized greedily by selecting splits that most reduce this objective,
 and the final prediction is:
@@ -4253,12 +4304,19 @@ Nevertheless, XGBoost remains a gold standard in tabular machine learning.
 **Key hyperparameters (conceptual view)**
 
 •	n_estimators: number of boosting rounds.
+
 •	learning_rate (eta): controls the contribution of each tree.
+
 •	max_depth: limits tree complexity.
+
 •	min_child_weight: minimum sum of Hessians in a leaf (controls overfitting).
+
 •	subsample / colsample_bytree: sample fractions for rows and columns.
+
 •	lambda, alpha: L2 and L1 regularization terms, respectively.
+
 •	gamma: penalty for creating new leaves.
+
 •	booster: algorithm type (gbtree, gblinear, or dart).
 
 ⸻
@@ -4268,12 +4326,15 @@ Nevertheless, XGBoost remains a gold standard in tabular machine learning.
 Evaluate XGBoost using both predictive and calibration metrics:
 
 •	ROC–AUC, PR–AUC, and Log-loss for classification.
+
 •	MSE, MAE, and R² for regression.
+
 •	Feature importance and SHAP values for interpretability.
 
 Additionally:
 
 •	Use cross-validation to monitor generalization.
+
 •	Enable early stopping to prevent overfitting.
 
 ⸻
@@ -4283,13 +4344,17 @@ Additionally:
 Use it when:
 
 •	You have structured/tabular data with nonlinear relationships.
+
 •	You need state-of-the-art performance on medium-to-large datasets.
+
 •	You require built-in handling for missing or sparse features.
 
 Avoid it when:
 
 •	Data is extremely noisy or too small.
+
 •	Real-time inference latency is critical.
+
 •	You prefer more interpretable models (consider simpler trees or linear models).
 
 ⸻
@@ -4304,8 +4369,9 @@ Canonical papers
 
 **Web resources**
 
-•	XGBoost Documentation https://xgboost.readthedocs.io/￼
-•	StatQuest — XGBoost Explained Clearly https://www.youtube.com/watch?v=OtD8wVaFm6E￼
+XGBoost Documentation https://xgboost.readthedocs.io/￼
+
+StatQuest — XGBoost Explained Clearly https://www.youtube.com/watch?v=OtD8wVaFm6E￼
 
 -----
 
@@ -4341,22 +4407,26 @@ LightGBM is designed for speed, scalability, and efficiency in both training and
 It is widely adopted in production systems and data competitions for its ability to handle:
 
 •	Large-scale datasets with millions of rows and hundreds of features.
+
 •	Categorical variables natively, without one-hot encoding.
+
 •	High-performance computing environments (supports GPU acceleration).
+
 •	Highly imbalanced datasets via custom objective functions and weights.
 
 Compared to XGBoost, it typically:
 
 •	Trains 10–20× faster.
+
 •	Uses less memory.
+
 •	Maintains or improves predictive accuracy.
 
 ⸻
 
 **Intuition**
 
-LightGBM builds trees in a leaf-wise (best-first) manner rather than level-wise (breadth-first) like XGBoost.
-This means that instead of expanding all nodes at the same depth, LightGBM always splits the leaf with the highest loss reduction, leading to deeper, more accurate trees with fewer overall splits.
+LightGBM builds trees in a leaf-wise (best-first) manner rather than level-wise (breadth-first) like XGBoost. This means that instead of expanding all nodes at the same depth, LightGBM always splits the leaf with the highest loss reduction, leading to deeper, more accurate trees with fewer overall splits.
 
 However, deeper trees can overfit if not controlled — hence parameters like max_depth and num_leaves are critical for regularization.
 
@@ -4398,8 +4468,7 @@ $$
 \text{Gain} = \frac{1}{2} \left( \frac{G_L^2}{H_L + \lambda} + \frac{G_R^2}{H_R + \lambda} - \frac{(G_L + G_R)^2}{H_L + H_R + \lambda} \right) - \gamma
 $$
 
-where G_L, G_R and H_L, H_R are gradient and Hessian sums of the left and right child nodes,
-\lambda is the L2 regularization term, and \gamma controls the complexity penalty.
+where G_L, G_R and H_L, H_R are gradient and Hessian sums of the left and right child nodes, lambda is the L2 regularization term, and \gamma controls the complexity penalty.
 
 This formula efficiently determines the best split by maximizing information gain while avoiding overfitting.
 
@@ -4428,12 +4497,15 @@ LightGBM’s leaf-wise growth and histogram binning make it extremely efficient 
 Assumptions
 
 •	The underlying loss function is differentiable.
+
 •	Weak learners (trees) can approximate residuals effectively.
 
 Limitations
 
 •	More prone to overfitting than level-wise methods (requires strong regularization).
+
 •	Sensitive to small datasets — leaf-wise splits may over-specialize.
+
 •	Slightly less interpretable due to aggressive depth growth.
 
 ⸻
@@ -4441,12 +4513,19 @@ Limitations
 **Key hyperparameters (conceptual view)**
 
 •	num_leaves: controls the maximum complexity of trees.
+
 •	max_depth: limits tree depth (helps prevent overfitting).
+
 •	learning_rate: scales each tree’s contribution.
+
 •	n_estimators: number of boosting iterations.
+
 •	feature_fraction / bagging_fraction: random feature or row sampling for variance reduction.
+
 •	lambda_l1, lambda_l2: regularization terms for sparsity and smoothness.
+
 •	min_data_in_leaf: minimum samples per leaf (key to regularization).
+
 •	boosting_type: gbdt, dart, or goss (Gradient-based One-Side Sampling).
 
 ⸻
@@ -4456,7 +4535,9 @@ Limitations
 Evaluate using the same criteria as GBDT or XGBoost:
 
 •	ROC–AUC, PR–AUC, Log-loss, F1-score for classification.
+
 •	Early stopping on validation data to detect overfitting.
+
 •	Feature importance and SHAP values for interpretability.
 
 Additionally, monitor leaf growth and gain ratios to ensure the model doesn’t overfit through overly deep or imbalanced splits.
@@ -4468,13 +4549,17 @@ Additionally, monitor leaf growth and gain ratios to ensure the model doesn’t 
 Use it when:
 
 •	You have large-scale datasets with high-dimensional features.
+
 •	You need extremely fast training and deployment.
+
 •	You want native categorical handling and GPU acceleration.
 
 Avoid it when:
 
 •	The dataset is small or simple (simpler models are more interpretable).
+
 •	The data is noisy — leaf-wise splitting can exaggerate noise effects.
+
 •	Feature binning may discard important fine-grained distinctions.
 
 ⸻
@@ -4489,13 +4574,13 @@ Canonical papers
 
 Web resources
 
-•	LightGBM Documentation https://lightgbm.readthedocs.io/￼
-•	Microsoft Research Blog — LightGBM Overview https://www.microsoft.com/en-us/research/blog/lightgbm-a-fast-open-source-gradient-boosting-framework/￼
+LightGBM Documentation https://lightgbm.readthedocs.io/￼
+
+Microsoft Research Blog — LightGBM Overview https://www.microsoft.com/en-us/research/blog/lightgbm-a-fast-open-source-gradient-boosting-framework/￼
 
 -----
 
-LightGBM redefined gradient boosting efficiency, merging mathematical rigor with software engineering excellence.
-Its ability to handle categorical data, billions of samples, and high-dimensional spaces made it a cornerstone of industrial ML pipelines.
+LightGBM redefined gradient boosting efficiency, merging mathematical rigor with software engineering excellence. Its ability to handle categorical data, billions of samples, and high-dimensional spaces made it a cornerstone of industrial ML pipelines.
 
 Yet, while LightGBM focused on speed and scale, it still relied on numerical encodings for categorical variables,
 sometimes losing information about their natural order or interaction.
@@ -4510,14 +4595,14 @@ combining ordered boosting and category encoding directly within the training pr
 
 **What is it?**
 
-CatBoost, short for Categorical Boosting, is a high-performance gradient boosting algorithm developed by Yandex (2018).
-It extends the standard GBDT framework (like XGBoost and LightGBM) but introduces unique innovations that make it particularly effective with categorical data and robust against overfitting.
+CatBoost, short for Categorical Boosting, is a high-performance gradient boosting algorithm developed by Yandex (2018). It extends the standard GBDT framework (like XGBoost and LightGBM) but introduces unique innovations that make it particularly effective with categorical data and robust against overfitting.
 
 ![class](/ima/ima31.png)
 
 The two defining ideas of CatBoost are:
 
 1.	Ordered boosting — a mathematically principled way to prevent prediction shift and target leakage.
+
 2.	Efficient categorical encoding — built-in transformation of categorical features into numerical statistics while preserving the training order.
 
 These innovations allow CatBoost to deliver state-of-the-art accuracy with minimal parameter tuning and high interpretability.
@@ -4526,20 +4611,24 @@ These innovations allow CatBoost to deliver state-of-the-art accuracy with minim
 
 **Why use it?**
 
-CatBoost is designed to natively handle categorical variables and reduce overfitting in iterative boosting.
-Unlike other algorithms that require preprocessing (e.g., one-hot encoding), CatBoost processes categories internally and efficiently.
+CatBoost is designed to natively handle categorical variables and reduce overfitting in iterative boosting. Unlike other algorithms that require preprocessing (e.g., one-hot encoding), CatBoost processes categories internally and efficiently.
 
 It is widely used when:
 
 •	Data contain many categorical features or mixed data types.
+
 •	Overfitting is a concern (CatBoost’s ordered boosting mitigates it).
+
 •	Interpretability and calibration matter alongside predictive power.
 
 Applications include:
 
 •	Financial risk scoring.
+
 •	E-commerce recommendation systems.
+
 •	Customer segmentation and churn modeling.
+
 •	Natural language and text classification (token categories).
 
 ⸻
@@ -4561,6 +4650,7 @@ using permutations to preserve independence and avoid bias.
 In short:
 
 •	LightGBM optimizes for speed.
+
 •	CatBoost optimizes for correctness and categorical integrity.
 
 ⸻
@@ -4585,7 +4675,9 @@ $$
 
 where:
 
-•	N_{c_i,<i} is the number of preceding samples with the same category as c_i,
+$$
+N_{c_i,<i} \text{ is the number of preceding samples with the same category as } c_i.
+$$
 
 •	P is the prior (e.g., global mean of targets),
 
@@ -4628,12 +4720,15 @@ making it one of the most versatile gradient boosting implementations.
 Assumptions
 
 •	Data can be meaningfully partitioned by categories or interactions.
+
 •	Categorical statistics (mean encodings) correlate with the target.
 
 Limitations
 
 •	Slightly slower training than LightGBM due to ordered permutations.
+
 •	Requires enough samples per category to compute stable statistics.
+
 •	Less transparent mathematically (more internal heuristics).
 
 ⸻
@@ -4641,13 +4736,21 @@ Limitations
 **Key hyperparameters (conceptual view)**
 
 •	iterations: number of boosting stages.
+
 •	learning_rate: shrinkage applied to each tree.
+
 •	depth: tree depth (controls interaction strength).
+
 •	l2_leaf_reg: L2 regularization coefficient.
+
 •	rsm: feature subsampling rate.
+
 •	border_count: number of split bins for numerical features.
+
 •	cat_features: list of categorical feature indices.
+
 •	loss_function: e.g., Logloss, CrossEntropy, RMSE.
+
 •	bootstrap_type: sampling strategy (Bayesian, Bernoulli, MVS).
 
 ⸻
@@ -4657,12 +4760,15 @@ Limitations
 Like other boosting models, CatBoost can be evaluated with:
 
 •	ROC–AUC, Log-loss, and PR–AUC for classification.
+
 •	MSE and MAE for regression.
 
 Additional diagnostics include:
 
 •	Overfitting detector (CatBoost supports built-in early stopping).
+
 •	Feature importance and prediction analysis (via CatBoost visualizer).
+
 •	Parameter sensitivity — especially learning rate and depth.
 
 ⸻
@@ -4672,13 +4778,17 @@ Additional diagnostics include:
 Use it when:
 
 •	Your dataset includes categorical or mixed-type variables.
+
 •	You want strong accuracy without heavy tuning.
+
 •	Data volume is moderate to large and you can afford slightly slower training.
 
 Avoid it when:
 
 •	Data are purely numeric and LightGBM or XGBoost already perform optimally.
+
 •	The dataset is very small — ordered encodings may overfit.
+
 •	You need real-time, ultra-low-latency inference (trees are dense).
 
 ⸻
@@ -4694,6 +4804,7 @@ Canonical papers
 Web resources
 
 •	CatBoost Documentation https://catboost.ai/en/docs/￼
+
 •	Yandex Research Blog — Introducing CatBoost https://research.yandex.com/news/introducing-catboost￼
 
 -----
