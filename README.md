@@ -5943,6 +5943,8 @@ In classification, discrimination measures how well a model distinguishes betwee
 Among discrimination metrics, two stand out as foundational: ROC–AUC (Receiver Operating Characteristic — Area Under the Curve) and PR–AUC (Precision–Recall — Area Under the Curve).
 Both summarize the model’s ranking ability — how consistently it assigns higher scores to positive samples than to negative ones — yet they emphasize different aspects of performance.
 
+![class](/ima/ima40.png)
+
 ⸻
 
 **ROC Curve: Intuition**
@@ -6045,6 +6047,8 @@ ROC–AUC and PR–AUC tell us how well the model separates classes, but not how
 
 While ROC–AUC and PR–AUC summarize ranking performance, they say nothing about a model’s performance at a specific threshold — where decisions are actually made. To evaluate real-world classification behavior, we need threshold-dependent metrics, which measure how accurately and confidently a model classifies observations once probabilities are converted into decisions.
 
+![class](/ima/ima41.png)
+
 This group of metrics covers precision–recall balance (F1, Fβ), global correlation (MCC), probability accuracy (Log-Loss, Brier), and distributional separation (KS statistic). Together, they bridge the gap between theoretical discrimination and operational reliability.
 
 ⸻
@@ -6090,6 +6094,8 @@ Definition
 
 The MCC summarizes all four elements of the confusion matrix — TP, TN, FP, FN — into a single number:
 
+![class](/ima/ima42.jpg)
+
 $$
 MCC = \frac{TP \cdot TN - FP \cdot FN}{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN + FN)}}
 $$
@@ -6118,6 +6124,8 @@ Definition
 
 Log-Loss evaluates how close predicted probabilities are to the true labels. It heavily penalizes confident but incorrect predictions.
 
+![class](/ima/ima43.jpg)
+
 $$
 \text{LogLoss} = - \frac{1}{N} \sum_{i=1}^{N} [y_i \log(p_i) + (1 - y_i) \log(1 - p_i)]
 $$
@@ -6143,6 +6151,8 @@ Limitations
 Definition
 
 The Brier Score is the mean squared error between predicted probabilities and actual outcomes:
+
+![class](/ima/ima44.png)
 
 $$
 \text{Brier Score} = \frac{1}{N} \sum_{i=1}^{N} (p_i - y_i)^2
