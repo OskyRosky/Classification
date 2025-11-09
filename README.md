@@ -7953,58 +7953,62 @@ Give you a clear, opinionated map from the models we covered to the libraries an
 1.1 Python (recommended path)
 
 You can implement the full taxonomy with a small, stable set of libraries.
-	•	scikit-learn (core classical ML)
-	•	Linear & probabilistic: LogisticRegression, LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis, GaussianNB, MultinomialNB, BernoulliNB, ComplementNB.
-	•	Margin-based: Perceptron, LinearSVC, SVC (with kernel="rbf" or "poly").
-	•	Instance-based: KNeighborsClassifier.
-	•	Trees & cost-sensitive trees: DecisionTreeClassifier (with class_weight), plus criterion="gini" or "entropy", pruning via ccp_alpha.
-	•	Bagging & forest-style ensembles: BaggingClassifier, RandomForestClassifier, ExtraTreesClassifier.
-	•	Gradient boosting (vanilla): GradientBoostingClassifier.
-	•	Cross-cutting utilities: Pipeline, ColumnTransformer, StandardScaler, MinMaxScaler, OneHotEncoder, CalibratedClassifierCV, GridSearchCV, RandomizedSearchCV, StratifiedKFold, class_weight="balanced".
-	•	xgboost, lightgbm, catboost (GBDT variants)
-	•	xgboost.XGBClassifier (robust, regularized GBDT, great defaults).
-	•	lightgbm.LGBMClassifier (fast, leaf-wise growth, strong on large/tabular).
-	•	catboost.CatBoostClassifier (handles categoricals natively, strong out-of-the-box performance with fewer tweaks).
-	•	PyTorch o TensorFlow/Keras (neural networks)
-	•	MLP for tabular: torch.nn modules o tf.keras Sequential/Functional API.
-	•	CNN para imágenes: torchvision o tf.keras.applications para transfer learning.
-	•	RNN/LSTM/GRU para secuencias: torch.nn.LSTM o tf.keras.layers.LSTM/GRU.
-	•	Transformers para texto/secuencias: transformers (Hugging Face) con cabezales de clasificación (AutoModelForSequenceClassification).
-	•	Model evaluation, reporting, and monitoring helpers
-	•	Experiment tracking: MLflow (lightweight and effective).
-	•	Drift and report dashboards: Evidently AI.
-	•	Serialization: joblib (sklearn), pickle (con cuidado), formatos nativos (.json para CatBoost, Booster para XGBoost/LightGBM), o torch.save / model.save en deep learning.
 
-Conventions that keep you sane.
-Set random seeds consistently. Freeze dependencies in requirements.txt. Use Pipeline for preprocessing plus model, so training and inference share the exact same transforms. Keep data splits stratified. Always persist the entire pipeline (not just the estimator). Calibrate probabilities when decisions depend on risk thresholds.
+•	scikit-learn (core classical ML)
+•	Linear & probabilistic: LogisticRegression, LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis, GaussianNB, MultinomialNB, BernoulliNB, ComplementNB.
+•	Margin-based: Perceptron, LinearSVC, SVC (with kernel="rbf" or "poly").
+•	Instance-based: KNeighborsClassifier.
+•	Trees & cost-sensitive trees: DecisionTreeClassifier (with class_weight), plus criterion="gini" or "entropy", pruning via ccp_alpha.
+•	Bagging & forest-style ensembles: BaggingClassifier, RandomForestClassifier, ExtraTreesClassifier.
+•	Gradient boosting (vanilla): GradientBoostingClassifier.
+•	Cross-cutting utilities: Pipeline, ColumnTransformer, StandardScaler, MinMaxScaler, OneHotEncoder, CalibratedClassifierCV, GridSearchCV, RandomizedSearchCV, StratifiedKFold, class_weight="balanced".
+•	xgboost, lightgbm, catboost (GBDT variants)
+•	xgboost.XGBClassifier (robust, regularized GBDT, great defaults).
+•	lightgbm.LGBMClassifier (fast, leaf-wise growth, strong on large/tabular).
+•	catboost.CatBoostClassifier (handles categoricals natively, strong out-of-the-box performance with fewer tweaks).
+•	PyTorch o TensorFlow/Keras (neural networks)
+•	MLP for tabular: torch.nn modules o tf.keras Sequential/Functional API.
+•	CNN para imágenes: torchvision o tf.keras.applications para transfer learning.
+•	RNN/LSTM/GRU para secuencias: torch.nn.LSTM o tf.keras.layers.LSTM/GRU.
+•	Transformers para texto/secuencias: transformers (Hugging Face) con cabezales de clasificación (AutoModelForSequenceClassification).
+•	Model evaluation, reporting, and monitoring helpers
+•	Experiment tracking: MLflow (lightweight and effective).
+•	Drift and report dashboards: Evidently AI.
+•	Serialization: joblib (sklearn), pickle (con cuidado), formatos nativos (.json para CatBoost, Booster para XGBoost/LightGBM), o torch.save / model.save en deep learning.
+
+Conventions that keep you sane. Set random seeds consistently. Freeze dependencies in requirements.txt. Use Pipeline for preprocessing plus model, so training and inference share the exact same transforms. Keep data splits stratified. Always persist the entire pipeline (not just the estimator). Calibrate probabilities when decisions depend on risk thresholds.
 
 1.2 R (optional mirrors)
 
 If you prefer R, most families have mature equivalents.
-	•	Core models: glm (logit/probit), MASS::lda y qda, e1071::naiveBayes y svm, class::knn, rpart para árboles, randomForest, xgboost, lightgbm, catboost, nnet para MLP básico, keras para deep learning.
-	•	Workflow: caret o tidymodels (parsnip, recipes, workflows, tune) para unificar preprocesamiento, tuning y evaluación con buenas prácticas.
+
+•	Core models: glm (logit/probit), MASS::lda y qda, e1071::naiveBayes y svm, class::knn, rpart para árboles, randomForest, xgboost, lightgbm, catboost, nnet para MLP básico, keras para deep learning.
+•	Workflow: caret o tidymodels (parsnip, recipes, workflows, tune) para unificar preprocesamiento, tuning y evaluación con buenas prácticas.
 
 1.3 Mapping from families to tools (mental checklist)
-	•	Linear/probabilistic → scikit-learn covers everything cleanly; for large sparse text, add SGDClassifier (log-loss hinge) with partial_fit.
-	•	Margin-based → LinearSVC para grandes dimensiones; SVC con RBF si el tamaño lo permite; calibrar con CalibratedClassifierCV si necesitas probabilidades fiables.
-	•	Instance-based → KNeighborsClassifier con pipeline de escalado y cuidadosa selección de n_neighbors y distancia.
-	•	Trees → DecisionTreeClassifier con poda y class_weight; usa RandomForest o ExtraTrees para estabilidad.
-	•	Ensembles GBDT → XGBoost/LightGBM/CatBoost según necesidades (velocidad, categóricas, robustez).
-	•	Deep learning → PyTorch o Keras con plantillas de MLP para tabular; transfer learning para imágenes y texto cuando el dataset es limitado.
+
+•	Linear/probabilistic → scikit-learn covers everything cleanly; for large sparse text, add SGDClassifier (log-loss hinge) with partial_fit.
+•	Margin-based → LinearSVC para grandes dimensiones; SVC con RBF si el tamaño lo permite; calibrar con CalibratedClassifierCV si necesitas probabilidades fiables.
+•	Instance-based → KNeighborsClassifier con pipeline de escalado y cuidadosa selección de n_neighbors y distancia.
+•	Trees → DecisionTreeClassifier con poda y class_weight; usa RandomForest o ExtraTrees para estabilidad.
+•	Ensembles GBDT → XGBoost/LightGBM/CatBoost según necesidades (velocidad, categóricas, robustez).
+•	Deep learning → PyTorch o Keras con plantillas de MLP para tabular; transfer learning para imágenes y texto cuando el dataset es limitado.
 
 1.4 Reproducibility essentials
-	•	Entorno aislado (venv o conda) y requirements.txt con versiones fijas.
-	•	Semillas de aleatoriedad configuradas en NumPy, PyTorch/TF y los estimadores.
-	•	Datos versionados (rutas claras, hashes o DVC si lo necesitas).
-	•	Pipeline para acoplar preprocesamiento y modelo; guarda el pipeline final.
-	•	Métricas y parámetros registrados en MLflow (o un equivalente simple si prefieres).
+
+•	Entorno aislado (venv o conda) y requirements.txt con versiones fijas.
+•	Semillas de aleatoriedad configuradas en NumPy, PyTorch/TF y los estimadores.
+•	Datos versionados (rutas claras, hashes o DVC si lo necesitas).
+•	Pipeline para acoplar preprocesamiento y modelo; guarda el pipeline final.
+•	Métricas y parámetros registrados en MLflow (o un equivalente simple si prefieres).
 
 1.5 What not to skip before coding
-	•	Especifica claramente la métrica objetivo (ROC-AUC vs PR-AUC, F1, Log-Loss, etc.) según el caso de uso.
-	•	Define si necesitas calibración y umbral óptimo (no asumas 0.5).
-	•	Decide si habrá costos asimétricos o class weights.
-	•	Documenta el plan de validación (K folds estratificados, temporal split si aplica).
-	•	Establece criterios de parada (ej. “ganancia mínima de X en validación” para no sobre-ajustar con tuning).
+
+•	Especifica claramente la métrica objetivo (ROC-AUC vs PR-AUC, F1, Log-Loss, etc.) según el caso de uso.
+•	Define si necesitas calibración y umbral óptimo (no asumas 0.5).
+•	Decide si habrá costos asimétricos o class weights.
+•	Documenta el plan de validación (K folds estratificados, temporal split si aplica).
+•	Establece criterios de parada (ej. “ganancia mínima de X en validación” para no sobre-ajustar con tuning).
 
 
 2. Scaling with cloud & DevOps:
@@ -8027,9 +8031,10 @@ There are three main ways to deploy classification models depending on scale and
 The simplest and most common pattern is to wrap the trained model inside a lightweight web service that exposes endpoints for prediction.
 
 Typical structure:
-	•	Endpoint: POST /predict → receives JSON input, applies preprocessing and model inference, and returns prediction plus probability.
-	•	Preprocessing and model are stored as serialized pipelines (for example: pipeline.joblib or model.pkl).
-	•	Logging middleware captures inputs, outputs, latency, and metadata.
+
+•	Endpoint: POST /predict → receives JSON input, applies preprocessing and model inference, and returns prediction plus probability.
+•	Preprocessing and model are stored as serialized pipelines (for example: pipeline.joblib or model.pkl).
+•	Logging middleware captures inputs, outputs, latency, and metadata.
 
 FastAPI is generally preferred over Flask because it supports asynchronous requests, generates OpenAPI documentation automatically, and uses type hints for validation.
 
@@ -8052,6 +8057,7 @@ This approach works well for prototypes, internal APIs, and low-latency inferenc
 ⸻
 
 2. Dockerization and Container Management
+
 Once your model runs locally, containerization ensures it will behave identically in any environment.
 Docker encapsulates dependencies, OS, and configuration — eliminating “works on my machine” problems.
 
@@ -8066,12 +8072,14 @@ EXPOSE 8000
 CMD [“uvicorn”, “app.main:app”, “–host”, “0.0.0.0”, “–port”, “8000”]
 
 Key principles:
-	•	Use lightweight base images such as python:slim or alpine.
-	•	Install only runtime dependencies.
-	•	Store models in /app/model/ with version tags (for example: model_v1.pkl).
-	•	Externalize configuration and secrets through environment variables (.env).
+
+•	Use lightweight base images such as python:slim or alpine.
+•	Install only runtime dependencies.
+•	Store models in /app/model/ with version tags (for example: model_v1.pkl).
+•	Externalize configuration and secrets through environment variables (.env).
 
 To build and run:
+
 docker build -t classification-api:1.0 .
 docker run -d -p 8000:8000 classification-api:1.0
 
@@ -8080,11 +8088,13 @@ Docker allows horizontal scaling via container orchestration systems such as Kub
 ⸻
 
 3. Cloud Deployment Options
+
 Once containerized, models can easily be hosted in the cloud:
-	•	AWS ECS or Fargate: serverless container execution for APIs.
-	•	Azure Container Apps or AKS: integrates smoothly with CI/CD pipelines.
-	•	Google Cloud Run: automatically scales from zero and charges per request.
-	•	Hugging Face Spaces or Streamlit Cloud: ideal for demos or research sharing.
+
+•	AWS ECS or Fargate: serverless container execution for APIs.
+•	Azure Container Apps or AKS: integrates smoothly with CI/CD pipelines.
+•	Google Cloud Run: automatically scales from zero and charges per request.
+•	Hugging Face Spaces or Streamlit Cloud: ideal for demos or research sharing.
 
 For enterprise contexts, managed platforms such as AWS SageMaker, Vertex AI, or Azure ML handle the full lifecycle — from training and deployment to monitoring — under one ecosystem.
 
@@ -8095,10 +8105,11 @@ For enterprise contexts, managed platforms such as AWS SageMaker, Vertex AI, or 
 Every model is an evolving hypothesis that must be versioned like code.
 
 Recommended practices:
-	•	Track model artifacts, metrics, and data lineage with MLflow or DVC (Data Version Control).
-	•	Create a model_version.json file containing metadata: training date, dataset hash, performance metrics, and author.
-	•	Follow semantic versioning (v1.0.0, v1.1.0, etc.).
-	•	Keep a structured hierarchy such as:
+
+•	Track model artifacts, metrics, and data lineage with MLflow or DVC (Data Version Control).
+•	Create a model_version.json file containing metadata: training date, dataset hash, performance metrics, and author.
+•	Follow semantic versioning (v1.0.0, v1.1.0, etc.).
+•	Keep a structured hierarchy such as:
 
 models/
 ├── logistic_regression/
@@ -8117,15 +8128,17 @@ Deployed models are living systems that require continuous observation.
 Monitoring ensures models remain accurate, stable, and fair over time.
 
 Core metrics to track:
-	•	Input drift: compare new data distributions with training data (for example, using KS test or population stability index).
-	•	Prediction drift: monitor shifts in predicted probabilities or class proportions.
-	•	Performance decay: evaluate periodically against new ground truth data.
-	•	Operational metrics: latency, uptime, memory usage, and error rate.
+
+•	Input drift: compare new data distributions with training data (for example, using KS test or population stability index).
+•	Prediction drift: monitor shifts in predicted probabilities or class proportions.
+•	Performance decay: evaluate periodically against new ground truth data.
+•	Operational metrics: latency, uptime, memory usage, and error rate.
 
 Tools:
-	•	Evidently AI for open-source dashboards that track drift, bias, and calibration.
-	•	Prometheus and Grafana for operational monitoring.
-	•	MLflow and custom logging scripts for predictions and outcomes.
+
+•	Evidently AI for open-source dashboards that track drift, bias, and calibration.
+•	Prometheus and Grafana for operational monitoring.
+•	MLflow and custom logging scripts for predictions and outcomes.
 
 ⸻
 
@@ -8134,17 +8147,19 @@ Tools:
 MLOps brings automation, governance, and software-engineering rigor to machine learning workflows.
 
 Core principles:
-	1.	Automation — automate training, validation, and deployment pipelines.
-	2.	Reproducibility — fix seeds, library versions, and environment configurations.
-	3.	Continuous monitoring — track drift, performance, and fairness post-deployment.
-	4.	CI/CD integration — add automated tests for data schema, model accuracy, and latency.
-	5.	Collaboration — define clear roles for data scientists, engineers, and domain experts.
-	6.	Accountability — every model update should include an audit trail and responsible owner.
+
+1.	Automation — automate training, validation, and deployment pipelines.
+2.	Reproducibility — fix seeds, library versions, and environment configurations.
+3.	Continuous monitoring — track drift, performance, and fairness post-deployment.
+4.	CI/CD integration — add automated tests for data schema, model accuracy, and latency.
+5.	Collaboration — define clear roles for data scientists, engineers, and domain experts.
+6.	Accountability — every model update should include an audit trail and responsible owner.
 
 Typical lightweight workflow:
-	•	Version-controlled code (Git) with experiments tracked in MLflow.
-	•	Docker images integrated into a CI/CD pipeline for automated testing and release.
-	•	Monitoring loop to evaluate model health on schedule and trigger retraining when needed.
+
+•	Version-controlled code (Git) with experiments tracked in MLflow.
+•	Docker images integrated into a CI/CD pipeline for automated testing and release.
+•	Monitoring loop to evaluate model health on schedule and trigger retraining when needed.
 
 This structure completes the model lifecycle: from development → deployment → feedback → retraining.
 
@@ -8195,11 +8210,16 @@ project/
 └── requirements.txt
 
 Core workflow:
-	1.	Ingest → Load data from CSV, SQL, or API.
-	2.	Preprocess → Encode, scale, and split (train/test).
-	3.	Train → Fit model (Logistic Regression, Random Forest, XGBoost, etc.).
-	4.	Evaluate → Compute metrics (ROC–AUC, F1, PR–AUC, Log-Loss).
-	5.	Predict → Serialize and expose pipeline for inference.
+
+1.	Ingest → Load data from CSV, SQL, or API.
+
+2.	Preprocess → Encode, scale, and split (train/test).
+
+3.	Train → Fit model (Logistic Regression, Random Forest, XGBoost, etc.).
+
+4.	Evaluate → Compute metrics (ROC–AUC, F1, PR–AUC, Log-Loss).
+
+5.	Predict → Serialize and expose pipeline for inference.
 
 This format works seamlessly with MLflow for experiment tracking, DVC for data versioning, and Docker for deployment.
 
@@ -8220,12 +8240,13 @@ Prefer YAML configs for parameters instead of hardcoded values — this makes re
 
 Every experiment should generate an evaluation summary saved to a report file (for example, metrics.json).
 It should include:
-	•	Model name and version
-	•	Dataset used (with hash or ID)
-	•	Metrics: ROC–AUC, PR–AUC, F1, Log-Loss, etc.
-	•	Validation scheme
-	•	Training time and date
-	•	Git commit hash or version tag
+
+•	Model name and version
+•	Dataset used (with hash or ID)
+•	Metrics: ROC–AUC, PR–AUC, F1, Log-Loss, etc.
+•	Validation scheme
+•	Training time and date
+•	Git commit hash or version tag
 
 This transparency ensures that every reported result can be replicated, verified, and compared.
 
@@ -8235,12 +8256,13 @@ This transparency ensures that every reported result can be replicated, verified
 
 Jupyter notebooks are valuable when they tell a clear, traceable story.
 Follow a consistent narrative structure:
-	1.	Objective — What problem are we solving?
-	2.	Data Overview — Source, shape, key variables, and target balance.
-	3.	Exploration — Basic visualization and summary statistics.
-	4.	Modeling — Pipeline definition, cross-validation, and tuning.
-	5.	Evaluation — Metrics and discussion of results.
-	6.	Next Steps — Ideas for improvement or deployment.
+
+1.	Objective — What problem are we solving?
+2.	Data Overview — Source, shape, key variables, and target balance.
+3.	Exploration — Basic visualization and summary statistics.
+4.	Modeling — Pipeline definition, cross-validation, and tuning.
+5.	Evaluation — Metrics and discussion of results.
+6.	Next Steps — Ideas for improvement or deployment.
 
 A notebook should always export results to reproducible artifacts (such as .csv, .pkl, or .json).
 Avoid leaving experiments half-documented or dependent on the notebook’s internal state.
@@ -8270,12 +8292,13 @@ This simplicity ensures that experimentation and production stay aligned — sam
 3.6 Reproducibility Checklist
 
 Before publishing or deploying any model:
-	•	Fix random seeds (NumPy, PyTorch, TensorFlow).
-	•	Freeze environment dependencies in requirements.txt or environment.yml.
-	•	Version all models and data with clear naming conventions.
-	•	Document preprocessing steps and keep transformations identical for training and inference.
-	•	Validate metrics with cross-validation or holdout data.
-	•	Store results and configs in version control.
+
+•	Fix random seeds (NumPy, PyTorch, TensorFlow).
+•	Freeze environment dependencies in requirements.txt or environment.yml.
+•	Version all models and data with clear naming conventions.
+•	Document preprocessing steps and keep transformations identical for training and inference.
+•	Validate metrics with cross-validation or holdout data.
+•	Store results and configs in version control.
 
 Reproducibility isn’t optional — it’s what makes your science a system.
 
