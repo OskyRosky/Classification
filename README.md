@@ -6124,7 +6124,7 @@ Definition
 
 Log-Loss evaluates how close predicted probabilities are to the true labels. It heavily penalizes confident but incorrect predictions.
 
-![class](/ima/ima43.jpg)
+![class](/ima/ima43.png)
 
 $$
 \text{LogLoss} = - \frac{1}{N} \sum_{i=1}^{N} [y_i \log(p_i) + (1 - y_i) \log(1 - p_i)]
@@ -6211,6 +6211,7 @@ To visualize those dynamics and interpret how predictions evolve, we now turn to
 
 Metrics like F1 or AUC compress information into a single number.Curves, on the other hand, show how model performance changes as the decision threshold varies. They provide a richer diagnostic view of model behavior — revealing trade-offs between sensitivity, precision, and reliability that scalar metrics can easily hide.
 
+
 The three fundamental visualization tools are:
 
 1.	ROC Curve — global discrimination ability.
@@ -6228,6 +6229,8 @@ Together, they tell a complete story: Can the model separate, prioritize, and es
 Definition
 
 The Receiver Operating Characteristic (ROC) curve plots the True Positive Rate (TPR) against the False Positive Rate (FPR) at different thresholds.
+
+![class](/ima/ima45.webp)
 
 $$
 TPR = \frac{TP}{TP + FN}
