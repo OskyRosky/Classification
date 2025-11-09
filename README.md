@@ -5791,6 +5791,8 @@ from statistical foundations to modern deep architectures.
 
 Before moving forward, it is worth pausing to reflect. We have traversed the full landscape of classification — from linear equations and probabilistic reasoning to geometric margins, hierarchical rules, collective ensembles, and deep neural representations. Each family has offered a different way of seeing structure in data, and together they form a coherent spectrum of how learning can occur.
 
+![class](/ima/ima38.webp)
+
 This summary brings those perspectives together, comparing their logic, their strengths, and their limitations — and preparing the ground for the next essential step: evaluation.
 
 ⸻
@@ -5891,6 +5893,8 @@ They transform the static concept of a “trained model” into a dynamic proces
 
 Once a model has been estimated, its performance cannot be assumed — it must be proven. Estimation gives us a function that maps inputs to predictions, but evaluation tells us how trustworthy that function is.
 It determines not only how well the model performs, but how it performs: whether it generalizes across data, treats all classes fairly, and produces decisions that can be acted upon responsibly.
+
+![class](/ima/ima39.png)
 
 In classification, evaluation is both a science and an art. It combines quantitative measurement (metrics and validation) with qualitative insight (error interpretation and fairness checks). A model that performs well on paper but fails under distribution shifts, imbalanced data, or unequal error costs is not a good model — it is simply an unverified hypothesis.
 
