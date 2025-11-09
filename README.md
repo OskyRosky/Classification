@@ -5901,13 +5901,16 @@ This section, therefore, completes the analytical cycle that began with estimati
 Evaluation in classification serves three intertwined goals:
 
 1.	Quality — Does the model make correct predictions?
+
 Quality is captured through metrics that summarize discrimination (how well classes are separated), calibration (how well predicted probabilities reflect reality), and overall fit to unseen data.
 
 2.	Stability — Does the model behave consistently across samples, folds, and time?
+
 Stability refers to reproducibility under variation: small changes in training data, features, or random seeds should not cause erratic shifts in performance.
 This is why techniques like cross-validation and bootstrapped testing are essential.
 
 3.	Fairness — Does the model perform equitably across groups or classes?
+
 Beyond accuracy, models must be judged by equity of errors: false positives and false negatives should not concentrate disproportionately in particular subgroups.
 Evaluating fairness involves comparing performance metrics across sensitive features (gender, region, institution, etc.) and ensuring parity of opportunity.
 
@@ -5951,6 +5954,7 @@ FPR = \frac{FP}{FP + TN}
 $$
 
 Each point on the ROC curve represents a balance between sensitivity and specificity.
+
 A perfect classifier reaches the top-left corner (TPR = 1, FPR = 0), while a random classifier lies along the diagonal (AUC ≈ 0.5).
 
 The Area Under the ROC Curve (AUC) represents the probability that the classifier ranks a randomly chosen positive instance higher than a randomly chosen negative one.
@@ -5985,26 +5989,32 @@ PR–AUC thus answers a different question:
 **Comparing ROC–AUC and PR–AUC**
 
 Both metrics describe the model’s discrimination ability, but they highlight different perspectives:
-	•	ROC–AUC evaluates the model’s overall ranking performance, considering both positive and negative classes.
-	•	PR–AUC focuses only on positive predictions and is more informative when the positive class is rare.
-	•	ROC–AUC assumes class balance; PR–AUC assumes imbalance and emphasizes precision.
-	•	ROC–AUC ranges from 0.5 (random) to 1 (perfect); PR–AUC ranges from 0 to 1.
 
-When classes are balanced, both metrics usually tell a similar story.
-But when the positive class is rare (e.g., fraud detection, medical diagnosis, defect detection), ROC–AUC can be overly optimistic, as the large number of true negatives inflates the denominator of FPR.
-In these cases, PR–AUC provides a clearer, more faithful signal of real performance.
+•	ROC–AUC evaluates the model’s overall ranking performance, considering both positive and negative classes.
+
+•	PR–AUC focuses only on positive predictions and is more informative when the positive class is rare.
+
+•	ROC–AUC assumes class balance; PR–AUC assumes imbalance and emphasizes precision.
+
+•	ROC–AUC ranges from 0.5 (random) to 1 (perfect); PR–AUC ranges from 0 to 1.
+
+When classes are balanced, both metrics usually tell a similar story. But when the positive class is rare (e.g., fraud detection, medical diagnosis, defect detection), ROC–AUC can be overly optimistic, as the large number of true negatives inflates the denominator of FPR. In these cases, PR–AUC provides a clearer, more faithful signal of real performance.
 
 ⸻
 
 **When to Use** 
 
 Use ROC–AUC when:
-	•	The dataset is balanced or both classes are equally important.
-	•	The goal is to assess the global ranking quality of predictions.
+
+•	The dataset is balanced or both classes are equally important.
+
+•	The goal is to assess the global ranking quality of predictions.
 
 Use PR–AUC when:
-	•	The dataset is imbalanced or the positive class is rare.
-	•	False positives carry high costs (e.g., fraud detection, disease screening).
+
+•	The dataset is imbalanced or the positive class is rare.
+
+•	False positives carry high costs (e.g., fraud detection, disease screening).
 
 In practice, many practitioners compute both metrics:
 ROC–AUC to measure ranking discrimination, and PR–AUC to measure precision reliability under scarcity.
@@ -6014,30 +6024,31 @@ ROC–AUC to measure ranking discrimination, and PR–AUC to measure precision r
 **Limitations**
 
 •	ROC–AUC hides class imbalance effects and may overestimate performance.
+
 •	PR–AUC can fluctuate strongly when the positive class is very small.
+
 •	Both aggregate over thresholds, losing information about operational decision points.
+
 •	Neither reflects calibration — how close predicted probabilities are to real-world frequencies.
 
 ⸻
 
 **Transition**
 
-ROC–AUC and PR–AUC tell us how well the model separates classes, but not how accurate or confident its predicted probabilities are.
-For that, we now move to F1, Fβ, MCC, Log-Loss, Brier, and KS — metrics that bring us closer to evaluating performance under specific thresholds and probability distributions.
+ROC–AUC and PR–AUC tell us how well the model separates classes, but not how accurate or confident its predicted probabilities are. For that, we now move to F1, Fβ, MCC, Log-Loss, Brier, and KS — metrics that bring us closer to evaluating performance under specific thresholds and probability distributions.
 
 ### 1.2. F1 / Fβ / MCC / Log-Loss / Brier / KS
 
-While ROC–AUC and PR–AUC summarize ranking performance, they say nothing about a model’s performance at a specific threshold — where decisions are actually made.
-To evaluate real-world classification behavior, we need threshold-dependent metrics, which measure how accurately and confidently a model classifies observations once probabilities are converted into decisions.
+While ROC–AUC and PR–AUC summarize ranking performance, they say nothing about a model’s performance at a specific threshold — where decisions are actually made. To evaluate real-world classification behavior, we need threshold-dependent metrics, which measure how accurately and confidently a model classifies observations once probabilities are converted into decisions.
 
-This group of metrics covers precision–recall balance (F1, Fβ), global correlation (MCC), probability accuracy (Log-Loss, Brier), and distributional separation (KS statistic).
-Together, they bridge the gap between theoretical discrimination and operational reliability.
+This group of metrics covers precision–recall balance (F1, Fβ), global correlation (MCC), probability accuracy (Log-Loss, Brier), and distributional separation (KS statistic). Together, they bridge the gap between theoretical discrimination and operational reliability.
 
 ⸻
 
-F1 and Fβ Score
+**F1 and Fβ Score**
 
-Definition
+**Definition**
+
 The F1-score is the harmonic mean of precision and recall:
 
 $$
@@ -6055,18 +6066,23 @@ $$
 	•	β < 1 → prioritize precision (be stricter about positive predictions).
 
 When to Use
-	•	Imbalanced data where one error type is more costly than the other.
-	•	Common in medical, fraud, or spam detection tasks.
+
+•	Imbalanced data where one error type is more costly than the other.
+
+•	Common in medical, fraud, or spam detection tasks.
 
 Limitations
-	•	Ignores true negatives entirely.
-	•	Sensitive to class imbalance and threshold choice.
+
+•	Ignores true negatives entirely.
+
+•	Sensitive to class imbalance and threshold choice.
 
 ⸻
 
-Matthews Correlation Coefficient (MCC)
+**Matthews Correlation Coefficient (MCC)**
 
 Definition
+
 The MCC summarizes all four elements of the confusion matrix — TP, TN, FP, FN — into a single number:
 
 $$
@@ -6074,110 +6090,128 @@ MCC = \frac{TP \cdot TN - FP \cdot FN}{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN + FN
 $$
 
 It behaves like a correlation coefficient between observed and predicted classifications.
+
 Values range from –1 (total disagreement) to +1 (perfect prediction), with 0 meaning random guessing.
 
 When to Use
-	•	Especially useful for imbalanced datasets, where accuracy can be misleading.
-	•	Provides a stable global measure of model quality.
+
+•	Especially useful for imbalanced datasets, where accuracy can be misleading.
+
+•	Provides a stable global measure of model quality.
 
 Limitations
-	•	Harder to interpret intuitively than F1.
-	•	Undefined if one class is completely absent.
+
+•	Harder to interpret intuitively than F1.
+
+•	Undefined if one class is completely absent.
 
 ⸻
 
-Log-Loss (Cross-Entropy Loss)
+**Log-Loss (Cross-Entropy Loss)**
 
 Definition
-Log-Loss evaluates how close predicted probabilities are to the true labels.
-It heavily penalizes confident but incorrect predictions.
+
+Log-Loss evaluates how close predicted probabilities are to the true labels. It heavily penalizes confident but incorrect predictions.
 
 $$
 \text{LogLoss} = - \frac{1}{N} \sum_{i=1}^{N} [y_i \log(p_i) + (1 - y_i) \log(1 - p_i)]
 $$
 
-Lower values indicate better probabilistic calibration and discrimination.
-Unlike F1 or accuracy, Log-Loss uses the entire probability distribution rather than only binary outcomes.
+Lower values indicate better probabilistic calibration and discrimination. Unlike F1 or accuracy, Log-Loss uses the entire probability distribution rather than only binary outcomes.
 
 When to Use
-	•	When probabilistic confidence matters (e.g., risk modeling, credit scoring).
-	•	Preferred for comparing calibrated models like Logistic Regression, GBDT, or neural networks.
+
+•	When probabilistic confidence matters (e.g., risk modeling, credit scoring).
+
+•	Preferred for comparing calibrated models like Logistic Regression, GBDT, or neural networks.
 
 Limitations
-	•	Sensitive to outliers and overconfident predictions.
-	•	Harder to interpret in isolation — needs baseline comparison.
+
+•	Sensitive to outliers and overconfident predictions.
+
+•	Harder to interpret in isolation — needs baseline comparison.
 
 ⸻
 
-Brier Score
+**Brier Score**
 
 Definition
+
 The Brier Score is the mean squared error between predicted probabilities and actual outcomes:
 
 $$
 \text{Brier Score} = \frac{1}{N} \sum_{i=1}^{N} (p_i - y_i)^2
 $$
 
-It measures how well-calibrated probabilities are, without logarithmic penalization.
-Perfectly calibrated models achieve the lowest possible Brier value.
+It measures how well-calibrated probabilities are, without logarithmic penalization. Perfectly calibrated models achieve the lowest possible Brier value.
 
 When to Use
-	•	Evaluating probabilistic models where calibration is critical.
-	•	Especially relevant in meteorology, finance, and medical forecasting.
+
+•	Evaluating probabilistic models where calibration is critical.
+
+•	Especially relevant in meteorology, finance, and medical forecasting.
 
 Limitations
-	•	Does not differentiate between over- and under-confident predictions.
-	•	Less sensitive to rare events than Log-Loss.
+
+•	Does not differentiate between over- and under-confident predictions.
+
+•	Less sensitive to rare events than Log-Loss.
 
 ⸻
 
-Kolmogorov–Smirnov (KS) Statistic
+**Kolmogorov–Smirnov (KS) Statistic**
 
 Definition
+
 The KS statistic quantifies the maximum separation between the cumulative distributions of scores for positives and negatives:
 
 $$
 KS = \max_{t} |F_{pos}(t) - F_{neg}(t)|
 $$
 
-It indicates how distinctly the model separates the two classes.
-A KS value near 1 means perfect separation; a value near 0 implies no discrimination.
+It indicates how distinctly the model separates the two classes. A KS value near 1 means perfect separation; a value near 0 implies no discrimination.
 
 When to Use
-	•	Common in credit scoring, risk analysis, and binary classification.
-	•	Helps visualize score distributions and overlap.
+
+•	Common in credit scoring, risk analysis, and binary classification.
+
+•	Helps visualize score distributions and overlap.
 
 Limitations
-	•	Applicable mainly to binary problems.
-	•	Does not reflect probability calibration or multi-class performance.
+
+•	Applicable mainly to binary problems.
+
+•	Does not reflect probability calibration or multi-class performance.
 
 
 -------
 
-Metrics like F1, MCC, Log-Loss, Brier, and KS quantify how a classifier performs once decisions are made or probabilities are issued.
-However, these are scalar summaries — they capture snapshots of performance, not the full dynamics across thresholds.
+Metrics like F1, MCC, Log-Loss, Brier, and KS quantify how a classifier performs once decisions are made or probabilities are issued. However, these are scalar summaries — they capture snapshots of performance, not the full dynamics across thresholds.
+
 To visualize those dynamics and interpret how predictions evolve, we now turn to Curves and Calibration, the next crucial lens for evaluating classifiers.
 
 -------
 
 ## 2. Curves and Calibration
 
-Metrics like F1 or AUC compress information into a single number.
-Curves, on the other hand, show how model performance changes as the decision threshold varies.
-They provide a richer diagnostic view of model behavior — revealing trade-offs between sensitivity, precision, and reliability that scalar metrics can easily hide.
+Metrics like F1 or AUC compress information into a single number.Curves, on the other hand, show how model performance changes as the decision threshold varies. They provide a richer diagnostic view of model behavior — revealing trade-offs between sensitivity, precision, and reliability that scalar metrics can easily hide.
 
 The three fundamental visualization tools are:
-	1.	ROC Curve — global discrimination ability.
-	2.	Precision–Recall Curve — performance under class imbalance.
-	3.	Calibration Plot (Reliability Curve) — how trustworthy predicted probabilities are.
+
+1.	ROC Curve — global discrimination ability.
+
+2.	Precision–Recall Curve — performance under class imbalance.
+
+3.	Calibration Plot (Reliability Curve) — how trustworthy predicted probabilities are.
 
 Together, they tell a complete story: Can the model separate, prioritize, and estimate probabilities correctly?
 
 ⸻
 
-2.1. ROC Curve
+**2.1. ROC Curve**
 
 Definition
+
 The Receiver Operating Characteristic (ROC) curve plots the True Positive Rate (TPR) against the False Positive Rate (FPR) at different thresholds.
 
 $$
@@ -6188,17 +6222,20 @@ $$
 FPR = \frac{FP}{FP + TN}
 $$
 
-Each point represents a threshold used to classify probabilities into positive or negative predictions.
-The curve’s shape reveals the model’s discrimination power — how well it distinguishes positives from negatives across all thresholds.
+Each point represents a threshold used to classify probabilities into positive or negative predictions. The curve’s shape reveals the model’s discrimination power — how well it distinguishes positives from negatives across all thresholds.
 
 Interpretation
-	•	A perfect model hugs the top-left corner (TPR ≈ 1, FPR ≈ 0).
-	•	A random model forms a diagonal (AUC ≈ 0.5).
-	•	A weaker model may even fall below the diagonal, implying inverted predictions.
+
+•	A perfect model hugs the top-left corner (TPR ≈ 1, FPR ≈ 0).
+
+•	A random model forms a diagonal (AUC ≈ 0.5).
+
+•	A weaker model may even fall below the diagonal, implying inverted predictions.
 
 The area under this curve (AUC) quantifies the model’s global ranking performance.
 
-Insight
+**Insight**
+
 ROC curves are robust for balanced data, where both positive and negative outcomes are equally relevant.
 However, under heavy class imbalance, the ROC curve can appear optimistic — because the large number of true negatives artificially reduces FPR.
 In those cases, PR curves offer a more honest view.
@@ -6208,6 +6245,7 @@ In those cases, PR curves offer a more honest view.
 2.2. Precision–Recall (PR) Curve
 
 Definition
+
 The Precision–Recall curve plots Precision versus Recall for all thresholds:
 
 $$
@@ -6221,21 +6259,23 @@ $$
 It focuses only on the positive class, showing how well the model retrieves true positives without generating too many false positives.
 
 Interpretation
-	•	The curve starts at high recall but low precision (many false positives).
-	•	As the threshold increases, precision improves but recall drops.
-	•	The area under the curve (PR–AUC) summarizes this trade-off — higher is better.
+
+•	The curve starts at high recall but low precision (many false positives).
+•	As the threshold increases, precision improves but recall drops.
+•	The area under the curve (PR–AUC) summarizes this trade-off — higher is better.
 
 Insight
+
 PR curves are particularly informative in imbalanced datasets (e.g., fraud, disease detection), where negatives vastly outnumber positives.
 They reveal whether the model truly learns to identify positives or merely benefits from the majority class.
 
 ⸻
 
-2.3. Calibration Plot (Reliability Curve)
+**2.3. Calibration Plot (Reliability Curve)**
 
 Definition
-A Calibration Plot compares predicted probabilities with actual outcome frequencies.
-It helps answer a key question: When the model says “70% chance,” does the event actually occur about 70% of the time?
+
+A Calibration Plot compares predicted probabilities with actual outcome frequencies. It helps answer a key question: When the model says “70% chance,” does the event actually occur about 70% of the time?
 
 Mathematically, calibration means that:
 
@@ -6246,28 +6286,40 @@ $$
 If the model is perfectly calibrated, points will align along the diagonal line (perfect reliability).
 
 Construction
-	1.	Divide predictions into bins (e.g., [0.0–0.1], [0.1–0.2], …).
-	2.	Compute the average predicted probability and the observed frequency of positives for each bin.
-	3.	Plot these pairs — ideally, they should follow the 45° diagonal.
+
+1.	Divide predictions into bins (e.g., [0.0–0.1], [0.1–0.2], …).
+
+2.	Compute the average predicted probability and the observed frequency of positives for each bin.
+
+3.	Plot these pairs — ideally, they should follow the 45° diagonal.
 
 Interpretation
-	•	Perfect calibration: points lie on the diagonal.
-	•	Overconfident model: curve lies below the diagonal (predicts probabilities too high).
-	•	Underconfident model: curve lies above the diagonal (predicts probabilities too low).
+
+•	Perfect calibration: points lie on the diagonal.
+
+•	Overconfident model: curve lies below the diagonal (predicts probabilities too high).
+
+•	Underconfident model: curve lies above the diagonal (predicts probabilities too low).
 
 Insight
-	•	Tree-based models (e.g., Random Forest, XGBoost) often need calibration.
-	•	Logistic Regression tends to be naturally well-calibrated.
-	•	Post-processing methods like Platt scaling, Isotonic regression, or Temperature scaling can improve probability reliability.
+
+•	Tree-based models (e.g., Random Forest, XGBoost) often need calibration.
+
+•	Logistic Regression tends to be naturally well-calibrated.
+
+•	Post-processing methods like Platt scaling, Isotonic regression, or Temperature scaling can improve probability reliability.
 
 ⸻
 
-2.4. Complementarity of Curves
+**2.4. Complementarity of Curves**
 
 Each curve answers a different diagnostic question:
-	•	ROC Curve: “Can the model rank examples correctly?”
-	•	PR Curve: “Can the model identify positives effectively under imbalance?”
-	•	Calibration Plot: “Can I trust its probabilities?”
+
+•	ROC Curve: “Can the model rank examples correctly?”
+
+•	PR Curve: “Can the model identify positives effectively under imbalance?”
+
+•	Calibration Plot: “Can I trust its probabilities?”
 
 Using all three provides a complete performance portrait — combining discrimination, precision trade-offs, and probability trustworthiness.
 
@@ -6288,18 +6340,21 @@ Threshold analysis aims to find the point that maximizes usefulness — whether 
 
 ⸻
 
-3.1. Why Thresholds Matter
+3.1. **Why Thresholds Matter**
 
 A model’s quality depends not just on how well it predicts, but where we decide to act on those predictions.
+
 For example:
-	•	In fraud detection, missing a fraud (false negative) is worse than flagging an innocent transaction (false positive).
-	•	In medical screening, it is preferable to over-predict disease risk than to miss an actual patient.
+
+•	In fraud detection, missing a fraud (false negative) is worse than flagging an innocent transaction (false positive).
+
+•	In medical screening, it is preferable to over-predict disease risk than to miss an actual patient.
 
 The optimal threshold thus depends on the relative importance (or cost) of each type of error.
 
 ⸻
 
-3.2. Core Idea: Balancing True and False Outcomes
+3.2. **Core Idea: Balancing True and False Outcomes**
 
 To visualize this, consider the confusion matrix at different thresholds.
 As the threshold decreases:
@@ -6313,7 +6368,7 @@ The art of threshold tuning is to find the sweet spot that balances these forces
 
 ⸻
 
-3.3. Youden’s J Statistic
+3.3. **Youden’s J Statistic**
 
 A simple and popular method to select the optimal threshold is Youden’s J, which maximizes the difference between the True Positive Rate (TPR) and False Positive Rate (FPR):
 
@@ -6326,7 +6381,7 @@ This method is widely used in medicine and diagnostics because it assumes equal 
 
 ⸻
 
-3.4. F1-Optimal Threshold
+3.4. **F1-Optimal Threshold**
 
 In tasks where precision and recall are more relevant than true negatives, we can directly maximize the F1-score across thresholds:
 
@@ -6339,7 +6394,7 @@ This approach is especially useful in imbalanced datasets (e.g., fraud, churn, r
 
 ⸻
 
-3.5. Cost-Based Thresholds
+3.5. **Cost-Based Thresholds**
 
 In many business or operational settings, the costs of errors are asymmetric.
 We can define a threshold that minimizes the expected cost or maximizes expected utility.
@@ -6363,7 +6418,7 @@ For example:
 
 ⸻
 
-3.6. Expected Utility and Custom Metrics
+3.6. **Expected Utility and Custom Metrics**
 
 Threshold selection can also be reframed as maximizing expected utility, where each outcome (TP, FP, TN, FN) has an associated value or penalty.
 This approach generalizes cost-based rules into any decision environment:
@@ -6378,11 +6433,15 @@ This framework is especially useful for financial applications, risk management,
 
 ⸻
 
-3.7. Practical Considerations
-	•	Always determine thresholds on validation data, not test data, to avoid bias.
-	•	Consider using ROC–AUC or PR–AUC for model comparison, and threshold tuning for deployment.
-	•	When communicating results, report the chosen threshold explicitly and explain its rationale (e.g., “selected to maximize F1 on validation set”).
-	•	Visualize the impact of thresholds with Precision–Recall vs Threshold and Expected Cost vs Threshold curves.
+3.7. **Practical Considerations**
+
+•	Always determine thresholds on validation data, not test data, to avoid bias.
+
+•	Consider using ROC–AUC or PR–AUC for model comparison, and threshold tuning for deployment.
+
+•	When communicating results, report the chosen threshold explicitly and explain its rationale (e.g., “selected to maximize F1 on validation set”).
+
+•	Visualize the impact of thresholds with Precision–Recall vs Threshold and Expected Cost vs Threshold curves.
 
 -------
 
@@ -6396,37 +6455,36 @@ The next section focuses on error analysis, confusion matrices, and class-level 
 Metrics summarize how well a model performs, but they rarely explain why it performs that way.
 Diagnostic methods focus on uncovering the underlying structure of model errors — identifying which patterns, classes, or subgroups the model struggles with.
 
-In classification tasks, every prediction carries information.
-Some errors are random noise; others reveal systematic bias, model blind spots, or data imbalance.
-By interpreting these patterns, we turn evaluation into understanding — bridging performance metrics with actionable insight.
+In classification tasks, every prediction carries information. Some errors are random noise; others reveal systematic bias, model blind spots, or data imbalance. By interpreting these patterns, we turn evaluation into understanding — bridging performance metrics with actionable insight.
 
 ⸻
 
-4.1. Confusion Matrix: The Core Diagnostic Tool
+### 4.1. **Confusion Matrix: The Core Diagnostic Tool**
 
 The confusion matrix is the foundation of classification diagnostics.
 It records how often the model’s predictions agree or disagree with actual outcomes.
 
 To conceptualize it:
-	•	True Positives (TP): predicted positive and actually positive.
-	•	False Positives (FP): predicted positive but actually negative.
-	•	True Negatives (TN): predicted negative and actually negative.
-	•	False Negatives (FN): predicted negative but actually positive.
 
-These four numbers summarize every possible classification result.
-From them, we derive all key metrics — accuracy, precision, recall, specificity, and F1.
+•	True Positives (TP): predicted positive and actually positive.
+•	False Positives (FP): predicted positive but actually negative.
+•	True Negatives (TN): predicted negative and actually negative.
+•	False Negatives (FN): predicted negative but actually positive.
+
+These four numbers summarize every possible classification result. From them, we derive all key metrics — accuracy, precision, recall, specificity, and F1.
 
 Key Insights
-	•	A high FP rate means the model over-predicts positives (too permissive).
-	•	A high FN rate means the model misses many positives (too conservative).
-	•	When most predictions fall along the “correct” diagonal (TP + TN ≫ FP + FN), classification is stable.
-	•	Repeated off-diagonal errors indicate systematic confusion — for instance, “cats” often mistaken for “dogs” or “A” misread as “4.”
+
+•	A high FP rate means the model over-predicts positives (too permissive).
+•	A high FN rate means the model misses many positives (too conservative).
+•	When most predictions fall along the “correct” diagonal (TP + TN ≫ FP + FN), classification is stable.
+•	Repeated off-diagonal errors indicate systematic confusion — for instance, “cats” often mistaken for “dogs” or “A” misread as “4.”
 
 Even a simple confusion matrix — visualized or summarized — is often the single most informative diagnostic tool for understanding a classifier’s strengths and weaknesses.
 
 ⸻
 
-4.2. Per-Class Performance
+### 4.2. Per-Class Performance
 
 In multi-class problems, global metrics such as accuracy can be misleading.
 They may look excellent overall but mask poor performance in smaller or rare classes.
@@ -6453,7 +6511,7 @@ This detailed breakdown ensures that performance on minority or critical classes
 
 ⸻
 
-4.3. Error Analysis
+### 4.3. Error Analysis
 
 Error analysis moves from measurement to interpretation — asking why the model misclassifies certain cases.
 It has both quantitative and qualitative components.
@@ -6474,13 +6532,14 @@ for instance, blurry medical images, overlapping linguistic features, or underre
 
 ⸻
 
-4.4. Turning Errors into Insight
+### 4.4. Turning Errors into Insight
 
 Error analysis is not about blaming the model — it’s about understanding its learning boundaries.
 Patterns of confusion can suggest very different next steps:
-	•	Many false negatives → collect more positive examples or adjust thresholds.
-	•	Many false positives → refine features, calibrate probabilities, or tune class weights.
-	•	Errors clustered around specific categories → improve data labeling consistency.
+
+•	Many false negatives → collect more positive examples or adjust thresholds.
+•	Many false positives → refine features, calibrate probabilities, or tune class weights.
+•	Errors clustered around specific categories → improve data labeling consistency.
 
 Treat each type of error as a signal, not noise.
 The best-performing models are not those that avoid mistakes entirely,
@@ -6488,39 +6547,37 @@ but those whose mistakes teach us something meaningful about the data itself.
 
 --------
 
-Now that we know how to interpret errors and class-level patterns,
-the next step is ensuring that our performance estimates are reliable and reproducible.
-We move next to 5. Cross-Validation and Leakage Prevention,
-where we examine how to test models properly — avoiding misleading results and hidden information leaks.
+Now that we know how to interpret errors and class-level patterns, the next step is ensuring that our performance estimates are reliable and reproducible.
+We move next to 5. Cross-Validation and Leakage Prevention, where we examine how to test models properly — avoiding misleading results and hidden information leaks.
 
 --------
 
 ## 5. Cross-Validation and Leakage Prevention
 
-Model evaluation means little if the test data already influenced the model during training.
-To assess a classifier’s true generalization capacity — how well it performs on unseen data — we must separate learning from testing.
-This is where cross-validation and leakage prevention come into play.
+Model evaluation means little if the test data already influenced the model during training. To assess a classifier’s true generalization capacity — how well it performs on unseen data — we must separate learning from testing. This is where cross-validation and leakage prevention come into play.
+
 They ensure that what appears as high performance is not merely the model memorizing the data, but genuinely learning patterns that generalize.
 
 ⸻
 
-5.1. The Principle of Data Separation
+### 5.1. The Principle of Data Separation
 
 Every supervised learning workflow follows one golden rule:
 
 Data used for model training must never overlap with data used for evaluation.
 
 Typically, the dataset is divided into:
-	•	Training set: used to learn model parameters.
-	•	Validation set: used for tuning hyperparameters.
-	•	Test set: held out until the very end for unbiased evaluation.
+
+•	Training set: used to learn model parameters.
+•	Validation set: used for tuning hyperparameters.
+•	Test set: held out until the very end for unbiased evaluation.
 
 In small or moderate datasets, splitting once may produce unstable estimates.
 Cross-validation mitigates this problem by rotating which samples play each role.
 
 ⸻
 
-5.2. k-Fold Cross-Validation
+### 5.2. k-Fold Cross-Validation
 
 The standard approach is k-fold cross-validation.
 The dataset is divided into k roughly equal parts (folds).
@@ -6537,7 +6594,7 @@ Cross-validation provides a more reliable picture of model stability and varianc
 
 ⸻
 
-5.3. Stratified Cross-Validation
+### 5.3. Stratified Cross-Validation
 
 For classification, it is crucial to preserve the class balance within each fold.
 Otherwise, some folds may contain almost no minority-class samples, distorting performance estimates.
@@ -6545,75 +6602,84 @@ Stratified cross-validation ensures each fold mirrors the overall class distribu
 
 ⸻
 
-5.4. Other Variants
+### 5.4. Other Variants
 
 Depending on the data size and purpose, alternative schemes exist:
-	•	Leave-One-Out (LOO): each sample becomes a test case once.
+
+•	Leave-One-Out (LOO): each sample becomes a test case once.
+
 Extremely exhaustive but computationally expensive.
-	•	Group K-Fold: ensures that all observations from a single group (e.g., same patient or user) stay within the same fold, preventing cross-contamination.
-	•	Time-Series Split: respects temporal order — training on the past, testing on the future — to avoid peeking into data that “hasn’t happened yet.”
+
+•	Group K-Fold: ensures that all observations from a single group (e.g., same patient or user) stay within the same fold, preventing cross-contamination.
+•	Time-Series Split: respects temporal order — training on the past, testing on the future — to avoid peeking into data that “hasn’t happened yet.”
 
 Each strategy reflects the same philosophy: evaluation must simulate the real-world scenario of deploying the model on new, unseen data.
 
 ⸻
 
-5.5. The Hidden Threat: Data Leakage
+### 5.5. The Hidden Threat: Data Leakage
 
-Data leakage occurs when information from outside the training process influences the model.
-This can make results appear deceptively strong while silently invalidating them.
-Leakage is one of the most common — and most dangerous — mistakes in applied machine learning.
+Data leakage occurs when information from outside the training process influences the model. This can make results appear deceptively strong while silently invalidating them. Leakage is one of the most common — and most dangerous — mistakes in applied machine learning.
 
 Common sources of leakage include:
-	•	Preprocessing on the full dataset before splitting (e.g., scaling or encoding).
-→ Always fit preprocessing steps only on the training data, then apply them to validation/test sets.
-	•	Feature creation using target information, such as ratios or aggregates computed with the label included.
-	•	Temporal leakage, where future data leaks into past predictions.
-	•	Duplicated or correlated records appearing in both train and test sets.
+
+•	Preprocessing on the full dataset before splitting (e.g., scaling or encoding).
+
+→ **Always fit preprocessing steps only on the training data, then apply them to validation/test sets.**
+
+•	Feature creation using target information, such as ratios or aggregates computed with the label included.
+•	Temporal leakage, where future data leaks into past predictions.
+•	Duplicated or correlated records appearing in both train and test sets.
 
 Even subtle leakage can inflate metrics dramatically, leading to over-optimistic conclusions and models that fail in production.
 
 ⸻
 
-5.6. Guarding Against Leakage
+### 5.6. Guarding Against Leakage
 
 To prevent leakage, apply these practical safeguards:
-	1.	Build your pipeline step-by-step using frameworks that isolate transformations (e.g., sklearn.Pipeline).
-	2.	Perform feature engineering inside the cross-validation loop, not before.
-	3.	Lock the test set — never inspect it until final evaluation.
-	4.	Use temporal validation when data have natural order or dependencies.
-	5.	Regularly audit your dataset for duplicates, proxy variables, or mislabeled data.
+
+1.	Build your pipeline step-by-step using frameworks that isolate transformations (e.g., sklearn.Pipeline).
+
+2.	Perform feature engineering inside the cross-validation loop, not before.
+
+3.	Lock the test set — never inspect it until final evaluation.
+
+4.	Use temporal validation when data have natural order or dependencies.
+
+5.	Regularly audit your dataset for duplicates, proxy variables, or mislabeled data.
 
 These habits enforce a clear separation between learning and evaluation, ensuring that reported performance genuinely reflects generalization.
 
 ⸻
 
-5.7. When Cross-Validation Is Not Enough
+### 5.7. When Cross-Validation Is Not Enough
 
-In very large datasets (millions of samples), a single, well-stratified train/validation/test split may suffice.
-Cross-validation’s value diminishes when variance across folds becomes negligible.
+In very large datasets (millions of samples), a single, well-stratified train/validation/test split may suffice. Cross-validation’s value diminishes when variance across folds becomes negligible.
 Conversely, in small datasets, nested cross-validation — where one loop tunes hyperparameters and another estimates performance — may be necessary to avoid overfitting to validation folds.
 
 The right strategy depends on data size, diversity, and computational budget.
 
 -------
+
 Having established how to measure model performance fairly and avoid leakage,
 the next step is to communicate results transparently — ensuring that others can reproduce, interpret, and trust our findings.
 We now move to 6. Reporting Metrics Transparently and Reproducibly,
 where evaluation evolves from a technical task to a standard of scientific integrity.
+
 ------
 
 
 ## 6.1  Reporting Metrics Transparently and Reproducibly
 
-Evaluation loses meaning when its results cannot be trusted or replicated.
-Transparent reporting transforms model assessment from a private experiment into scientific evidence.
+Evaluation loses meaning when its results cannot be trusted or replicated. Transparent reporting transforms model assessment from a private experiment into scientific evidence.
 The goal is not only to declare how well a model performs but also to demonstrate how those numbers were obtained — the data, methods, parameters, and randomness involved.
 
 Reproducibility is the cornerstone of credible machine learning: a result that cannot be repeated is indistinguishable from chance.
 
 ⸻
 
-6.1. The Principles of Transparent Reporting
+### 6.1. The Principles of Transparent Reporting
 
 A transparent evaluation communicates:
 	1.	What data were used — including sources, size, preprocessing, and class distribution.
@@ -6627,7 +6693,7 @@ These six dimensions make evaluation not only interpretable but auditable.
 
 ⸻
 
-6.2. Presenting Results Clearly
+### 6.2. Presenting Results Clearly
 
 A good performance report balances precision and readability.
 When preparing documentation or research summaries, aim for:
@@ -6642,7 +6708,7 @@ This communicates reliability rather than absolute perfection.
 
 ⸻
 
-6.3. Reproducibility in Practice
+### 6.3. Reproducibility in Practice
 
 Reproducibility goes beyond good intentions — it must be engineered.
 Key practices include:
@@ -6663,7 +6729,7 @@ Clear experiment logs make results interpretable months or years later.
 
 ⸻
 
-6.4. Honesty in Metric Interpretation
+### 6.4. Honesty in Metric Interpretation
 
 Numbers do not speak for themselves — context gives them meaning.
 Responsible reporting acknowledges limitations:
@@ -6678,7 +6744,7 @@ It allows peers — or future you — to trust that performance differences refl
 
 ⸻
 
-6.5. Minimal Template for Reproducible Reporting
+### 6.5. Minimal Template for Reproducible Reporting
 
 When documenting experiments, include at least:
 
@@ -6716,10 +6782,11 @@ This transition marks the shift from assessment to enhancement — from knowing 
 From Observation to Action
 
 Every metric tells a story:
-	•	Low ROC–AUC suggests the model struggles to separate classes — perhaps the features lack discriminative power.
-	•	Poor precision but high recall may signal excessive false positives — maybe the threshold is too low.
-	•	High variance across folds in cross-validation hints at instability — more regularization or data may be needed.
-	•	Calibration plots showing overconfidence imply that probabilities need scaling or isotonic regression.
+
+•	Low ROC–AUC suggests the model struggles to separate classes — perhaps the features lack discriminative power.
+•	Poor precision but high recall may signal excessive false positives — maybe the threshold is too low.
+•	High variance across folds in cross-validation hints at instability — more regularization or data may be needed.
+•	Calibration plots showing overconfidence imply that probabilities need scaling or isotonic regression.
 
 In each case, the evaluation does more than quantify performance — it reveals where optimization should focus.
 
@@ -6729,11 +6796,12 @@ The Feedback Loop
 
 Machine learning is inherently iterative.
 Evaluation and optimization form a closed feedback loop:
-	1.	Train a model on data.
-	2.	Evaluate its predictions with transparent, reproducible metrics.
-	3.	Diagnose what drives success or failure.
-	4.	Optimize — by adjusting hyperparameters, features, or algorithms.
-	5.	Re-evaluate to confirm improvement.
+
+1.	Train a model on data.
+2.	Evaluate its predictions with transparent, reproducible metrics.
+3.	Diagnose what drives success or failure.
+4.	Optimize — by adjusting hyperparameters, features, or algorithms.
+5.	Re-evaluate to confirm improvement.
 
 Each iteration sharpens both model and understanding.
 Progress in classification rarely comes from one bold leap, but from many small, validated refinements.
@@ -6772,7 +6840,7 @@ Achieving this balance requires structured experimentation, guided by theory and
 
 ⸻
 
-The Nature of Optimization
+##The Nature of Optimization##
 
 Every classifier represents a set of design choices — parameters, data, and assumptions — that can be tuned.
 Optimization refines those choices across multiple levels:
@@ -6834,13 +6902,14 @@ Hyperparameter tuning, therefore, is the systematic process of searching for the
 
 ⸻
 
-Why It Matters
+##Why It Matters##
 
 The same model can perform brilliantly or poorly depending on its hyperparameters.
 For example:
-	•	A Random Forest with too few trees may underfit; with too many, it wastes computation.
-	•	A Neural Network with a learning rate that is too high may diverge; too low, and it never converges.
-	•	A Support Vector Machine with a small C may be too rigid; with a large C, it overfits.
+
+•	A Random Forest with too few trees may underfit; with too many, it wastes computation.
+•	A Neural Network with a learning rate that is too high may diverge; too low, and it never converges.
+•	A Support Vector Machine with a small C may be too rigid; with a large C, it overfits.
 
 Hyperparameter tuning transforms guesswork into structured experimentation — converting intuition into measurable evidence.
 
@@ -6859,42 +6928,50 @@ and the search algorithm seeks to find the configuration that maximizes this met
 Main Approaches
 
 1. Grid Search
-A brute-force but systematic approach:
-define a discrete grid of hyperparameter values and train the model for every possible combination.
+
+A brute-force but systematic approach: define a discrete grid of hyperparameter values and train the model for every possible combination.
 
 Advantages
-	•	Simple to implement and parallelize.
-	•	Guarantees coverage of all combinations.
+
+•	Simple to implement and parallelize.
+•	Guarantees coverage of all combinations.
 
 Limitations
-	•	Computationally expensive for large search spaces.
-	•	Inefficient when many parameters are irrelevant.
+
+•	Computationally expensive for large search spaces.
+•	Inefficient when many parameters are irrelevant.
 
 Use When
-	•	You have few hyperparameters or a small parameter range.
-	•	You need full reproducibility for audit or comparison.
+
+•	You have few hyperparameters or a small parameter range.
+•	You need full reproducibility for audit or comparison.
 
 ⸻
 
-2. Random Search
+### 2. Random Search
+   
 Instead of evaluating all combinations, sample random points from the hyperparameter space.
 Over time, this tends to discover strong configurations with far fewer evaluations.
 
 Advantages
-	•	Much more efficient for high-dimensional spaces.
-	•	Can be stopped early if good results appear.
+
+•	Much more efficient for high-dimensional spaces.
+•	Can be stopped early if good results appear.
 
 Limitations
-	•	Does not exploit information from past trials.
-	•	Results may vary slightly across runs.
+
+•	Does not exploit information from past trials.
+•	Results may vary slightly across runs.
 
 Use When
-	•	You have limited computational budget.
-	•	Many hyperparameters have negligible influence.
+
+•	You have limited computational budget.
+•	Many hyperparameters have negligible influence.
 
 ⸻
 
-3. Bayesian Optimization
+### 3. Bayesian Optimization
+   
 A probabilistic approach that models the performance landscape and selects new hyperparameter sets intelligently.
 It balances exploration (trying uncertain regions) and exploitation (refining known good regions).
 
@@ -6914,7 +6991,7 @@ Use When
 
 ⸻
 
-4. Evolutionary Algorithms
+### 4. Evolutionary Algorithms
 Inspired by natural selection: a population of candidate solutions evolves over generations via mutation and crossover.
 Good configurations survive, while poor ones are discarded.
 
@@ -6933,11 +7010,12 @@ Use When
 ⸻
 
 Best Practices
-	•	Always use cross-validation to evaluate each configuration fairly.
-	•	Monitor both mean and variance of metrics — stability matters as much as score.
-	•	Start coarse, then refine — wide random search followed by local fine-tuning often works best.
-	•	Log results systematically (e.g., with MLflow, Weights & Biases) for reproducibility.
-	•	Automate with pipelines — integrate tuning within your training framework (e.g., scikit-learn’s GridSearchCV, RandomizedSearchCV, or Optuna studies).
+
+•	Always use cross-validation to evaluate each configuration fairly.
+•	Monitor both mean and variance of metrics — stability matters as much as score.
+•	Start coarse, then refine — wide random search followed by local fine-tuning often works best.
+•	Log results systematically (e.g., with MLflow, Weights & Biases) for reproducibility.
+•	Automate with pipelines — integrate tuning within your training framework (e.g., scikit-learn’s GridSearchCV, RandomizedSearchCV, or Optuna studies).
 
 ⸻
 
@@ -6950,10 +7028,9 @@ Also, remember that tuning multiplies training time — always balance depth of 
 
 ------
 
-Hyperparameter tuning optimizes how the model learns.
-But equally critical is what the model learns from.
-The next step focuses on Feature Selection and Dimensionality Reduction —
-techniques that enhance generalization by refining the information entering the model itself.
+Hyperparameter tuning optimizes how the model learns. But equally critical is what the model learns from.
+
+The next step focuses on Feature Selection and Dimensionality Reduction — techniques that enhance generalization by refining the information entering the model itself.
 
 --------
 
@@ -6969,7 +7046,7 @@ Their goal is to reshape the training data distribution so that learning algorit
 
 ⸻
 
-Why It Matters
+## Why It Matters ##
 
 A classifier learns patterns based on frequency.
 When positive examples are scarce, the model underestimates their importance —
@@ -6982,7 +7059,7 @@ leading to more equitable and reliable decision boundaries.
 
 ⸻
 
-Core Idea
+##Core Idea##
 
 Resampling modifies the training set composition, not the algorithm itself.
 This makes it model-agnostic — applicable to trees, SVMs, neural networks, or any learner.
@@ -6993,209 +7070,226 @@ Each method seeks to improve class representation while maintaining meaningful d
 Main Approaches
 
 1. Random Undersampling
+
 Remove samples from the majority class until both classes have similar sizes.
 
 Advantages
-	•	Simple and fast.
-	•	Reduces training time.
+
+•	Simple and fast.
+•	Reduces training time.
 
 Limitations
-	•	Discards potentially valuable information.
-	•	Risk of underfitting when the majority class becomes too small.
+
+•	Discards potentially valuable information.
+•	Risk of underfitting when the majority class becomes too small.
 
 Use When
-	•	You have abundant majority data and want a quick balance.
-	•	Model training is expensive and speed matters more than maximum accuracy.
+
+•	You have abundant majority data and want a quick balance.
+•	Model training is expensive and speed matters more than maximum accuracy.
 
 ⸻
 
 2. Random Oversampling
+
 Duplicate existing minority examples to balance class frequencies.
 
 Advantages
-	•	Retains all information from the original dataset.
-	•	Effective when data volume is small.
+
+•	Retains all information from the original dataset.
+•	Effective when data volume is small.
 
 Limitations
-	•	May lead to overfitting by repeating the same examples.
-	•	Adds no new information to the minority class.
+
+•	May lead to overfitting by repeating the same examples.
+•	Adds no new information to the minority class.
 
 Use When
-	•	You want a simple baseline for balancing before using synthetic methods.
-	•	You combine it with strong regularization or ensemble methods.
+
+•	You want a simple baseline for balancing before using synthetic methods.
+•	You combine it with strong regularization or ensemble methods.
 
 ⸻
 
-3. SMOTE (Synthetic Minority Oversampling Technique)
+### 3. SMOTE (Synthetic Minority Oversampling Technique)
+   
 SMOTE creates new synthetic samples for the minority class by interpolating between existing ones.
 For each minority example, it selects one or more nearest neighbors and generates points along the connecting line.
 This produces realistic synthetic diversity, rather than duplicates.
 
 Advantages
-	•	Enriches the minority class without mere repetition.
-	•	Improves generalization and smooths decision boundaries.
+
+•	Enriches the minority class without mere repetition.
+•	Improves generalization and smooths decision boundaries.
 
 Limitations
-	•	May generate borderline or ambiguous samples near class overlaps.
-	•	Sensitive to noise and outliers in the minority class.
+
+•	May generate borderline or ambiguous samples near class overlaps.
+•	Sensitive to noise and outliers in the minority class.
 
 Use When
-	•	You want to improve recall without heavily distorting class structure.
-	•	Data are numeric and have moderate feature dimensionality.
+
+•	You want to improve recall without heavily distorting class structure.
+•	Data are numeric and have moderate feature dimensionality.
 
 ⸻
 
 4. ADASYN (Adaptive Synthetic Sampling)
+   
 An extension of SMOTE that focuses synthetic generation on harder-to-learn areas.
 It adaptively creates more samples where the minority class is underrepresented or closer to the majority class boundary.
 
 Advantages
-	•	Targets regions where the model struggles.
-	•	Often improves minority recall compared to plain SMOTE.
+
+•	Targets regions where the model struggles.
+•	Often improves minority recall compared to plain SMOTE.
 
 Limitations
-	•	May amplify noisy or mislabeled regions.
-	•	Requires careful parameter tuning.
+
+•	May amplify noisy or mislabeled regions.
+•	Requires careful parameter tuning.
 
 Use When
-	•	The dataset is strongly imbalanced and contains heterogeneous clusters.
-	•	You can monitor performance metrics to prevent over-generation.
+
+•	The dataset is strongly imbalanced and contains heterogeneous clusters.
+•	You can monitor performance metrics to prevent over-generation.
 
 ⸻
 
-Hybrid Strategies
+### Hybrid Strategies
 
 In practice, combining undersampling of the majority with synthetic oversampling of the minority often yields the best results.
 This maintains diversity in the data while preventing the dataset from growing excessively.
 
 Other refinements include:
-	•	Tomek Links and Edited Nearest Neighbors (ENN): cleaning ambiguous samples after oversampling.
-	•	Cluster-based undersampling: reducing majority samples while preserving distributional diversity.
+
+•	Tomek Links and Edited Nearest Neighbors (ENN): cleaning ambiguous samples after oversampling.
+•	Cluster-based undersampling: reducing majority samples while preserving distributional diversity.
 
 ⸻
 
 Best Practices
-	•	Apply resampling only on the training data, never on validation or test sets.
-	•	Always evaluate results using class-sensitive metrics (e.g., PR–AUC, F1, Recall).
-	•	Combine with cross-validation to ensure robustness.
-	•	Visualize class separation before and after resampling to detect anomalies.
-	•	When possible, prefer algorithmic alternatives (e.g., class_weight in SVMs or trees) to avoid synthetic distortion.
+
+•	Apply resampling only on the training data, never on validation or test sets.
+
+•	Always evaluate results using class-sensitive metrics (e.g., PR–AUC, F1, Recall).
+
+•	Combine with cross-validation to ensure robustness.
+
+•	Visualize class separation before and after resampling to detect anomalies.
+
+•	When possible, prefer algorithmic alternatives (e.g., class_weight in SVMs or trees) to avoid synthetic distortion.
 
 ⸻
 
-Limitations and Cautions
+##Limitations and Cautions##
 
-Resampling methods manipulate the dataset — they don’t change the model’s understanding of uncertainty.
-Synthetic methods can create unrealistic samples, and undersampling can lose information.
+Resampling methods manipulate the dataset — they don’t change the model’s understanding of uncertainty. Synthetic methods can create unrealistic samples, and undersampling can lose information.
+
 Therefore, the best approach is often data-driven experimentation guided by validation results rather than fixed rules.
 
 --------
 
-Balancing the data helps the model see all classes fairly.
-Next, we refine what features the model uses and how strongly it relies on them —
-revisiting the principles of Regularization and Dropout,
+Balancing the data helps the model see all classes fairly. Next, we refine what features the model uses and how strongly it relies on them — revisiting the principles of Regularization and Dropout,
 two mechanisms that control model complexity and prevent overfitting from dominating learned representations.
 
 --------
 
-
-
 ##	4. Regularization and dropout revisited.
 
-After improving data balance, the next step in model optimization is controlling complexity.
-A model that is too flexible memorizes the noise — it fits perfectly to the training data but fails to generalize.
-A model that is too rigid ignores relevant patterns.
-Regularization is the mathematical discipline that manages this trade-off,
-while Dropout, in the context of neural networks, represents its stochastic, modern counterpart.
+After improving data balance, the next step in model optimization is controlling complexity. A model that is too flexible memorizes the noise — it fits perfectly to the training data but fails to generalize. A model that is too rigid ignores relevant patterns.
 
-Both act as regulators of learning intensity, preventing overconfidence and promoting stability.
+Regularization is the mathematical discipline that manages this trade-off, while Dropout, in the context of neural networks, represents its stochastic, modern counterpart. Both act as regulators of learning intensity, preventing overconfidence and promoting stability.
 
 ⸻
 
-Why It Matters
+##Why It Matters##
 
-Every model — linear, tree-based, or neural — seeks to minimize a loss function.
-But minimizing loss alone often drives the model toward the path of least resistance: overfitting.
-Regularization adds a penalty term to this objective, discouraging overly large coefficients or excessive complexity.
-It introduces the principle of “simpler is better, unless proven otherwise.”
+Every model: linear, tree-based, or neural, seeks to minimize a loss function. But minimizing loss alone often drives the model toward the path of least resistance: overfitting. Regularization adds a penalty term to this objective, discouraging overly large coefficients or excessive complexity. It introduces the principle of “simpler is better, unless proven otherwise.”
 
-In deep networks, dropout achieves a similar goal by randomly deactivating neurons during training,
-forcing the model to learn redundant, distributed representations that generalize better.
+In deep networks, dropout achieves a similar goal by randomly deactivating neurons during training, forcing the model to learn redundant, distributed representations that generalize better.
 
 ⸻
 
-Core Idea
+**Core Idea**
 
-The essence of regularization is penalizing model confidence.
-By restraining how much any single feature or neuron can dominate, the model becomes more stable and robust to noise.
+The essence of regularization is penalizing model confidence. By restraining how much any single feature or neuron can dominate, the model becomes more stable and robust to noise.
 
 For classical models, the loss function typically takes the form:
 
 Loss = (Data Fit) + λ × (Penalty)
 
-Here,
-λ (lambda) controls the strength of regularization — higher λ means stronger constraints and simpler models.
-For neural networks, dropout injects noise directly into the learning process,
+Here, λ (lambda) controls the strength of regularization — higher λ means stronger constraints and simpler models. For neural networks, dropout injects noise directly into the learning process,
 so instead of modifying the loss, it modifies how parameters are learned.
 
 ⸻
 
-Types of Regularization
+### Types of Regularization**
 
-L1 Regularization (Lasso)
-Adds the absolute value of coefficients to the loss.
-It encourages sparsity by driving irrelevant weights to exactly zero.
+**L1 Regularization (Lasso)**
 
-Use it when feature selection is desired or when you expect only a few predictors to be important.
+Adds the absolute value of coefficients to the loss. It encourages sparsity by driving irrelevant weights to exactly zero. Use it when feature selection is desired or when you expect only a few predictors to be important.
 
-L2 Regularization (Ridge)
-Adds the square of coefficients to the loss.
-It penalizes large but not small weights, promoting smooth, evenly distributed learning.
+**L2 Regularization (Ridge)**
 
-Use it when features are correlated and you want stable coefficient estimates.
 
-Elastic Net
-Combines both L1 and L2 penalties, controlled by a parameter α between 0 and 1.
-It inherits sparsity from L1 and stability from L2 — a balanced compromise for most practical problems.
+Adds the square of coefficients to the loss. It penalizes large but not small weights, promoting smooth, evenly distributed learning. Use it when features are correlated and you want stable coefficient estimates.
+
+**Elastic Net**
+
+Combines both L1 and L2 penalties, controlled by a parameter α between 0 and 1. It inherits sparsity from L1 and stability from L2 — a balanced compromise for most practical problems.
 
 ⸻
 
-Dropout in Neural Networks
+##Dropout in Neural Networks##
 
-Dropout randomly disables a fraction of neurons during each training iteration.
-This forces the network to learn distributed patterns rather than relying on specific nodes.
-	•	Typical dropout rates: 0.2–0.5 for hidden layers, lower for input layers.
-	•	Effect: Prevents co-adaptation between neurons and reduces overfitting.
-	•	Inference phase: All neurons are active, but their outputs are scaled by the dropout rate to maintain balance.
+Dropout randomly disables a fraction of neurons during each training iteration. This forces the network to learn distributed patterns rather than relying on specific nodes.
 
-Dropout can be seen as “ensemble learning within a single network” —
-each training iteration effectively samples a smaller network,
-and their averaged predictions yield a more robust model.
+•	Typical dropout rates: 0.2–0.5 for hidden layers, lower for input layers.
+
+•	Effect: Prevents co-adaptation between neurons and reduces overfitting.
+
+•	Inference phase: All neurons are active, but their outputs are scaled by the dropout rate to maintain balance.
+
+Dropout can be seen as “ensemble learning within a single network” — each training iteration effectively samples a smaller network, and their averaged predictions yield a more robust model.
 
 ⸻
 
 Best Practices
-	•	Always tune λ or dropout rate using cross-validation — too high penalization leads to underfitting.
-	•	Combine regularization with early stopping for deep learning models.
-	•	Standardize or normalize inputs before applying L1/L2 penalties for consistent scaling.
-	•	Use batch normalization alongside dropout cautiously — both control overfitting differently and may interact.
-	•	Visualize coefficient magnitudes or weight distributions to detect excessive shrinkage.
+
+•	Always tune λ or dropout rate using cross-validation — too high penalization leads to underfitting.
+
+•	Combine regularization with early stopping for deep learning models.
+
+•	Standardize or normalize inputs before applying L1/L2 penalties for consistent scaling.
+
+•	Use batch normalization alongside dropout cautiously — both control overfitting differently and may interact.
+
+•	Visualize coefficient magnitudes or weight distributions to detect excessive shrinkage.
 
 ⸻
 
 Limitations and Cautions
-	•	Over-regularization can suppress meaningful signals and flatten decision boundaries.
-	•	L1 may behave unstably when features are highly correlated.
-	•	Dropout slows convergence and may require longer training or lower learning rates.
-	•	Regularization does not fix data quality issues — garbage in still leads to garbage out.
+
+•	Over-regularization can suppress meaningful signals and flatten decision boundaries.
+
+•	L1 may behave unstably when features are highly correlated.
+
+•	Dropout slows convergence and may require longer training or lower learning rates.
+
+•	Regularization does not fix data quality issues — garbage in still leads to garbage out.
 
 ⸻
 
 When to Use
-	•	You suspect your model is memorizing the training data (high variance).
-	•	Validation metrics fluctuate strongly across folds.
-	•	You’re using high-dimensional or sparse features.
-	•	Neural networks show rapid convergence with declining validation accuracy.
+
+•	You suspect your model is memorizing the training data (high variance).
+
+•	Validation metrics fluctuate strongly across folds.
+
+•	You’re using high-dimensional or sparse features.
+
+•	Neural networks show rapid convergence with declining validation accuracy.
 
 
 --------
@@ -7218,7 +7312,7 @@ Here, we revisit them from an optimization perspective — focusing on how to re
 
 ⸻
 
-Why It Matters
+**Why It Matters**
 
 No single model is universally optimal.
 Every algorithm captures a different “view” of the data — linear models see direction, trees see thresholds, neural networks see abstractions.
@@ -7244,132 +7338,155 @@ The art lies in finding how to best combine diverse learners without amplifying 
 
 ⸻
 
-Main Techniques
+**Main Techniques**
 
 1. Model Averaging
-The simplest ensemble refinement.
-Train several models independently and average their predictions.
-For classification, this may mean taking the mean of probabilities or a majority vote.
+   
+The simplest ensemble refinement. Train several models independently and average their predictions. For classification, this may mean taking the mean of probabilities or a majority vote.
 
 Advantages
-	•	Reduces variance.
-	•	Easy to implement and interpret.
+
+•	Reduces variance.
+•	Easy to implement and interpret.
 
 Limitations
-	•	Does not exploit model-specific strengths.
-	•	Performs poorly if models are highly correlated.
+
+•	Does not exploit model-specific strengths.
+•	Performs poorly if models are highly correlated.
 
 Use When
-	•	Models are similar in performance but complementary in errors.
+
+•	Models are similar in performance but complementary in errors.
 
 ⸻
 
 2. Weighted Blending
+   
 Assign different importance to each model based on validation performance.
 Weights can be determined manually or through optimization (e.g., linear regression on validation predictions).
 
 Advantages
-	•	Prioritizes more reliable models.
-	•	Enhances ensemble interpretability.
+
+•	Prioritizes more reliable models.
+•	Enhances ensemble interpretability.
 
 Limitations
-	•	Sensitive to overfitting on the validation set.
-	•	Requires careful metric selection for weighting.
+
+•	Sensitive to overfitting on the validation set.
+•	Requires careful metric selection for weighting.
 
 Use When
-	•	Some models consistently outperform others across folds.
+
+•	Some models consistently outperform others across folds.
 
 ⸻
 
 3. Stacking (Stacked Generalization)
+   
 A hierarchical ensemble where the predictions of base models become inputs to a meta-learner.
 The meta-learner learns how to optimally combine the outputs of individual models to minimize overall error.
 
 Workflow
-	1.	Split the training data into folds.
-	2.	Train base models on each fold and collect out-of-fold predictions.
-	3.	Train a meta-model (e.g., logistic regression, random forest, or neural net) on those predictions.
-	4.	Use the trained meta-model for final predictions.
+
+1.	Split the training data into folds.
+
+2.	Train base models on each fold and collect out-of-fold predictions.
+
+3.	Train a meta-model (e.g., logistic regression, random forest, or neural net) on those predictions.
+
+4.	Use the trained meta-model for final predictions.
 
 Advantages
-	•	Captures complex, non-linear relationships between base models.
-	•	Often yields substantial performance gains.
+
+•	Captures complex, non-linear relationships between base models.
+
+•	Often yields substantial performance gains.
 
 Limitations
-	•	More complex pipeline with risk of data leakage.
-	•	Requires careful cross-validation to avoid overfitting.
+
+•	More complex pipeline with risk of data leakage.
+•	Requires careful cross-validation to avoid overfitting.
 
 Use When
-	•	You have multiple strong but diverse base models.
-	•	Interpretability is secondary to predictive power.
+
+•	You have multiple strong but diverse base models.
+•	Interpretability is secondary to predictive power.
 
 ⸻
 
 4. Cascading (Sequential Ensembles)
+
 Models are arranged in sequence, where each subsequent model focuses on correcting the errors of the previous ones.
 This idea underlies boosting but can be extended more generally.
 
 Advantages
-	•	Leverages error correction dynamically.
-	•	Adapts to complex data distributions.
+
+•	Leverages error correction dynamically.
+•	Adapts to complex data distributions.
 
 Limitations
-	•	High risk of overfitting if not regularized.
-	•	Sensitive to noisy data or mislabeled samples.
+
+•	High risk of overfitting if not regularized.
+•	Sensitive to noisy data or mislabeled samples.
 
 Use When
-	•	The dataset has systematic residual patterns that single learners miss.
+
+•	The dataset has systematic residual patterns that single learners miss.
 
 ⸻
 
 Best Practices
-	•	Ensure diversity: combine models with different structures, data representations, or feature subsets.
-	•	Use cross-validation predictions (out-of-fold) when training meta-models to avoid information leakage.
-	•	Evaluate both individual and ensemble performance on the same validation splits.
-	•	Keep ensembles interpretable — visualize model weights or contributions when possible.
-	•	Always monitor stability: a small gain in metric is not worth a large loss in robustness.
+
+•	Ensure diversity: combine models with different structures, data representations, or feature subsets.
+
+•	Use cross-validation predictions (out-of-fold) when training meta-models to avoid information leakage.
+
+•	Evaluate both individual and ensemble performance on the same validation splits.
+
+•	Keep ensembles interpretable — visualize model weights or contributions when possible.
+
+•	Always monitor stability: a small gain in metric is not worth a large loss in robustness.
 
 ⸻
 
 Limitations and Cautions
-	•	Ensembles increase computational cost and deployment complexity.
-	•	Difficult to explain in regulated environments due to multiple interacting models.
-	•	When base models share the same biases, the ensemble cannot correct them.
-	•	Adding more models does not always improve performance — diminishing returns are common.
+
+•	Ensembles increase computational cost and deployment complexity.
+
+•	Difficult to explain in regulated environments due to multiple interacting models.
+
+•	When base models share the same biases, the ensemble cannot correct them.
+
+•	Adding more models does not always improve performance — diminishing returns are common.
 
 ⸻
 
 When to Use
-	•	You have several good models with complementary errors.
-	•	Model interpretability is less critical than accuracy or robustness.
-	•	You have computational resources for multi-model training and inference.
-	•	The dataset is large or complex enough to justify the added complexity.
+
+•	You have several good models with complementary errors.
+•	Model interpretability is less critical than accuracy or robustness.
+•	You have computational resources for multi-model training and inference.
+•	The dataset is large or complex enough to justify the added complexity.
 
 
 --------
 
-Ensemble refinement and stacking maximize accuracy by combining perspectives.
-But sometimes the challenge lies not in the algorithm, but in how we value errors —
+Ensemble refinement and stacking maximize accuracy by combining perspectives. But sometimes the challenge lies not in the algorithm, but in how we value errors —
 especially when certain mistakes are more costly than others.
-The next section explores Cost-Sensitive Learning Adjustments,
-where we integrate real-world asymmetries — like financial loss, medical risk, or fairness constraints — directly into the optimization process.
+
+The next section explores Cost-Sensitive Learning Adjustments, where we integrate real-world asymmetries — like financial loss, medical risk, or fairness constraints — directly into the optimization process.
 
 --------
 
 ##	6. Cost-sensitive learning adjustments.
 
-In most real-world classification problems, not all errors cost the same.
-Predicting a sick patient as healthy is more serious than the reverse.
-Missing a fraudulent transaction costs money, but a false alarm costs trust.
-Traditional models, however, treat all misclassifications equally — minimizing overall error without regard for its consequences.
+In most real-world classification problems, not all errors cost the same. Predicting a sick patient as healthy is more serious than the reverse. Missing a fraudulent transaction costs money, but a false alarm costs trust. Traditional models, however, treat all misclassifications equally — minimizing overall error without regard for its consequences.
 
-Cost-sensitive learning introduces asymmetry into the model’s objective.
-It explicitly assigns different weights to different types of errors,
-aligning the learning process with the real-world cost structure of the problem.
+Cost-sensitive learning introduces asymmetry into the model’s objective. It explicitly assigns different weights to different types of errors,aligning the learning process with the real-world cost structure of the problem.
 
 ⸻
 
-Why It Matters
+**Why It Matters**
 
 Accuracy alone can be misleading when the stakes differ by outcome.
 A model might be “90% accurate” yet fail catastrophically if it consistently misses the rare but high-impact cases.
@@ -7379,150 +7496,145 @@ By integrating domain-specific costs into training, we shift focus from “How m
 
 ⸻
 
-Core Idea
+**Core Idea**
 
-Instead of minimizing a uniform loss function,
-cost-sensitive methods minimize an expected cost, where each type of prediction error carries a predefined penalty.
+Instead of minimizing a uniform loss function, cost-sensitive methods minimize an expected cost, where each type of prediction error carries a predefined penalty.
 
 Let each prediction fall into one of four cases:
-	•	True Positive (TP): correctly predict positive → cost = 0
-	•	False Positive (FP): predict positive when it’s negative → cost = C_FP
-	•	False Negative (FN): predict negative when it’s positive → cost = C_FN
-	•	True Negative (TN): correctly predict negative → cost = 0
+
+•	True Positive (TP): correctly predict positive → cost = 0
+•	False Positive (FP): predict positive when it’s negative → cost = C_FP
+•	False Negative (FN): predict negative when it’s positive → cost = C_FN
+•	True Negative (TN): correctly predict negative → cost = 0
 
 The total expected cost can be expressed conceptually as:
 
 Expected Cost = (C_FP × FP) + (C_FN × FN)
 
-The model learns to minimize this value instead of raw error counts.
-This introduces an operational sense of risk management into machine learning.
+The model learns to minimize this value instead of raw error counts. This introduces an operational sense of risk management into machine learning.
 
 ⸻
 
 Main Approaches
 
 1. Class Weighting
-Most modern classifiers (Logistic Regression, SVMs, Trees, Neural Networks)
-allow adjusting class weights directly within the loss function.
-Higher weights for the minority or critical class penalize errors more severely.
+   
+Most modern classifiers (Logistic Regression, SVMs, Trees, Neural Networks) allow adjusting class weights directly within the loss function. Higher weights for the minority or critical class penalize errors more severely.
 
 Use When
-	•	You have a well-understood imbalance or cost asymmetry.
-	•	The algorithm supports a class_weight or equivalent parameter (e.g., balanced mode in Scikit-learn).
+
+•	You have a well-understood imbalance or cost asymmetry.
+•	The algorithm supports a class_weight or equivalent parameter (e.g., balanced mode in Scikit-learn).
 
 Example
-	•	Fraud detection: assign 10× higher penalty for missing a fraudulent case.
-	•	Medical screening: weight false negatives much more than false positives.
+
+•	Fraud detection: assign 10× higher penalty for missing a fraudulent case.
+•	Medical screening: weight false negatives much more than false positives.
 
 ⸻
 
 2. Custom Loss Functions
-Instead of uniform penalties, define a loss that embeds domain-specific costs directly.
-For example, in gradient boosting frameworks like XGBoost or LightGBM,
+   
+Instead of uniform penalties, define a loss that embeds domain-specific costs directly. For example, in gradient boosting frameworks like XGBoost or LightGBM,
 you can encode different gradients for FP and FN errors to reflect their asymmetric consequences.
 
 Advantages
-	•	Fine-grained control over error priorities.
-	•	Can encode complex business logic.
+
+•	Fine-grained control over error priorities.
+•	Can encode complex business logic.
 
 Limitations
-	•	Requires expertise to design, tune, and validate.
-	•	Risk of overfitting to cost assumptions that may change over time.
+
+•	Requires expertise to design, tune, and validate.
+•	Risk of overfitting to cost assumptions that may change over time.
 
 ⸻
 
 3. Threshold Adjustment
-Even if a model is trained on standard loss,
-you can modify the decision threshold post hoc to balance precision and recall according to cost ratios.
+   
+Even if a model is trained on standard loss, you can modify the decision threshold post hoc to balance precision and recall according to cost ratios.
 
 Idea
+
 If the cost of a false negative (C_FN) is higher than that of a false positive (C_FP),
 you can lower the decision threshold, making the model more sensitive to positives.
 
 When to Use
-	•	The underlying model provides calibrated probabilities.
-	•	Costs or class prevalence vary dynamically over time.
+
+•	The underlying model provides calibrated probabilities.
+•	Costs or class prevalence vary dynamically over time.
 
 Threshold tuning can be guided by metrics such as Youden’s J index, expected utility, or custom cost curves.
 
 ⸻
 
 4. Sampling-Based Cost Adjustment
-Instead of directly modifying loss, you can oversample costly cases
-or undersample cheaper ones — effectively changing the empirical risk landscape.
-This approach is simpler when you can’t modify the algorithm’s internals but still want to bias learning toward costly outcomes.
+   
+Instead of directly modifying loss, you can oversample costly cases or undersample cheaper ones — effectively changing the empirical risk landscape. This approach is simpler when you can’t modify the algorithm’s internals but still want to bias learning toward costly outcomes.
 
 Best Use
-	•	When class weights are unavailable or unstable.
-	•	In prototyping, to approximate cost sensitivity before implementing formal weighting.
+
+•	When class weights are unavailable or unstable.
+•	In prototyping, to approximate cost sensitivity before implementing formal weighting.
 
 ⸻
 
 Best Practices
-	•	Always define cost matrices in collaboration with domain experts — never assume symmetry.
-	•	Re-evaluate cost structures periodically, especially in dynamic systems (finance, healthcare, cybersecurity).
-	•	Pair cost-sensitive learning with threshold calibration and cross-validation to ensure robustness.
-	•	Visualize cost-performance trade-offs (e.g., cost curves or decision surfaces).
-	•	Ensure transparency — explain how the model values errors, especially in regulated sectors.
+
+•	Always define cost matrices in collaboration with domain experts — never assume symmetry.
+•	Re-evaluate cost structures periodically, especially in dynamic systems (finance, healthcare, cybersecurity).
+•	Pair cost-sensitive learning with threshold calibration and cross-validation to ensure robustness.
+•	Visualize cost-performance trade-offs (e.g., cost curves or decision surfaces).
+•	Ensure transparency — explain how the model values errors, especially in regulated sectors.
 
 ⸻
 
 Limitations and Cautions
-	•	Mis-specified cost ratios can mislead the model and degrade fairness.
-	•	Overweighting rare cases can reduce precision drastically.
-	•	True cost functions may be uncertain or context-dependent.
-	•	Hard-coded costs can become obsolete as business rules evolve.
+
+•	Mis-specified cost ratios can mislead the model and degrade fairness.
+•	Overweighting rare cases can reduce precision drastically.
+•	True cost functions may be uncertain or context-dependent.
+•	Hard-coded costs can become obsolete as business rules evolve.
 
 The key is balance — optimizing for cost without distorting generalization.
 
 ⸻
 
 When to Use
-	•	In domains with asymmetric risks (healthcare, fraud, credit scoring, defect detection).
-	•	When recall or precision imbalance has a direct financial or ethical implication.
-	•	When the false-negative impact is unacceptable, even at the expense of more false positives.
+
+•	In domains with asymmetric risks (healthcare, fraud, credit scoring, defect detection).
+•	When recall or precision imbalance has a direct financial or ethical implication.
+•	When the false-negative impact is unacceptable, even at the expense of more false positives.
 
 --------
 
-Cost-sensitive learning integrates meaning into model optimization —
-reminding us that not all mistakes are equal.
-However, the best-performing models are not only accurate and fair,
+Cost-sensitive learning integrates meaning into model optimization — reminding us that not all mistakes are equal. However, the best-performing models are not only accurate and fair,
 but also robust and consistent across data shifts and resampling.
 
-The next section, 7. Robustness Checks and Stability Analysis,
-explores how to test a model’s durability — ensuring its performance holds steady
+The next section, 7. Robustness Checks and Stability Analysis, explores how to test a model’s durability — ensuring its performance holds steady
 when the world it learned from inevitably changes.
 
 --------
 
 ##	7. Robustness checks and stability analysis.
 
-A model that performs well today but fails tomorrow is not truly intelligent — it’s brittle.
-The goal of robustness analysis is to ensure that our models remain reliable, stable, and trustworthy
-when exposed to new, imperfect, or slightly shifted data.
+A model that performs well today but fails tomorrow is not truly intelligent — it’s brittle. The goal of robustness analysis is to ensure that our models remain reliable, stable, and trustworthy when exposed to new, imperfect, or slightly shifted data.
 
-In practical terms, robustness means resilience to change:
-variations in input distribution, missing values, outliers, or random initialization
-should not drastically alter predictions or decisions.
+In practical terms, robustness means resilience to change: variations in input distribution, missing values, outliers, or random initialization should not drastically alter predictions or decisions.
 
 Machine learning isn’t just about fitting — it’s about enduring.
 
 ⸻
 
-Why It Matters
+**Why It Matters**
 
-Even high-performing models can fail silently when their operating environment evolves.
-Distributional drift, seasonal changes, demographic shifts, or new policies
-can erode predictive accuracy and fairness without immediate warning.
+Even high-performing models can fail silently when their operating environment evolves. Distributional drift, seasonal changes, demographic shifts, or new policies can erode predictive accuracy and fairness without immediate warning.
 
-By testing robustness, we evaluate whether a model’s knowledge is structural or merely incidental —
-whether it truly learned generalizable relationships or memorized noise.
-
-A robust model earns trust because it is predictably accurate across contexts.
+By testing robustness, we evaluate whether a model’s knowledge is structural or merely incidental — whether it truly learned generalizable relationships or memorized noise. A robust model earns trust because it is predictably accurate across contexts.
 
 ⸻
 
-Core Idea
+**Core Idea**
 
 Robustness analysis examines how stable predictions and parameters remain
 under controlled perturbations of data, features, or training conditions.
@@ -7536,20 +7648,23 @@ robustness measures how consistently it does so.
 
 ⸻
 
-Main Techniques
+**Main Techniques**
 
-1. Cross-Validation Stability
+### 1. Cross-Validation Stability
+   
 Run k-fold cross-validation multiple times with different random seeds.
 A robust model yields consistent metrics across folds and runs.
 High variance across folds indicates instability or data leakage.
 
 What to check
-	•	Metric variance (e.g., standard deviation of AUC or F1 across folds).
-	•	Consistency of feature importance across iterations.
+
+•	Metric variance (e.g., standard deviation of AUC or F1 across folds).
+•	Consistency of feature importance across iterations.
 
 ⸻
 
-2. Perturbation and Noise Injection
+### 2. Perturbation and Noise Injection
+
 Introduce controlled noise to inputs —
 add random jitter, permute a fraction of features, or simulate missing data.
 Re-run predictions and observe how much outputs change.
@@ -7558,12 +7673,14 @@ If minor noise drastically alters predictions,
 the model is overly sensitive and not generalizing properly.
 
 Best use
-	•	Validate stability under imperfect data collection.
-	•	Detect reliance on spurious correlations.
+
+•	Validate stability under imperfect data collection.
+•	Detect reliance on spurious correlations.
 
 ⸻
 
-3. Bootstrap and Resampling Robustness
+### 3. Bootstrap and Resampling Robustness
+
 Train the model on multiple bootstrap samples of the data (random samples with replacement).
 Then, evaluate the distribution of predictions or feature weights across models.
 
@@ -7572,7 +7689,8 @@ Unstable models show wide dispersion, meaning they depend heavily on particular 
 
 ⸻
 
-4. Feature Sensitivity and Importance Consistency
+### 4. Feature Sensitivity and Importance Consistency
+
 Evaluate how much predictions change when individual features are perturbed or removed.
 Compare feature importance rankings across folds or training runs.
 
@@ -7582,22 +7700,26 @@ where interpretability must remain consistent over time.
 
 ⸻
 
-5. Temporal and Subgroup Validation
+### 5. Temporal and Subgroup Validation
+
 Test the model on different time slices, regions, or demographic subgroups.
 Stable performance across these subsets indicates robust generalization;
 sharp drops in specific contexts may signal bias, drift, or over-specialization.
 
 When to use
-	•	Time-dependent data (finance, climate, healthcare).
-	•	Datasets with heterogeneous populations.
+
+•	Time-dependent data (finance, climate, healthcare).
+•	Datasets with heterogeneous populations.
 
 ⸻
 
-6. Adversarial and Stress Testing
+### 6. Adversarial and Stress Testing
+
 Simulate worst-case scenarios:
-	•	deliberately flip important feature signs,
-	•	inject extreme outliers, or
-	•	stress-test inputs with synthetic edge cases.
+
+•	deliberately flip important feature signs,
+•	inject extreme outliers, or
+•	stress-test inputs with synthetic edge cases.
 
 A robust classifier should degrade gracefully — not collapse.
 Adversarial testing reveals blind spots that may not appear under normal validation.
@@ -7605,66 +7727,72 @@ Adversarial testing reveals blind spots that may not appear under normal validat
 ⸻
 
 Best Practices
-	•	Always monitor metric stability alongside metric magnitude.
-	•	Include random seeds and reproducibility settings in all experiments.
-	•	Use confidence intervals or bootstrapped errors when reporting metrics.
-	•	Combine robustness checks with explainability tools (e.g., SHAP, permutation importance).
-	•	Test for data drift periodically after deployment — not just during training.
+
+•	Always monitor metric stability alongside metric magnitude.
+
+•	Include random seeds and reproducibility settings in all experiments.
+
+•	Use confidence intervals or bootstrapped errors when reporting metrics.
+
+•	Combine robustness checks with explainability tools (e.g., SHAP, permutation importance).
+
+•	Test for data drift periodically after deployment — not just during training.
 
 ⸻
 
 Limitations and Cautions
-	•	Some degree of variability is normal — total stability may indicate underfitting.
-	•	Robustness testing increases computational cost (multiple re-trainings).
-	•	Over-stabilizing models via heavy regularization can reduce responsiveness to new patterns.
-	•	External drift (e.g., socio-economic changes) can still break even robust systems.
+
+•	Some degree of variability is normal — total stability may indicate underfitting.
+
+•	Robustness testing increases computational cost (multiple re-trainings).
+
+•	Over-stabilizing models via heavy regularization can reduce responsiveness to new patterns.
+
+•	External drift (e.g., socio-economic changes) can still break even robust systems.
 
 ⸻
 
 When to Use
-	•	Before model deployment or retraining decisions.
-	•	When data sources change frequently or pipelines are dynamic.
-	•	In regulated domains that demand performance stability guarantees.
-	•	During benchmarking of multiple algorithms under identical conditions.
+
+•	Before model deployment or retraining decisions.
+
+•	When data sources change frequently or pipelines are dynamic.
+
+•	In regulated domains that demand performance stability guarantees.
+
+•	During benchmarking of multiple algorithms under identical conditions.
 
 --------
 
-With robustness validated, we ensure our models can withstand the test of reality —
-not only performing well in theory but surviving variability, noise, and drift.
+With robustness validated, we ensure our models can withstand the test of reality — not only performing well in theory but surviving variability, noise, and drift.
 
-The final step of this analytical journey closes the loop:
-integrating everything we’ve learned into Evaluation Feedback Loops —
-continuous systems that monitor, diagnose, and iteratively improve model performance over time.
+The final step of this analytical journey closes the loop: integrating everything we’ve learned into Evaluation Feedback Loops —continuous systems that monitor, diagnose, and iteratively improve model performance over time.
 
 --------
 
-##	8, Integration of evaluation feedback loops.
+##	8. Integration of evaluation feedback loops.
 
-Machine learning does not end when a model is deployed — it begins there.
-Data shifts, user behavior changes, and system updates all gradually alter the environment in which the model operates.
+Machine learning does not end when a model is deployed — it begins there. Data shifts, user behavior changes, and system updates all gradually alter the environment in which the model operates.
 Without a mechanism to detect and respond to these changes, performance will decay silently.
 
-Evaluation feedback loops close this gap.
-They turn model evaluation into a continuous cycle of learning,
-where every prediction becomes a new opportunity to measure, correct, and adapt.
+Evaluation feedback loops close this gap. They turn model evaluation into a continuous cycle of learning, where every prediction becomes a new opportunity to measure, correct, and adapt.
 
-This approach transforms classification systems from static artifacts
-into living, self-improving components of a broader analytical ecosystem.
+This approach transforms classification systems from static artifacts into living, self-improving components of a broader analytical ecosystem.
 
 ⸻
 
-Why It Matters
+**Why It Matters**
 
 A model that cannot learn from its mistakes is doomed to obsolescence.
 Even the most accurate system at launch will degrade as new data drifts away from its training distribution.
 Feedback loops make performance observable, explainable, and recoverable.
 
-By integrating continuous evaluation into production,
-organizations can:
-	•	Detect data drift early (before it becomes critical).
-	•	Identify shifts in precision, recall, or calibration.
-	•	Automate retraining or recalibration schedules.
-	•	Align human oversight with AI decision boundaries.
+By integrating continuous evaluation into production, organizations can:
+
+•	Detect data drift early (before it becomes critical).
+•	Identify shifts in precision, recall, or calibration.
+•	Automate retraining or recalibration schedules.
+•	Align human oversight with AI decision boundaries.
 
 In essence, evaluation feedback loops keep models aligned with reality.
 
@@ -7673,9 +7801,12 @@ In essence, evaluation feedback loops keep models aligned with reality.
 Core Idea
 
 Feedback loops formalize the connection between three components:
-	1.	Monitoring – constantly track predictions and key metrics (accuracy, precision, recall, AUC, drift indicators).
-	2.	Diagnosis – analyze deviations from expected behavior (e.g., concept drift, data corruption, new class patterns).
-	3.	Adaptation – trigger retraining, threshold adjustment, or re-weighting to restore optimal performance.
+
+1.	Monitoring – constantly track predictions and key metrics (accuracy, precision, recall, AUC, drift indicators).
+
+2.	Diagnosis – analyze deviations from expected behavior (e.g., concept drift, data corruption, new class patterns).
+
+3.	Adaptation – trigger retraining, threshold adjustment, or re-weighting to restore optimal performance.
 
 This forms a continuous pipeline:
 
@@ -7685,106 +7816,123 @@ Each cycle increases robustness and transparency, while reducing manual interven
 
 ⸻
 
-Main Strategies
+**Main Strategies**
 
 1. Automated Performance Monitoring
-Implement metric dashboards (e.g., via MLflow, EvidentlyAI, or custom pipelines)
-that track model behavior in real time.
-These systems flag anomalies such as:
-	•	Drop in F1 or AUC beyond tolerance.
-	•	Changes in input distributions (covariate drift).
-	•	Imbalances in predicted probabilities or class frequencies.
+
+Implement metric dashboards (e.g., via MLflow, EvidentlyAI, or custom pipelines) that track model behavior in real time. These systems flag anomalies such as:
+
+•	Drop in F1 or AUC beyond tolerance.
+
+•	Changes in input distributions (covariate drift).
+
+•	Imbalances in predicted probabilities or class frequencies.
 
 Automated alerts ensure early detection of degradation.
 
 ⸻
 
 2. Data Drift and Concept Drift Detection
-Two major types of drift affect classifiers:
-	•	Data drift: input features change in distribution (e.g., new demographics, sensor variations).
-	•	Concept drift: the relationship between features and labels changes (e.g., new fraud patterns, evolving language).
 
-Statistical tests (Kolmogorov–Smirnov, Jensen–Shannon divergence)
-and embedding-based comparisons (cosine similarity, Mahalanobis distance)
-can signal when retraining or recalibration is necessary.
+Two major types of drift affect classifiers:
+
+•	Data drift: input features change in distribution (e.g., new demographics, sensor variations).
+•	Concept drift: the relationship between features and labels changes (e.g., new fraud patterns, evolving language).
+
+Statistical tests (Kolmogorov–Smirnov, Jensen–Shannon divergence) and embedding-based comparisons (cosine similarity, Mahalanobis distance) can signal when retraining or recalibration is necessary.
 
 ⸻
 
 3. Continuous Retraining and Validation
-Periodic retraining using the most recent labeled data
-keeps models synchronized with their environment.
+
+Periodic retraining using the most recent labeled data keeps models synchronized with their environment.
+
 The frequency depends on:
-	•	Data volatility,
-	•	Labeling latency, and
-	•	Resource constraints.
+
+•	Data volatility,
+•	Labeling latency, and
+•	Resource constraints.
 
 Each retraining cycle should include:
-	•	Validation against a stable benchmark dataset,
-	•	Monitoring of generalization gaps, and
-	•	Version tracking for both data and model artifacts.
+
+•	Validation against a stable benchmark dataset,
+•	Monitoring of generalization gaps, and
+•	Version tracking for both data and model artifacts.
 
 ⸻
 
 4. Human-in-the-Loop Feedback
-No feedback loop is complete without human oversight.
-Analysts or domain experts review misclassified cases, edge scenarios, or fairness violations.
-Their insights guide:
-	•	Rule adjustments,
-	•	Label corrections,
-	•	Model constraint updates.
 
-In high-stakes applications (e.g., healthcare, finance, public policy),
-this human layer transforms the feedback loop into a learning partnership between humans and machines.
+No feedback loop is complete without human oversight. Analysts or domain experts review misclassified cases, edge scenarios, or fairness violations.
+
+Their insights guide:
+
+•	Rule adjustments,
+•	Label corrections,
+•	Model constraint updates.
+
+In high-stakes applications (e.g., healthcare, finance, public policy), this human layer transforms the feedback loop into a learning partnership between humans and machines.
 
 ⸻
 
 5. Closed-Loop Governance
+
 Combine all components under a structured governance framework that enforces:
-	•	Traceability — every decision and update is logged.
-	•	Accountability — roles are defined for who monitors, approves, and deploys changes.
-	•	Reproducibility — retraining is deterministic, version-controlled, and auditable.
+
+•	Traceability — every decision and update is logged.
+
+•	Accountability — roles are defined for who monitors, approves, and deploys changes.
+
+•	Reproducibility — retraining is deterministic, version-controlled, and auditable.
 
 This makes the learning process not only adaptive but also ethical and transparent.
 
 ⸻
 
 Best Practices
-	•	Maintain baseline models as control benchmarks for long-term comparison.
-	•	Define performance tolerance bands (acceptable deviation limits) for each key metric.
-	•	Automate data quality checks before retraining cycles.
-	•	Record feedback loop events in metadata — include triggers, actions, and outcomes.
-	•	Periodically review feedback mechanisms themselves — a feedback loop can drift too.
+
+•	Maintain baseline models as control benchmarks for long-term comparison.
+
+•	Define performance tolerance bands (acceptable deviation limits) for each key metric.
+
+•	Automate data quality checks before retraining cycles.
+
+•	Record feedback loop events in metadata — include triggers, actions, and outcomes.
+
+•	Periodically review feedback mechanisms themselves — a feedback loop can drift too.
 
 ⸻
 
 Limitations and Cautions
-	•	Overly aggressive retraining may amplify noise instead of signal.
-	•	Delayed labeling can create feedback lag, reducing loop effectiveness.
-	•	Feedback bias can emerge if the system learns only from confirmed outcomes (e.g., “positive feedback bias”).
-	•	Continuous systems require careful monitoring to prevent automation errors or model churn.
+
+•	Overly aggressive retraining may amplify noise instead of signal.
+
+•	Delayed labeling can create feedback lag, reducing loop effectiveness.
+
+•	Feedback bias can emerge if the system learns only from confirmed outcomes (e.g., “positive feedback bias”).
+
+•	Continuous systems require careful monitoring to prevent automation errors or model churn.
 
 The key is equilibrium — update frequently enough to adapt, but not so often that the model forgets stability.
 
 ⸻
 
 When to Use
-	•	In production systems where data or conditions evolve continuously.
-	•	In any mission-critical environment (finance, security, operations) requiring model accountability.
-	•	When multiple stakeholders (data, engineering, ethics) depend on shared performance visibility.
-	•	For models integrated in decision pipelines that must remain explainable and auditable.
+
+•	In production systems where data or conditions evolve continuously.
+
+•	In any mission-critical environment (finance, security, operations) requiring model accountability.
+
+•	When multiple stakeholders (data, engineering, ethics) depend on shared performance visibility.
+
+•	For models integrated in decision pipelines that must remain explainable and auditable.
 
 
 -------
 
-Optimization and improvement do not stop at achieving high performance;
-they extend into sustaining that performance responsibly.
-Through feedback loops, models evolve not as static tools,
-but as dynamic, monitored systems that learn from their own outcomes.
+Optimization and improvement do not stop at achieving high performance; they extend into sustaining that performance responsibly. Through feedback loops, models evolve not as static tools,but as dynamic, monitored systems that learn from their own outcomes.
 
-With this, we complete the cycle of model construction, evaluation, and refinement —
-ready to move into the final stage:
-Tools for Applied Classification Models,
-where theory becomes action through practical implementation, reproducibility, and deployment.
+With this, we complete the cycle of model construction, evaluation, and refinement — ready to move into the final stage: Tools for Applied Classification Models, where theory becomes action through practical implementation, reproducibility, and deployment.
 
 ------
 
