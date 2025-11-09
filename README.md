@@ -7126,9 +7126,7 @@ The next step focuses on Feature Selection and Dimensionality Reduction — tech
 
 ##	**3. Resampling and data balancing (SMOTE, ADASYN, undersampling).**
 
-In many real-world problems — fraud detection, medical diagnosis, equipment failure prediction —
-the positive (rare) class represents only a small fraction of the data.
-Such class imbalance causes models to favor the majority class, achieving high accuracy by simply predicting the dominant outcome while failing to detect rare but critical events.
+In many real-world problems — fraud detection, medical diagnosis, equipment failure prediction — the positive (rare) class represents only a small fraction of the data. Such class imbalance causes models to favor the majority class, achieving high accuracy by simply predicting the dominant outcome while failing to detect rare but critical events. 
 
 Resampling and data balancing methods directly address this asymmetry.
 Their goal is to reshape the training data distribution so that learning algorithms receive a more balanced view of both classes — improving sensitivity, recall, and fairness without distorting generalization.
@@ -7137,22 +7135,15 @@ Their goal is to reshape the training data distribution so that learning algorit
 
 ** Why It Matters **
 
-A classifier learns patterns based on frequency.
-When positive examples are scarce, the model underestimates their importance —
-a fraudulent transaction becomes “invisible” among thousands of normal ones.
-Balancing techniques rebalance this exposure,
-either by increasing minority presence (oversampling) or reducing majority dominance (undersampling).
+A classifier learns patterns based on frequency. When positive examples are scarce, the model underestimates their importance — a fraudulent transaction becomes “invisible” among thousands of normal ones. Balancing techniques rebalance this exposure, either by increasing minority presence (oversampling) or reducing majority dominance (undersampling).
 
-The result: the model pays proportional attention to each outcome,
-leading to more equitable and reliable decision boundaries.
+The result: the model pays proportional attention to each outcome, leading to more equitable and reliable decision boundaries.
 
 ⸻
 
 ** Core Idea **
 
-Resampling modifies the training set composition, not the algorithm itself.
-This makes it model-agnostic — applicable to trees, SVMs, neural networks, or any learner.
-Each method seeks to improve class representation while maintaining meaningful data variability.
+Resampling modifies the training set composition, not the algorithm itself. This makes it model-agnostic — applicable to trees, SVMs, neural networks, or any learner. Each method seeks to improve class representation while maintaining meaningful data variability.
 
 ⸻
 
@@ -7386,10 +7377,7 @@ When to Use
 
 --------
 
-Regularization and dropout make learning safer by constraining complexity.
-But sometimes, even a well-regularized model underperforms because its feature representation is inadequate.
-The next step explores how ensemble refinement and stacking combine the strengths of multiple models —
-transforming diverse perspectives into a single, more powerful decision system.
+Regularization and dropout make learning safer by constraining complexity. But sometimes, even a well-regularized model underperforms because its feature representation is inadequate. The next step explores how ensemble refinement and stacking combine the strengths of multiple models — transforming diverse perspectives into a single, more powerful decision system.
 
 --------
 
@@ -7602,8 +7590,11 @@ Instead of minimizing a uniform loss function, cost-sensitive methods minimize a
 Let each prediction fall into one of four cases:
 
 •	True Positive (TP): correctly predict positive → cost = 0
+
 •	False Positive (FP): predict positive when it’s negative → cost = C_FP
+
 •	False Negative (FN): predict negative when it’s positive → cost = C_FN
+
 •	True Negative (TN): correctly predict negative → cost = 0
 
 The total expected cost can be expressed conceptually as:
@@ -7623,11 +7614,13 @@ Most modern classifiers (Logistic Regression, SVMs, Trees, Neural Networks) allo
 Use When
 
 •	You have a well-understood imbalance or cost asymmetry.
+
 •	The algorithm supports a class_weight or equivalent parameter (e.g., balanced mode in Scikit-learn).
 
 Example
 
 •	Fraud detection: assign 10× higher penalty for missing a fraudulent case.
+
 •	Medical screening: weight false negatives much more than false positives.
 
 ⸻
@@ -7640,11 +7633,13 @@ you can encode different gradients for FP and FN errors to reflect their asymmet
 Advantages
 
 •	Fine-grained control over error priorities.
+
 •	Can encode complex business logic.
 
 Limitations
 
 •	Requires expertise to design, tune, and validate.
+
 •	Risk of overfitting to cost assumptions that may change over time.
 
 ⸻
@@ -7661,6 +7656,7 @@ you can lower the decision threshold, making the model more sensitive to positiv
 When to Use
 
 •	The underlying model provides calibrated probabilities.
+
 •	Costs or class prevalence vary dynamically over time.
 
 Threshold tuning can be guided by metrics such as Youden’s J index, expected utility, or custom cost curves.
@@ -7674,6 +7670,7 @@ Instead of directly modifying loss, you can oversample costly cases or undersamp
 Best Use
 
 •	When class weights are unavailable or unstable.
+
 •	In prototyping, to approximate cost sensitivity before implementing formal weighting.
 
 ⸻
@@ -7717,18 +7714,14 @@ When to Use
 --------
 
 Cost-sensitive learning integrates meaning into model optimization — reminding us that not all mistakes are equal. However, the best-performing models are not only accurate and fair,
-but also robust and consistent across data shifts and resampling.
-
-The next section, 7. Robustness Checks and Stability Analysis, explores how to test a model’s durability — ensuring its performance holds steady
+but also robust and consistent across data shifts and resampling. The next section, 7. Robustness Checks and Stability Analysis, explores how to test a model’s durability — ensuring its performance holds steady
 when the world it learned from inevitably changes.
 
 --------
 
 ##	7. Robustness checks and stability analysis.
 
-A model that performs well today but fails tomorrow is not truly intelligent — it’s brittle. The goal of robustness analysis is to ensure that our models remain reliable, stable, and trustworthy when exposed to new, imperfect, or slightly shifted data.
-
-In practical terms, robustness means resilience to change: variations in input distribution, missing values, outliers, or random initialization should not drastically alter predictions or decisions.
+A model that performs well today but fails tomorrow is not truly intelligent — it’s brittle. The goal of robustness analysis is to ensure that our models remain reliable, stable, and trustworthy when exposed to new, imperfect, or slightly shifted data. In practical terms, robustness means resilience to change: variations in input distribution, missing values, outliers, or random initialization should not drastically alter predictions or decisions.
 
 Machine learning isn’t just about fitting — it’s about enduring.
 
@@ -7736,23 +7729,17 @@ Machine learning isn’t just about fitting — it’s about enduring.
 
 **Why It Matters**
 
-Even high-performing models can fail silently when their operating environment evolves. Distributional drift, seasonal changes, demographic shifts, or new policies can erode predictive accuracy and fairness without immediate warning.
-
-By testing robustness, we evaluate whether a model’s knowledge is structural or merely incidental — whether it truly learned generalizable relationships or memorized noise. A robust model earns trust because it is predictably accurate across contexts.
+Even high-performing models can fail silently when their operating environment evolves. Distributional drift, seasonal changes, demographic shifts, or new policies can erode predictive accuracy and fairness without immediate warning. By testing robustness, we evaluate whether a model’s knowledge is structural or merely incidental — whether it truly learned generalizable relationships or memorized noise. A robust model earns trust because it is predictably accurate across contexts.
 
 ⸻
 
 **Core Idea**
 
-Robustness analysis examines how stable predictions and parameters remain
-under controlled perturbations of data, features, or training conditions.
+Robustness analysis examines how stable predictions and parameters remain under controlled perturbations of data, features, or training conditions.
 
-If small changes produce large differences in outcomes,
-the model is likely overfit, unstable, or sensitive to non-essential signals.
+If small changes produce large differences in outcomes, the model is likely overfit, unstable, or sensitive to non-essential signals.
 
-In formal terms, robustness complements performance metrics:
-while accuracy or AUC measure how well a model predicts,
-robustness measures how consistently it does so.
+In formal terms, robustness complements performance metrics: while accuracy or AUC measure how well a model predicts, robustness measures how consistently it does so.
 
 ⸻
 
@@ -7760,22 +7747,19 @@ robustness measures how consistently it does so.
 
 ### 1. Cross-Validation Stability
    
-Run k-fold cross-validation multiple times with different random seeds.
-A robust model yields consistent metrics across folds and runs.
-High variance across folds indicates instability or data leakage.
+Run k-fold cross-validation multiple times with different random seeds. A robust model yields consistent metrics across folds and runs. High variance across folds indicates instability or data leakage.
 
 What to check
 
 •	Metric variance (e.g., standard deviation of AUC or F1 across folds).
+
 •	Consistency of feature importance across iterations.
 
 ⸻
 
 ### 2. Perturbation and Noise Injection
 
-Introduce controlled noise to inputs —
-add random jitter, permute a fraction of features, or simulate missing data.
-Re-run predictions and observe how much outputs change.
+Introduce controlled noise to inputs — add random jitter, permute a fraction of features, or simulate missing data. Re-run predictions and observe how much outputs change.
 
 If minor noise drastically alters predictions,
 the model is overly sensitive and not generalizing properly.
@@ -7783,6 +7767,7 @@ the model is overly sensitive and not generalizing properly.
 Best use
 
 •	Validate stability under imperfect data collection.
+
 •	Detect reliance on spurious correlations.
 
 ⸻
@@ -7817,6 +7802,7 @@ sharp drops in specific contexts may signal bias, drift, or over-specialization.
 When to use
 
 •	Time-dependent data (finance, climate, healthcare).
+
 •	Datasets with heterogeneous populations.
 
 ⸻
@@ -7829,8 +7815,7 @@ Simulate worst-case scenarios:
 •	inject extreme outliers, or
 •	stress-test inputs with synthetic edge cases.
 
-A robust classifier should degrade gracefully — not collapse.
-Adversarial testing reveals blind spots that may not appear under normal validation.
+A robust classifier should degrade gracefully — not collapse. Adversarial testing reveals blind spots that may not appear under normal validation.
 
 ⸻
 
@@ -7891,9 +7876,7 @@ This approach transforms classification systems from static artifacts into livin
 
 **Why It Matters**
 
-A model that cannot learn from its mistakes is doomed to obsolescence.
-Even the most accurate system at launch will degrade as new data drifts away from its training distribution.
-Feedback loops make performance observable, explainable, and recoverable.
+A model that cannot learn from its mistakes is doomed to obsolescence. Even the most accurate system at launch will degrade as new data drifts away from its training distribution. Feedback loops make performance observable, explainable, and recoverable.
 
 By integrating continuous evaluation into production, organizations can:
 
@@ -7948,6 +7931,7 @@ Automated alerts ensure early detection of degradation.
 Two major types of drift affect classifiers:
 
 •	Data drift: input features change in distribution (e.g., new demographics, sensor variations).
+
 •	Concept drift: the relationship between features and labels changes (e.g., new fraud patterns, evolving language).
 
 Statistical tests (Kolmogorov–Smirnov, Jensen–Shannon divergence) and embedding-based comparisons (cosine similarity, Mahalanobis distance) can signal when retraining or recalibration is necessary.
@@ -7969,7 +7953,9 @@ The frequency depends on:
 Each retraining cycle should include:
 
 •	Validation against a stable benchmark dataset,
+
 •	Monitoring of generalization gaps, and
+
 •	Version tracking for both data and model artifacts.
 
 ⸻
@@ -7981,7 +7967,9 @@ No feedback loop is complete without human oversight. Analysts or domain experts
 Their insights guide:
 
 •	Rule adjustments,
+
 •	Label corrections,
+
 •	Model constraint updates.
 
 In high-stakes applications (e.g., healthcare, finance, public policy), this human layer transforms the feedback loop into a learning partnership between humans and machines.
@@ -8067,27 +8055,46 @@ Give you a clear, opinionated map from the models we covered to the libraries an
 
 You can implement the full taxonomy with a small, stable set of libraries.
 
-•scikit-learn (core classical ML)
-•Linear & probabilistic: LogisticRegression, LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis, GaussianNB, MultinomialNB, BernoulliNB, ComplementNB.
-•Margin-based: Perceptron, LinearSVC, SVC (with kernel="rbf" or "poly").
-•Instance-based: KNeighborsClassifier.
+•	scikit-learn (core classical ML)
 
-•Trees & cost-sensitive trees: DecisionTreeClassifier (with class_weight), plus criterion="gini" or "entropy", pruning via ccp_alpha.
+•	Linear & probabilistic: LogisticRegression, LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis, GaussianNB, MultinomialNB, BernoulliNB, ComplementNB.
+
+•	Margin-based: Perceptron, LinearSVC, SVC (with kernel="rbf" or "poly").
+
+•	Instance-based: KNeighborsClassifier.
+
+•	Trees & cost-sensitive trees: DecisionTreeClassifier (with class_weight), plus criterion="gini" or "entropy", pruning via ccp_alpha.
+
 •	Bagging & forest-style ensembles: BaggingClassifier, RandomForestClassifier, ExtraTreesClassifier.
+
 •	Gradient boosting (vanilla): GradientBoostingClassifier.
+
 •	Cross-cutting utilities: Pipeline, ColumnTransformer, StandardScaler, MinMaxScaler, OneHotEncoder, CalibratedClassifierCV, GridSearchCV, RandomizedSearchCV, StratifiedKFold, class_weight="balanced".
+
 •	xgboost, lightgbm, catboost (GBDT variants)
+
 •	xgboost.XGBClassifier (robust, regularized GBDT, great defaults).
+
 •	lightgbm.LGBMClassifier (fast, leaf-wise growth, strong on large/tabular).
+
 •	catboost.CatBoostClassifier (handles categoricals natively, strong out-of-the-box performance with fewer tweaks).
+
 •	PyTorch o TensorFlow/Keras (neural networks)
+
 •	MLP for tabular: torch.nn modules o tf.keras Sequential/Functional API.
+
 •	CNN para imágenes: torchvision o tf.keras.applications para transfer learning.
+
 •	RNN/LSTM/GRU para secuencias: torch.nn.LSTM o tf.keras.layers.LSTM/GRU.
+
 •	Transformers para texto/secuencias: transformers (Hugging Face) con cabezales de clasificación (AutoModelForSequenceClassification).
+
 •	Model evaluation, reporting, and monitoring helpers
+
 •	Experiment tracking: MLflow (lightweight and effective).
+
 •	Drift and report dashboards: Evidently AI.
+
 •	Serialization: joblib (sklearn), pickle (con cuidado), formatos nativos (.json para CatBoost, Booster para XGBoost/LightGBM), o torch.save / model.save en deep learning.
 
 Conventions that keep you sane. Set random seeds consistently. Freeze dependencies in requirements.txt. Use Pipeline for preprocessing plus model, so training and inference share the exact same transforms. Keep data splits stratified. Always persist the entire pipeline (not just the estimator). Calibrate probabilities when decisions depend on risk thresholds.
