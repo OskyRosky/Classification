@@ -6276,6 +6276,8 @@ $$
 
 It focuses only on the positive class, showing how well the model retrieves true positives without generating too many false positives.
 
+![class](/ima/ima46.ppm)
+
 Interpretation
 
 •	The curve starts at high recall but low precision (many false positives).
@@ -6304,6 +6306,8 @@ P(y = 1 \mid \hat{p}) = \hat{p}
 $$
 
 If the model is perfectly calibrated, points will align along the diagonal line (perfect reliability).
+
+![class](/ima/ima47.png)
 
 Construction
 
@@ -6356,6 +6360,8 @@ Every classification model that outputs probabilities must eventually decide whe
 By default, this threshold is 0.5, meaning anything above is labeled positive and anything below is negative.
 However, this choice is arbitrary and rarely optimal in real-world contexts, where false positives and false negatives have different costs.
 
+![class](/ima/ima48.png)
+
 Threshold analysis aims to find the point that maximizes usefulness — whether measured by accuracy, F1, financial gain, or expected utility — transforming raw probabilities into actionable decisions.
 
 ⸻
@@ -6395,6 +6401,8 @@ The art of threshold tuning is to find the sweet spot that balances these forces
 
 A simple and popular method to select the optimal threshold is Youden’s J, which maximizes the difference between the True Positive Rate (TPR) and False Positive Rate (FPR):
 
+![class](/ima/ima49.png)
+
 $$
 J = TPR - FPR
 $$
@@ -6412,6 +6420,8 @@ $$
 F1 = 2 \cdot \frac{Precision \cdot Recall}{Precision + Recall}
 $$
 
+![class](/ima/ima50.png)
+
 The F1-optimal threshold is the one that yields the highest F1 value on validation data.
 This approach is especially useful in imbalanced datasets (e.g., fraud, churn, rare events), where maximizing overall accuracy can be misleading.
 
@@ -6420,6 +6430,8 @@ This approach is especially useful in imbalanced datasets (e.g., fraud, churn, r
 3.5. **Cost-Based Thresholds**
 
 In many business or operational settings, the costs of errors are asymmetric. We can define a threshold that minimizes the expected cost or maximizes expected utility.
+
+![class](/ima/ima51.jpg)
 
 Let:
 
@@ -6482,6 +6494,8 @@ The next section focuses on error analysis, confusion matrices, and class-level 
 Metrics summarize how well a model performs, but they rarely explain why it performs that way.
 Diagnostic methods focus on uncovering the underlying structure of model errors — identifying which patterns, classes, or subgroups the model struggles with.
 
+![class](/ima/ima52.ppm)
+
 In classification tasks, every prediction carries information. Some errors are random noise; others reveal systematic bias, model blind spots, or data imbalance. By interpreting these patterns, we turn evaluation into understanding — bridging performance metrics with actionable insight.
 
 ⸻
@@ -6490,6 +6504,8 @@ In classification tasks, every prediction carries information. Some errors are r
 
 The confusion matrix is the foundation of classification diagnostics.
 It records how often the model’s predictions agree or disagree with actual outcomes.
+
+![class](/ima/ima53.webp)
 
 To conceptualize it:
 
@@ -6532,6 +6548,8 @@ $$
 $$
 F1_c = 2 \cdot \frac{Precision_c \cdot Recall_c}{Precision_c + Recall_c}
 $$
+
+![class](/ima/ima54.png)
 
 Then, these per-class metrics are aggregated using different averaging strategies:
 
@@ -6592,6 +6610,8 @@ We move next to 5. Cross-Validation and Leakage Prevention, where we examine how
 
 Model evaluation means little if the test data already influenced the model during training. To assess a classifier’s true generalization capacity — how well it performs on unseen data — we must separate learning from testing. This is where cross-validation and leakage prevention come into play. They ensure that what appears as high performance is not merely the model memorizing the data, but genuinely learning patterns that generalize.
 
+![class](/ima/ima55.png)
+
 ⸻
 
 ### 5.1. The Principle of Data Separation
@@ -6617,6 +6637,8 @@ Cross-validation mitigates this problem by rotating which samples play each role
 
 The standard approach is k-fold cross-validation. The dataset is divided into k roughly equal parts (folds). The model trains on k − 1 folds and is tested on the remaining one, repeating the process k times. Each observation is used once for testing and k − 1 times for training. The final performance metric is the average across all folds:
 
+![class](/ima/ima56.png)
+
 $$
 \text{Score}{CV} = \frac{1}{k} \sum{i=1}^{k} \text{Score}_i
 $$
@@ -6628,6 +6650,8 @@ Typical values are k = 5 or k = 10, balancing bias and variance in the estimate.
 ### 5.3. Stratified Cross-Validation
 
 For classification, it is crucial to preserve the class balance within each fold. Otherwise, some folds may contain almost no minority-class samples, distorting performance estimates. Stratified cross-validation ensures each fold mirrors the overall class distribution — especially important for imbalanced datasets.
+
+![class](/ima/ima57.png)
 
 ⸻
 
@@ -6774,9 +6798,13 @@ Numbers do not speak for themselves — context gives them meaning.
 Responsible reporting acknowledges limitations:
 
 •	Highlight where the model fails as well as where it succeeds.
+
 •	Specify uncertainties (confidence intervals, variance across folds).
+
 •	Avoid cherry-picking best results — average performance matters more.
+
 •	When comparing models, ensure identical data and validation protocols.
+
 •	Clarify whether metrics reflect in-sample validation or true hold-out testing.
 
 Transparency builds credibility.
@@ -6861,14 +6889,15 @@ A model can overfit to validation folds, exploit spurious correlations, or inadv
 As we transition to Section VII, improvement will mean more than boosting accuracy — it will encompass stability, fairness, and interpretability.
 The goal is not simply a better score, but a better model.
 
+
+
+---------------------------------------------------
+
 We now leave behind the realm of measurement and step into that of enhancement.
 
 Section VII will explore the art and science of Optimization —
 how to refine classifiers through tuning, ensembling, calibration, and feature engineering.
 It is where theoretical understanding meets practical iteration, and where good models become great.
-
----------
-
 
 -------------------------------------------------
 
@@ -6898,7 +6927,7 @@ Optimization, therefore, is not a single step but a cycle of learning, where eac
 
 ⸻
 
-Aims of This Section
+**Aims of This Section**
 
 This section provides a structured roadmap for improvement. We will explore practical and conceptual techniques that enhance accuracy, stability, and robustness, including:
 
@@ -6945,9 +6974,10 @@ Several strategies exist, each representing a balance between exhaustiveness, ef
 
 **Grid Search**
 
-The most straightforward method.
-It defines a fixed grid of possible hyperparameter values and evaluates all combinations through cross-validation.
+The most straightforward method. It defines a fixed grid of possible hyperparameter values and evaluates all combinations through cross-validation.
 Although simple and reproducible, grid search can be computationally expensive and inefficient when parameters interact or when the search space is large.
+
+![class](/ima/ima58.png)
 
 ⸻
 
@@ -7239,6 +7269,8 @@ Use When
 An extension of SMOTE that focuses synthetic generation on harder-to-learn areas.
 It adaptively creates more samples where the minority class is underrepresented or closer to the majority class boundary.
 
+![class](/ima/ima59.png)
+
 Advantages
 
 •	Targets regions where the model struggles.
@@ -7298,6 +7330,8 @@ two mechanisms that control model complexity and prevent overfitting from domina
 ##	4. Regularization and dropout revisited.
 
 After improving data balance, the next step in model optimization is controlling complexity. A model that is too flexible memorizes the noise — it fits perfectly to the training data but fails to generalize. A model that is too rigid ignores relevant patterns.
+
+![class](/ima/ima60.webp)
 
 Regularization is the mathematical discipline that manages this trade-off, while Dropout, in the context of neural networks, represents its stochastic, modern counterpart. Both act as regulators of learning intensity, preventing overconfidence and promoting stability.
 
@@ -7420,7 +7454,7 @@ especially in complex, high-dimensional, or noisy domains.
 
 ⸻
 
-Core Idea
+**Core Idea**
 
 The guiding principle is “wisdom of the crowd.”
 Multiple models trained on variations of the same data can be blended together,
@@ -7459,7 +7493,7 @@ Use When
 
 ⸻
 
-2. Weighted Blending
+**2. Weighted Blending**
    
 Assign different importance to each model based on validation performance.
 Weights can be determined manually or through optimization (e.g., linear regression on validation predictions).
@@ -7585,6 +7619,8 @@ especially when certain mistakes are more costly than others. The next section e
 ##	6. Cost-sensitive learning adjustments.
 
 In most real-world classification problems, not all errors cost the same. Predicting a sick patient as healthy is more serious than the reverse. Missing a fraudulent transaction costs money, but a false alarm costs trust. Traditional models, however, treat all misclassifications equally — minimizing overall error without regard for its consequences.
+
+![class](/ima/ima61.png)
 
 Cost-sensitive learning introduces asymmetry into the model’s objective. It explicitly assigns different weights to different types of errors,aligning the learning process with the real-world cost structure of the problem.
 
