@@ -8108,6 +8108,8 @@ Give you a clear, opinionated map from the models we covered to the libraries an
 
 You can implement the full taxonomy with a small, stable set of libraries.
 
+![class](/ima/ima62.jpg)
+
 •	scikit-learn (core classical ML)
 
 •	Linear & probabilistic: LogisticRegression, LinearDiscriminantAnalysis, QuadraticDiscriminantAnalysis, GaussianNB, MultinomialNB, BernoulliNB, ComplementNB.
@@ -8155,6 +8157,8 @@ Conventions that keep you sane. Set random seeds consistently. Freeze dependenci
 1.2 R (optional mirrors)
 
 If you prefer R, most families have mature equivalents.
+
+![class](/ima/ima63.png)
 
 •	Core models: glm (logit/probit), MASS::lda y qda, e1071::naiveBayes y svm, class::knn, rpart para árboles, randomForest, xgboost, lightgbm, catboost, nnet para MLP básico, keras para deep learning.
 
@@ -8230,6 +8234,8 @@ FastAPI is generally preferred over Flask because it supports asynchronous reque
 
 Example project layout:
 
+```python
+
 app/
 ├── main.py
 ├── model/
@@ -8238,6 +8244,8 @@ app/
 ├── utils/
 │   └── preprocess.py
 └── requirements.txt
+
+```
 
 To run locally, execute:
 uvicorn app.main:app --reload --port 8000
@@ -8253,6 +8261,8 @@ Docker encapsulates dependencies, OS, and configuration — eliminating “works
 
 Minimal Dockerfile example:
 
+```bash
+
 FROM python:3.12-slim
 WORKDIR /app
 COPY requirements.txt .
@@ -8260,6 +8270,8 @@ RUN pip install –no-cache-dir -r requirements.txt
 COPY . .
 EXPOSE 8000
 CMD [“uvicorn”, “app.main:app”, “–host”, “0.0.0.0”, “–port”, “8000”]
+
+```
 
 Key principles:
 
@@ -8310,12 +8322,16 @@ Recommended practices:
 
 •	Keep a structured hierarchy such as:
 
+```bash
+
 models/
 ├── logistic_regression/
 │   ├── v1/
 │   └── v2/
 ├── random_forest/
 └── xgboost/
+
+```
 
 •	Pair each model with exact dependency versions for reproducibility.
 	
@@ -8397,6 +8413,8 @@ Every project, from a quick prototype to a production pipeline, benefits from co
 A standard structure for any classification project can be expressed in a few directories.
 This organization allows clean separation between data, code, configuration, and results.
 
+```python
+
 project/
 ├── data/
 │   ├── raw/
@@ -8416,6 +8434,8 @@ project/
 ├── configs/
 │   └── params.yaml
 └── requirements.txt
+
+```
 
 Core workflow:
 
@@ -8486,6 +8506,8 @@ Avoid leaving experiments half-documented or dependent on the notebook’s inter
 
 A simple, consistent interface for model inference:
 
+```python
+
 from fastapi import FastAPI
 import joblib
 
@@ -8496,6 +8518,8 @@ model = joblib.load("models/logistic_regression_v1.pkl")
 def predict(input_data: dict):
     prediction = model.predict([list(input_data.values())])
     return {"prediction": int(prediction[0])}
+
+```
 
 Even minimal APIs should log requests, handle exceptions, and validate inputs.
 This simplicity ensures that experimentation and production stay aligned — same model, same logic, different environment.
